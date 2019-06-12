@@ -30,9 +30,8 @@ class Store {
         this.callbackToast = val;
     }
 
-    montarToast(mensaje : string){
-        console.log(mensaje);
-        this.callbackToast(mensaje);
+    displayToast(msj : string, appearance : string){
+        this.callbackToast(msj, appearance);
     }
 }
 

@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import store from '../stores/store';
 import AuthFireBase from '../utils/AuthFireBase';
 import '../styles/Login.css';
-import Toast from './Toast';
 
 @observer
 class Login extends Component<any, any>{
@@ -21,10 +20,7 @@ class Login extends Component<any, any>{
     }
 
     onLogin(val : boolean){
-        if(val){
-            this.props.history.push('/Home');
-        }else{
-        }
+        val && this.props.history.push('/Home');
     }
     
     handleClick(){

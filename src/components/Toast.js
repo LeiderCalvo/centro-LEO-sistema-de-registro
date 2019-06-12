@@ -6,23 +6,27 @@ import React, { Component } from 'react';
 import store from '../stores/store';
 
 class toast extends Component {
+
+  constructor(props){
+    super(props);
+    this.montarToast = this.montarToast.bind(this);
+  }
+
   componentDidMount(){
     store.setCallBackToast(this.montarToast);
   }
 
-  montarToast(content){
+  montarToast(content, appearance){
     this.props.toastManager.add(content, {
-      appearance: 'warning',
+      appearance: appearance,
       autoDismiss: true,
-      pauseOnHover: false,
+      pauseOnHover: true,
     })
   }
   
   render(){
     return(
-      <div onClick={() => this.montarToast('neeeeeeeeee')}>
-        Add Toast
-      </div>
+      <div/>
     );
   }
 }

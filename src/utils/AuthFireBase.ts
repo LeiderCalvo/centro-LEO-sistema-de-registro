@@ -21,7 +21,7 @@ function Login(usuario : string, password  : string, callback : any){
       store.setLoged(false);
       callback(false);
       console.log('Login error ', error);
-      store.montarToast('yeyyyyyyyyyyyyyyyyyyyyyy');
+      store.displayToast(error+'', 'error');
     }
   });
 }
