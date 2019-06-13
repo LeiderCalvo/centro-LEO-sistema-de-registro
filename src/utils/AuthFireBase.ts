@@ -41,7 +41,7 @@ function SingUp(usuario : Usuario, callback : any){
     store.setLoging(false);
     store.setLoged(true);
     DataBaseFireBase.addNewUser(dataBase, usuario);
-    store.displayToast('Bienvenido '+usuario, 'success');
+    store.displayToast('Bienvenido '+usuario.nombre, 'success');
   }).catch(function(error) {
     if (error) {
       callback(false);

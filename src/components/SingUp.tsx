@@ -50,8 +50,8 @@ class SingUp extends Component<any, any>{
             let fi = this.state.temp2;
             let step = this.state.step;
             if(ini !== '' && fi !== ''){
-                if(hor.length === 0) {this.setState({horario : [{inicio: ini, fin: fi}], step: step+1, temp: '', temp2: ''}); return;}
-                this.setState({horario : [...hor, {inicio: ini, fin: fi}], step: step+1, temp: '', temp2: ''});
+                if(hor.length === 0) {this.setState({horario : [[{inicio: ini, fin: fi}]], step: step+1, temp: '', temp2: ''}); return;}
+                this.setState({horario : [...hor, [{inicio: ini, fin: fi}]], step: step+1, temp: '', temp2: ''});
             }else{
                 store.displayToast('Por favor llene todos los campos', 'warning'); return;
             }
