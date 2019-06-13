@@ -20,7 +20,10 @@ class Login extends Component<any, any>{
     }
 
     onLogin(val : boolean){
-        val && this.props.history.push('/Home');
+        val? this.props.history.push('/Home') : this.setState({
+            usuario : '',
+            password : ''
+        });
     }
     
     handleClick(){
@@ -45,7 +48,7 @@ class Login extends Component<any, any>{
                         onChange={(e)=>{
                             this.setState({usuario : e.target.value + ''});
                         }}/>
-                        <input type="text" placeholder='Mi contraseña es ...' value={this.state.password}
+                        <input type="password" placeholder='Mi contraseña es ...' value={this.state.password}
                         onChange={(e)=>{
                             this.setState({password : e.target.value + ''})
                         }}/>

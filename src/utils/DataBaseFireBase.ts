@@ -1,13 +1,7 @@
-import store from "../stores/store";
+import store, { Usuario } from "../stores/store";
 
-import * as firebase from "firebase/app";
-import "firebase/database";
-import firebaseCredentials from "./firebaseCredentials";
+function addNewUser(DataBase: any, usuario: Usuario) {
+  console.log(usuario);
+}
 
-const firebaseConfig = firebaseCredentials;
-firebase.initializeApp(firebaseConfig);
-
-let database = firebase.database();
-
-
-export default {};
+export default {addNewUser};

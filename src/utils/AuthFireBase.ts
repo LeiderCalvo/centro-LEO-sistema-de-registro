@@ -2,13 +2,15 @@ import store, { Usuario } from "../stores/store";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 import firebaseCredentials from "./firebaseCredentials";
 import DataBaseFireBase from "./DataBaseFireBase";
 
 const firebaseConfig = firebaseCredentials;
 firebase.initializeApp(firebaseConfig);
 
-let auth = firebase.auth();
+const auth = firebase.auth();
+const dataBase = firebase.database();
 
 function Login(usuario : string, password  : string, callback : any){
   if(store.isLoging)return;
@@ -34,11 +36,11 @@ function SingUp(usuario : Usuario, callback : any){
   if(store.isLoging)return;
   store.setLoging(true);
 
-  auth.createUserWithEmailAndPassword(usuario.nombre, usuario.password).then(()=>{
+  auth.createUserWithEmailAndPassword(usuario.nombre + '@gmail.com', usuario.password).then(()=>{
     callback(true);
     store.setLoging(false);
     store.setLoged(true);
-    //RegistrarPersonaje(a.user.email.split('@')[0], correo, password);
+    DataBaseFireBase.addNewUser(dataBase, usuario);
   }).catch(function(error) {
     if (error) {
       callback(false);
