@@ -10,10 +10,10 @@ import ReactDOM from 'react-dom';
 import './styles/index.css';
 import * as serviceWorker from './serviceWorker';
 
-//import App from './components/App';
 import Login from './components/Login';
 import ToastProv from './components/ToastProvider';
 import SingUp from './components/SingUp';
+import Home from './components/Home';
 
 
 const routing = (
@@ -22,6 +22,7 @@ const routing = (
         <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/SingUp" component={SingUp} />
+            <Route exact path="/Home" component={Home} />
         </Switch>
     </Router>
   )
