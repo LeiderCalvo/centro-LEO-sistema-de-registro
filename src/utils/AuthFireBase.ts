@@ -41,11 +41,13 @@ function SingUp(usuario : Usuario, callback : any){
     store.setLoging(false);
     store.setLoged(true);
     DataBaseFireBase.addNewUser(dataBase, usuario);
+    store.displayToast('Bienvenido '+usuario, 'success');
   }).catch(function(error) {
     if (error) {
       callback(false);
       store.setLoging(false);
       store.setLoged(false);
+      store.displayToast(error+'', 'error');
       console.log('sing Up error ', error);
     }
   })

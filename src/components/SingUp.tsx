@@ -97,15 +97,19 @@ class SingUp extends Component<any, any>{
                             }}/>
                         </div>
                     :this.state.step === 1?
-                        <div className="cont">
+                        <div className="new-cont">
                             <div className="inp-cont">
                                 <h3>¡{this.state.nombre}!</h3>
-                                <p>Para continuar con tu registro, necesitaremos tener a mano los horarios en los que trabajaras cada día</p>
+                                <p>Para continuar con tu registro, necesitaremos tener a mano los horarios en los que trabajaras cada día.</p>
                             </div>
                             <div className="btn-cont">
                                 <button className="btn" onClick={()=>{this.setState({step: 2})}}>Next</button>
                                 <button className="btn" onClick={()=>{this.setState({step: 0, nombre: '', password: ''})}}>Back</button>
                             </div>
+                        </div>
+                    :this.state.step === 7?
+                        <div className="loading">
+                            <h3>Cargando</h3>
                         </div>
                     :this.state.step >=2 &&
                         <div className="inp-cont horarios">
@@ -127,7 +131,7 @@ class SingUp extends Component<any, any>{
                         </div>
                     }
 
-                    {this.state.step !== 1 && <button className="btn" onClick={this.handleClick}>{this.state.step === 6? 'Done' : 'Next'}</button>}
+                    {this.state.step !== 1 && this.state.step <7 && <button className="btn" onClick={this.handleClick}>{this.state.step === 6? 'Done' : 'Next'}</button>}
 
                     <p className='hora'>{store.fecha.hora + ':' + store.fecha.minutos + ':' + store.fecha.segundos}</p>
                 </div>
