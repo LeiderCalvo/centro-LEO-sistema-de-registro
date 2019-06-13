@@ -25,7 +25,7 @@ yarn-error.log*
 src/utils/firebaseCredentials.js
 src/styles/App.css
 src/styles/App.css.map
-src/styles/Login.css
-src/styles/Login.css.map
+src/styles/Sing.css
+src/styles/Sing.css.map
 src/styles/index.css
 src/styles/index.css.map

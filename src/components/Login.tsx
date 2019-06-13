@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import store from '../stores/store';
 import AuthFireBase from '../utils/AuthFireBase';
-import '../styles/Login.css';
+import '../styles/Sing.css';
 
 @observer
 class Login extends Component<any, any>{
@@ -24,12 +24,16 @@ class Login extends Component<any, any>{
     }
     
     handleClick(){
-        AuthFireBase.Login(this.state.email+'@gmail.com',  this.state.password, this.onLogin);
+        if(this.state.usuario==='' || this.state.password === ''){store.displayToast('Por favor llene todos los campos', 'warning'); return;}
+        if(this.state.usuario.includes(' ') || this.state.password.includes(' ')){store.displayToast('Por favor no use espacios', 'warning'); return;}
+        if(this.state.usuario.length<4){store.displayToast('Por favor use mas de 4 caracteres en su usuario', 'info'); return;}
+        if(this.state.password.length<6){store.displayToast('Por favor use mas de 6 caracteres en su contraseña', 'info'); return;}
+        AuthFireBase.Login(this.state.usuario,  this.state.password, this.onLogin);
     }
 
     render(){
         return(
-            <section className='Login two-colums'>
+            <section className='Sing Login two-colums'>
                 <div className="colum first">
                     <div className="img-container"><img src="./images/banner.png" alt=""/></div>
                 </div>
