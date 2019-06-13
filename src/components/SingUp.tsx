@@ -56,19 +56,21 @@ class SingUp extends Component<any, any>{
                 store.displayToast('Por favor llene todos los campos', 'warning'); return;
             }
             if(this.state.step === 6){
-                AuthFireBase.SingUp(
-                    {
-                        nombre: this.state.nombre,
-                        password: this.state.password,
-                        horario: {
-                            lunes: this.state.Lunes,
-                            martes: this.state.Martes,
-                            miercoles: this.state.Miercoles,
-                            jueves: this.state.Jueves,
-                            viernes: this.state.Viernes,
-                        }
-                    },
-                this.onSingUp);
+                setTimeout(()=>{
+                    AuthFireBase.SingUp(
+                        {
+                            nombre: this.state.nombre,
+                            password: this.state.password,
+                            horario: {
+                                lunes: this.state.horario[0],
+                                martes: this.state.horario[1],
+                                miercoles: this.state.horario[2],
+                                jueves: this.state.horario[3],
+                                viernes: this.state.horario[4],
+                            }
+                        },
+                    this.onSingUp);
+                }, 1500);
             }
         }
     }
