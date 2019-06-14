@@ -4,7 +4,6 @@
     @include centrado();
 
     .nav-item{
-        align-self: flex-end;
         color: $gris-color;
         @include font-size(33px);
         text-decoration: none;

@@ -19,11 +19,16 @@
     .first{
         @include width2(28px, 685px);
         background-color: rgba($color: #fff, $alpha: .5);
+
+        .barra{
+            background: $gradient-color;
+            border-radius: 25px;
+        }
     }
 
     .second{
         @include width2(656px, 685px);
-        height: 935px/ 1080px * 100%;
+        height: 965px/ 1080px * 100%;
         padding-left: 20px;
         display: flex;
         align-items: flex-end;

@@ -10,8 +10,9 @@ class Store {
     @observable isLoged : boolean = false;
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
+    @observable heightBar: number = 0;
     @observable navItemSelected: string = 'Inicio';
-    @observable currentUser: {rol: string, nombre: string} = {rol: '', nombre: ''};
+    @observable currentUser: {rol: string, nombre: string, dia: string, inicio: string, fin: string} = {rol: '', nombre: '', dia: '', inicio: '', fin: ''};
     @observable progressAdvice: string = 'Recuerda que si no registras tu llegada o salida con 5 minutos máximo de tardanza, se te descontará de tus horas.';
 
     constructor(){
@@ -27,6 +28,8 @@ class Store {
                 segundos: date.getSeconds(),
                 date: date
             }
+            this.heightBar = this.fecha.hora / parseInt(this.currentUser.fin) * 100;
+            console.log(this.heightBar);
         }, 1000);
     }
 
@@ -38,6 +41,18 @@ class Store {
 
             case 'nombre':
                 this.currentUser.nombre = val;
+                break;
+
+            case 'dia':
+                this.currentUser.dia = val;
+                break;
+
+            case 'inicio':
+                this.currentUser.inicio = val;
+                break;
+
+            case 'fin':
+                this.currentUser.fin = val;
                 break;
         
             default:

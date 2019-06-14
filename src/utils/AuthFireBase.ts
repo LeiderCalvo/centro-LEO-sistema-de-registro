@@ -21,6 +21,7 @@ function Login(usuario : string, password  : string, callback : any){
     store.setLoged(true);
 
     DataBaseFireBase.getRol(dataBase, usuario);
+    DataBaseFireBase.getHorario(dataBase, usuario);
     store.setCurrentUser('nombre', usuario+'');
 
     store.displayToast('Bienvenido '+usuario, 'success');
@@ -44,6 +45,7 @@ function SingUp(usuario : Usuario, callback : any){
     callback(true);
     store.setLoging(false);
     store.setLoged(true);
+
     DataBaseFireBase.addNewUser(dataBase, usuario);
 
     store.setCurrentUser('nombre', usuario.nombre);

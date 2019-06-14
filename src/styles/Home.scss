@@ -8,9 +8,10 @@
     }
     .second{
         @include width(1235px);
+        height: 965px/ 1080px * 100%;
+        padding-right: 107px / 1235px * 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        height: 100%;
     }
 }

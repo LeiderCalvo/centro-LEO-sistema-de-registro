@@ -52,4 +52,41 @@ function getRol(DataBase: any, user:string) {
     store.setCurrentUser('rol', rol.val()+'');
   });
 }
-export default {addNewUser, getRol};
+
+function getHorario(DataBase: any, user:string) {
+  if(store.fecha.dia===0 || store.fecha.dia >5)return;
+  let dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario/'+dias[store.fecha.dia - 1]).once('value').then(function (dia:any) {
+
+    store.setCurrentUser('dia', dias[store.fecha.dia - 1]);
+    if(dia.val().length === 1){
+      store.setCurrentUser('inicio', dia.val()[0].inicio);
+      store.setCurrentUser('fin', dia.val()[0].fin);
+      return;
+    }
+
+    getCloserHorario(dia);
+  });
+
+  function getCloserHorario(dia: any) {
+    let dist: any = [];
+    dia.val().forEach((elem: any) => {
+      dist.push(parseInt(elem.inicio)-store.fecha.hora);
+    });
+
+    let min: number = 50;
+    let cercano: number = 0;
+    for (let i = 0; i < dist.length; i++) {
+      const elem = dist[i];
+      if(elem<min){
+        min = elem;
+        cercano = i;
+      }
+    }
+
+    store.setCurrentUser('inicio', dia.val()[cercano].inicio);
+    store.setCurrentUser('fin', dia.val()[cercano].fin);
+  }
+}
+
+export default {addNewUser, getRol, getHorario};

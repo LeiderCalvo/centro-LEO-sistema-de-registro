@@ -1,6 +1,6 @@
 import React from 'react';
-import '../styles/Navigation.css'
-import store from '../stores/store';
+import '../../styles/Navigation.css'
+import store from '../../stores/store';
 import { observer } from 'mobx-react';
 
 @observer
