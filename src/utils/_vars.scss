@@ -11,6 +11,10 @@ $gradient-color: linear-gradient(90deg, rgba(231, 157, 90, 1) 0%, rgba(242, 208,
     width: $param / 1920px * 100%;
 }
 
+@mixin width2($param, $param2){
+    width: $param / $param2 * 100%;
+}
+
 @mixin centrado {
     display: flex;
     justify-content: center;

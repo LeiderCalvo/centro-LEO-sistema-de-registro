@@ -4,13 +4,13 @@ function addNewUser(DataBase: any, usuario: Usuario) {
   DataBase.ref('cantidadUsuarios').once('value').then(function (cantUsuarios: any) {
     if(cantUsuarios.val() !== null || cantUsuarios.val() !== undefined){
       let user = {...usuario, rol: 'monitor', horasLogradas: 0, id: cantUsuarios.val()+1}
-      DataBase.ref('Usuarios/'+(cantUsuarios.val()+1)).update(user);
+      DataBase.ref('Usuarios/'+usuario.nombre.toLowerCase()).update(user);
       DataBase.ref().update({cantidadUsuarios: cantUsuarios.val()+1});
       
       updateHorarioGeneral(DataBase, user.horario, user.nombre);
     }else{
       let user = {...usuario, rol: 'monitor', horasLogradas: 0, id: 0}
-      DataBase.ref('Usuarios/'+0).update(user);
+      DataBase.ref('Usuarios/'+usuario.nombre.toLowerCase()).update(user);
       DataBase.ref().update({cantidadUsuarios: 0});
 
       updateHorarioGeneral(DataBase, user.horario, user.nombre);
@@ -47,4 +47,9 @@ function addMonitor(array: any, nombre: string) {
   });
 }
 
-export default {addNewUser};
+function getRol(DataBase: any, user:string) {
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/rol').once('value').then(function (rol:any) {
+    store.setCurrentUser('rol', rol.val()+'');
+  });
+}
+export default {addNewUser, getRol};

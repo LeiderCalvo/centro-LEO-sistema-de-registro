@@ -19,6 +19,10 @@ function Login(usuario : string, password  : string, callback : any){
   auth.signInWithEmailAndPassword(usuario+'@gmail.com', password).then((a)=>{
     store.setLoging(false);
     store.setLoged(true);
+
+    DataBaseFireBase.getRol(dataBase, usuario);
+    store.setCurrentUser('nombre', usuario+'');
+
     store.displayToast('Bienvenido '+usuario, 'success');
     callback(true);
   }).catch(function(error) {
@@ -41,6 +45,10 @@ function SingUp(usuario : Usuario, callback : any){
     store.setLoging(false);
     store.setLoged(true);
     DataBaseFireBase.addNewUser(dataBase, usuario);
+
+    store.setCurrentUser('nombre', usuario.nombre);
+    store.setCurrentUser('nombre', 'monitor');
+
     store.displayToast('Bienvenido '+usuario.nombre, 'success');
   }).catch(function(error) {
     if (error) {

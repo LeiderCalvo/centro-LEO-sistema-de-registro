@@ -1,3 +1,16 @@
+@import '../utils/vars';
+
 .Home{
-    
+    height: 100%;
+    .first{
+        @include width(685px);
+        height: 100%;
+    }
+    .second{
+        @include width(1235px);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        height: 100%;
+    }
 }

@@ -11,6 +11,8 @@ class Store {
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
     @observable navItemSelected: string = 'Inicio';
+    @observable currentUser: {rol: string, nombre: string} = {rol: '', nombre: ''};
+    @observable progressAdvice: string = 'Recuerda que si no registras tu llegada o salida con 5 minutos máximo de tardanza, se te descontará de tus horas.';
 
     constructor(){
         setInterval(()=>{
@@ -26,6 +28,25 @@ class Store {
                 date: date
             }
         }, 1000);
+    }
+
+    @action setCurrentUser(attribute: string, val: string){
+        switch (attribute) {
+            case 'rol':
+                this.currentUser.rol = val;
+                break;
+
+            case 'nombre':
+                this.currentUser.nombre = val;
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+    @action setProgressAdvice(val: string){
+        this.progressAdvice = val;
     }
 
     @action setNavItemSelected(val: string){
