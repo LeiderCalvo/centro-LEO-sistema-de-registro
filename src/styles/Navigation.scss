@@ -1,3 +1,22 @@
+@import '../utils/vars';
+
 .Navigation{
-    
+    @include centrado();
+
+    .nav-item{
+        align-self: flex-end;
+        color: $gris-color;
+        @include font-size(33px);
+        text-decoration: none;
+        margin-right: 50px;
+    }
+
+    .sel{
+        color: $naranja-color;
+    }
+
+    .btn{
+        color: white;
+        margin: 0;
+    }
 }

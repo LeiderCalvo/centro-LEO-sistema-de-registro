@@ -10,6 +10,7 @@ class Store {
     @observable isLoged : boolean = false;
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
+    @observable navItemSelected: string = 'Inicio';
 
     constructor(){
         setInterval(()=>{
@@ -25,6 +26,10 @@ class Store {
                 date: date
             }
         }, 1000);
+    }
+
+    @action setNavItemSelected(val: string){
+        this.navItemSelected = val;
     }
 
     @action setLoged(val : boolean){

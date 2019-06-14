@@ -5,7 +5,7 @@ class Progress extends Component<any, any> {
     render(){
         return(
         <div className='Progress'>
-            Here Progress
+            
         </div>
         );
     }

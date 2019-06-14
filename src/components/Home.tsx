@@ -9,12 +9,11 @@ class Home extends  Component <any, any>{
   render(){
     return (
       <section className="Home two-colums">
-        here Home
-        <Navigation/>
         <div className="first">
           <Progress/>
         </div>
         <div className="second">
+        <Navigation/>
 
         </div>
       </section>
