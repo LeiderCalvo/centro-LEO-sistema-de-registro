@@ -61,6 +61,15 @@ code {
     }
 }
 
+
+.btn-cont{
+    display: flex;
+    width: 50%;
+    min-width: 350px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .btn{
   background : $gradient-color;
   border-radius : 29px;

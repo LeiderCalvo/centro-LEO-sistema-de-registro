@@ -13,5 +13,31 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+
+        .workArea{
+            width: 100%;
+            height: 100%;
+            @include centrado();
+            flex-direction: column;
+        }
+
+        .uno{
+            .time{
+                @include font-size(240px);
+                //color: $azul-color;
+                font-weight: 400;
+                margin-bottom: 0;
+            }
+            .date{
+                @include font-size(66px);
+                //color: $azul-color;
+                margin-bottom: 90px;
+            }
+            .btn-cont{
+                @include width2(560px, 1234px);
+                min-width: 450px;
+            }
+
+        }
     }
 }

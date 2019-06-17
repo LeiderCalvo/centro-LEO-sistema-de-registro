@@ -11,6 +11,7 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const dataBase = firebase.database();
+DataBaseFireBase.setRef(dataBase);
 
 function Login(usuario : string, password  : string, callback : any){
   if(store.isLoging)return;
@@ -20,8 +21,8 @@ function Login(usuario : string, password  : string, callback : any){
     store.setLoging(false);
     store.setLoged(true);
 
-    DataBaseFireBase.getRol(dataBase, usuario);
-    DataBaseFireBase.getHorario(dataBase, usuario);
+    DataBaseFireBase.getRol(usuario);
+    DataBaseFireBase.getHorario(usuario);
     store.setCurrentUser('nombre', usuario+'');
 
     store.displayToast('Bienvenido '+usuario, 'success');
@@ -46,10 +47,10 @@ function SingUp(usuario : Usuario, callback : any){
     store.setLoging(false);
     store.setLoged(true);
 
-    DataBaseFireBase.addNewUser(dataBase, usuario);
+    DataBaseFireBase.addNewUser(usuario);
 
     store.setCurrentUser('nombre', usuario.nombre);
-    DataBaseFireBase.getHorario(dataBase, usuario.nombre);
+    DataBaseFireBase.getHorario(usuario.nombre);
     store.setCurrentUser('rol', 'monitor');
 
     store.displayToast('Bienvenido '+usuario.nombre, 'success');

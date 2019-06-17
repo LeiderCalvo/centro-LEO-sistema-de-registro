@@ -1,24 +1,30 @@
 import store, { Usuario, Horario } from "../stores/store";
 
-function addNewUser(DataBase: any, usuario: Usuario) {
+let DataBase : any = null;
+
+function setRef(Database: any) {
+  DataBase = Database;
+}
+
+function addNewUser(usuario: Usuario) {
   DataBase.ref('cantidadUsuarios').once('value').then(function (cantUsuarios: any) {
     if(cantUsuarios.val() !== null || cantUsuarios.val() !== undefined){
       let user = {...usuario, rol: 'monitor', horasLogradas: 0, id: cantUsuarios.val()+1}
       DataBase.ref('Usuarios/'+usuario.nombre.toLowerCase()).update(user);
       DataBase.ref().update({cantidadUsuarios: cantUsuarios.val()+1});
       
-      updateHorarioGeneral(DataBase, user.horario, user.nombre);
+      updateHorarioGeneral(user.horario, user.nombre);
     }else{
       let user = {...usuario, rol: 'monitor', horasLogradas: 0, id: 0}
       DataBase.ref('Usuarios/'+usuario.nombre.toLowerCase()).update(user);
       DataBase.ref().update({cantidadUsuarios: 0});
 
-      updateHorarioGeneral(DataBase, user.horario, user.nombre);
+      updateHorarioGeneral(user.horario, user.nombre);
     }
   });
 }
 
-function updateHorarioGeneral(DataBase: any, horario: Horario, nombre: string) {
+function updateHorarioGeneral(horario: Horario, nombre: string) {
   if(horario.lunes[0].inicio !== null)addMonitor(horario.lunes, nombre);
   if(horario.martes[0].inicio !== null)addMonitor(horario.martes, nombre);
   if(horario.miercoles[0].inicio !== null)addMonitor(horario.miercoles, nombre);
@@ -47,13 +53,13 @@ function addMonitor(array: any, nombre: string) {
   });
 }
 
-function getRol(DataBase: any, user:string) {
+function getRol(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/rol').once('value').then(function (rol:any) {
     store.setCurrentUser('rol', rol.val()+'');
   });
 }
 
-function getHorario(DataBase: any, user:string) {
+function getHorario(user:string) {
   if(store.fecha.dia===0 || store.fecha.dia >5)return;
   let dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario/'+dias[store.fecha.dia - 1]).once('value').then(function (dia:any) {
@@ -70,6 +76,8 @@ function getHorario(DataBase: any, user:string) {
       let final = transfomNumberToTime(dia.val()[0].fin);
       store.setCurrentUser('inicio', inicio);
       store.setCurrentUser('fin', final);
+      let currentTime = transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos);
+      store.setCurrentUser('delay', (parseInt(dia.val()[0].inicio)-currentTime)+'');
       return;
     }
 
@@ -117,6 +125,7 @@ function getCloserHorario(dia: any) {
 
   store.setCurrentUser('inicio', inicio);
   store.setCurrentUser('fin', final);
+  store.setCurrentUser('delay', dist[cercano]+'');
 }
 
 function transfomNumberToTime(val:number) {
@@ -127,4 +136,18 @@ function transfomTimeToNumber(val:string) {
   return (parseInt(val.split(':')[0])  * 60 ) + parseInt(val.split(':')[1]);
 }
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime};
+function setRegistro(currentTime : number, currentDate: string, tipo: string) {
+  DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/registros').push({hora: currentTime, fecha: currentDate, tipo: tipo});
+}
+
+function setHorasPerdidas(cantidad:number) {
+  DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/horasPerdidas').once('value').then(function (horasPerdidas: any) {
+    if(horasPerdidas.exists()){
+      DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()).update({horasPerdidas: horasPerdidas.val() + cantidad});
+    }else{
+      DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()).update({horasPerdidas: cantidad});
+    }
+  });
+}
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas};

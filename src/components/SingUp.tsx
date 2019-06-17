@@ -190,7 +190,7 @@ class SingUp extends Component<any, any>{
 
                     {this.state.step === 0 && this.state.step <7 && <button className="btn" onClick={this.handleClick}>Next</button>}
 
-                    <p className='hora'>{store.fecha.hora + ':' + (store.fecha.minutos <10? '0'+store.fecha.minutos : store.fecha.minutos) + ':' + (store.fecha.segundos <10? '0'+store.fecha.segundos : store.fecha.segundos)}</p>
+                    <p className='hora'>{store.currentTime}</p>
                 </div>
             </section>
         )
