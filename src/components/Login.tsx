@@ -54,7 +54,7 @@ class Login extends Component<any, any>{
                         }}/>
                     </div>
                     <button className="btn" onClick={this.handleClick}>Login</button>
-                    <p className='hora'>{store.fecha.hora + ':' + store.fecha.minutos + ':' + store.fecha.segundos}</p>
+                    <p className='hora'>{store.fecha.hora + ':' + (store.fecha.minutos <10? '0'+store.fecha.minutos : store.fecha.minutos) + ':' + (store.fecha.segundos <10? '0'+store.fecha.segundos : store.fecha.segundos)}</p>
                 </div>
             </section>
         )

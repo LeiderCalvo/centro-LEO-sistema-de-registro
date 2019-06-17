@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import store from '../stores/store';
 import AuthFireBase from '../utils/AuthFireBase';
 import '../styles/Sing.css';
+import DataBaseFireBase from '../utils/DataBaseFireBase';
 
 @observer
 class SingUp extends Component<any, any>{
@@ -22,11 +23,14 @@ class SingUp extends Component<any, any>{
 
         this.onSingUp = this.onSingUp.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleClickSkip = this.handleClickSkip.bind(this);
+        this.handleClickMas = this.handleClickMas.bind(this);
     }
 
     onSingUp(val : boolean){
         val? this.props.history.push('/Home') : this.setState({
             step: 0,
+            isMas: false,
             nombre : '',
             password: '',
             horario: [],
@@ -36,6 +40,24 @@ class SingUp extends Component<any, any>{
         });
     }
     
+    wrapInformationToSingUp(){
+        setTimeout(()=>{
+            AuthFireBase.SingUp(
+                {
+                    nombre: this.state.nombre,
+                    password: this.state.password,
+                    horario: {
+                        lunes: this.state.horario[0],
+                        martes: this.state.horario[1],
+                        miercoles: this.state.horario[2],
+                        jueves: this.state.horario[3],
+                        viernes: this.state.horario[4],
+                    }
+                },
+            this.onSingUp);
+        }, 1500);
+    }
+
     handleClick(){
         if(this.state.step === 0){
             if(this.state.nombre==='' || this.state.password === ''){store.displayToast('Por favor llene todos los campos', 'warning'); return;}
@@ -46,32 +68,58 @@ class SingUp extends Component<any, any>{
         }
         if(this.state.step >=2){
             let hor = this.state.horario;
+
             let ini = this.state.temp;
             let fi = this.state.temp2;
+
             let step = this.state.step;
+
             if(ini !== '' && fi !== ''){
-                if(hor.length === 0) {this.setState({horario : [[{inicio: ini, fin: fi}]], step: step+1, temp: '', temp2: ''}); return;}
-                this.setState({horario : [...hor, [{inicio: ini, fin: fi}]], step: step+1, temp: '', temp2: ''});
+                let inicio = DataBaseFireBase.transfomTimeToNumber(ini);
+                let final = DataBaseFireBase.transfomTimeToNumber(fi);
+
+                if(hor.length === 0) {this.setState({horario : [[{inicio: inicio, fin: final}]], step: step+1, temp: '', temp2: ''}); return;}
+                if(this.state.isMas){
+                    hor[hor.length-1].push({inicio: inicio, fin: final});
+                    this.setState({horario : [...hor], temp: '', temp2: '', isMas: false, step: step+1});
+                    return;
+                }
+                this.setState({horario : [...hor, [{inicio: inicio, fin: final}]], step: step+1, temp: '', temp2: ''});
             }else{
                 store.displayToast('Por favor llene todos los campos', 'warning'); return;
             }
-            if(this.state.step === 6){
-                setTimeout(()=>{
-                    AuthFireBase.SingUp(
-                        {
-                            nombre: this.state.nombre,
-                            password: this.state.password,
-                            horario: {
-                                lunes: this.state.horario[0],
-                                martes: this.state.horario[1],
-                                miercoles: this.state.horario[2],
-                                jueves: this.state.horario[3],
-                                viernes: this.state.horario[4],
-                            }
-                        },
-                    this.onSingUp);
-                }, 1500);
-            }
+            
+            if(this.state.step === 6)this.wrapInformationToSingUp();
+        }
+    }
+
+    handleClickSkip(){
+        let hor = this.state.horario;
+        let step = this.state.step;
+
+        if(hor.length === 0) {this.setState({horario : [[{inicio: null, fin: null}]], step: step+1}); return;}
+        
+        this.setState({horario : [...hor, [{inicio: null, fin: null}]], step: step+1});
+
+        if(this.state.step === 6)this.wrapInformationToSingUp();
+    }
+
+    handleClickMas(){
+        let hor = this.state.horario;        
+        let ini = this.state.temp;
+        let fi = this.state.temp2;
+
+        
+        if(ini !== '' && fi !== ''){
+            let inicio = (parseInt(ini.split(':')[0])  * 60 ) + parseInt(ini.split(':')[1]);
+            let final = (parseInt(fi.split(':')[0])  * 60 ) + parseInt(fi.split(':')[1]);
+
+            if(hor.length === 0) {this.setState({horario : [[{inicio: inicio, fin: final}]], isMas: true, temp: '', temp2: ''}); return;}
+
+            hor[hor.length-1].push({inicio: inicio, fin: final});
+            this.setState({horario : [...hor], temp: '', temp2: '', isMas: true});
+        }else{
+            store.displayToast('Por favor llene todos los campos', 'warning'); return;
         }
     }
 
@@ -112,6 +160,7 @@ class SingUp extends Component<any, any>{
                             <h3>Cargando</h3>
                         </div>
                     :this.state.step >=2 &&
+                    <div className="new-cont-2">
                         <div className="inp-cont horarios">
                             <h3>{this.state.dias[this.state.step-2]}</h3>
                             <div className="label-cont">
@@ -128,12 +177,18 @@ class SingUp extends Component<any, any>{
                                     this.setState({temp2:e.target.value + '' });
                                 }}/>
                             </div>
+                            <p className='btn-mas' onClick={this.handleClickMas}>Más</p>
                         </div>
+                        <div className="btn-cont">
+                            <button className="btn" onClick={this.handleClick}>{this.state.step === 6? 'Done' : 'Next'}</button>
+                            <button className="btn" onClick={this.handleClickSkip}>Skip</button>
+                        </div>
+                    </div>
                     }
 
-                    {this.state.step !== 1 && this.state.step <7 && <button className="btn" onClick={this.handleClick}>{this.state.step === 6? 'Done' : 'Next'}</button>}
+                    {this.state.step === 0 && this.state.step <7 && <button className="btn" onClick={this.handleClick}>Next</button>}
 
-                    <p className='hora'>{store.fecha.hora + ':' + store.fecha.minutos + ':' + store.fecha.segundos}</p>
+                    <p className='hora'>{store.fecha.hora + ':' + (store.fecha.minutos <10? '0'+store.fecha.minutos : store.fecha.minutos) + ':' + (store.fecha.segundos <10? '0'+store.fecha.segundos : store.fecha.segundos)}</p>
                 </div>
             </section>
         )

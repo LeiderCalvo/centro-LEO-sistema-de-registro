@@ -28,8 +28,9 @@ class Store {
                 segundos: date.getSeconds(),
                 date: date
             }
-            this.heightBar = this.fecha.hora / parseInt(this.currentUser.fin) * 100;
-            console.log(this.heightBar);
+
+            //this.heightBar = this.fecha.hora / parseInt(this.currentUser.fin) * 100;
+            //console.log(this.heightBar);
         }, 1000);
     }
 

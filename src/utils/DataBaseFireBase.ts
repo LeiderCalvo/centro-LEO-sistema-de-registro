@@ -59,34 +59,73 @@ function getHorario(DataBase: any, user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario/'+dias[store.fecha.dia - 1]).once('value').then(function (dia:any) {
 
     store.setCurrentUser('dia', dias[store.fecha.dia - 1]);
+    if(dia.val() === null || dia.val() === undefined){
+      store.setCurrentUser('inicio', 'null');
+      store.setCurrentUser('fin', 'null');
+      return;
+    }
+
     if(dia.val().length === 1){
-      store.setCurrentUser('inicio', dia.val()[0].inicio);
-      store.setCurrentUser('fin', dia.val()[0].fin);
+      let inicio = transfomNumberToTime(dia.val()[0].inicio);
+      let final = transfomNumberToTime(dia.val()[0].fin);
+      store.setCurrentUser('inicio', inicio);
+      store.setCurrentUser('fin', final);
       return;
     }
 
     getCloserHorario(dia);
   });
+}
 
-  function getCloserHorario(dia: any) {
-    let dist: any = [];
-    dia.val().forEach((elem: any) => {
-      dist.push(parseInt(elem.inicio)-store.fecha.hora);
-    });
+function getCloserHorario(dia: any) {
+  let dist: any = [];
+  let currentTime = transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos);
+  dia.val().forEach((elem: any) => {
+    dist.push(parseInt(elem.inicio)-currentTime);
+    console.log('_________________________');
+    console.log(parseInt(elem.inicio), elem.inicio + 'elem.inicio');
+    console.log(currentTime, 'currentTime');
+    console.log(parseInt(elem.inicio)-currentTime, 'dist');
+  });
 
-    let min: number = 50;
-    let cercano: number = 0;
-    for (let i = 0; i < dist.length; i++) {
-      const elem = dist[i];
-      if(elem<min){
-        min = elem;
+  console.log('####################3');
+  let min: number = 500;
+  let cercano: number = 0;
+
+  for (let i = 0; i < dist.length; i++) {
+    const elem = dist[i];
+    if(Math.abs(elem) === min){
+      if(elem >= 0){
+        min = Math.abs(elem);
         cercano = i;
+        return;
       }
     }
 
-    store.setCurrentUser('inicio', dia.val()[cercano].inicio);
-    store.setCurrentUser('fin', dia.val()[cercano].fin);
+    if(Math.abs(elem)<min){
+      min = Math.abs(elem);
+      cercano = i;
+    }
+
+    console.log('_____________');
+    console.log(elem, 'dist'+i);
+    console.log(min, 'min');
+    console.log(cercano, '');
   }
+
+  let inicio = transfomNumberToTime(dia.val()[cercano].inicio);
+  let final = transfomNumberToTime(dia.val()[cercano].fin);
+
+  store.setCurrentUser('inicio', inicio);
+  store.setCurrentUser('fin', final);
 }
 
-export default {addNewUser, getRol, getHorario};
+function transfomNumberToTime(val:number) {
+  return Math.floor(val/60) + ':' + ((val - (Math.floor(val/60)*60))<10? '0': '') + (val - (Math.floor(val/60)*60));
+}
+
+function transfomTimeToNumber(val:string) {
+  return (parseInt(val.split(':')[0])  * 60 ) + parseInt(val.split(':')[1]);
+}
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime};

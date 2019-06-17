@@ -73,19 +73,24 @@
                 }
             }
 
-            .btn-cont{
-                display: flex;
-                width: 50%;
-                min-width: 350px;
-                flex-direction: row;
-                justify-content: space-between;
-            }
+        }
+        
+        .btn-cont{
+            display: flex;
+            width: 50%;
+            min-width: 350px;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         .horarios{
             width: 50%;
             min-width: 350px;
-            height: 220px;
+            display: flex;
+            height: 312px;
+            flex-direction: column;
+            justify-content: space-between;
+
             .label-cont{
                 @include colums();
                 justify-content: flex-start;
@@ -96,6 +101,12 @@
                 input{
                     width: 30%;
                 }
+            }
+
+            .btn-mas{
+                color: $naranja-color;
+                align-self: flex-end;
+                margin-bottom: 15%;
             }
         }
 
