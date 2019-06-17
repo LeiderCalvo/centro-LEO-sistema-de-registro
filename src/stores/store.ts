@@ -13,7 +13,7 @@ class Store {
     @observable callbackToast: any = null;
     @observable heightBar: number = 0;
     @observable navItemSelected: string = 'Inicio';
-    @observable currentUser: {rol: string, nombre: string, dia: string, inicio: string, fin: string, delay: string, llegue: string, termine:string} = {rol: '', nombre: '', dia: '', inicio: '', fin: '', delay:'', llegue:'', termine:''};
+    @observable currentUser: {rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
         setInterval(()=>{
@@ -56,10 +56,6 @@ class Store {
                 this.currentUser.fin = val;
                 break;
 
-            case 'delay':
-                this.currentUser.delay = val;
-                break;
-
             case 'llegue':
                 this.currentUser.llegue = val;
                 break;
@@ -76,6 +72,11 @@ class Store {
     @computed get diferenceCurrentAndInitial(){
         let currentTime = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
         return DataBaseFireBase.transfomTimeToNumber(this.currentUser.inicio)-currentTime;
+    }
+
+    @computed get diferenceCurrentAndFinal(){
+        let currentTime = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
+        return DataBaseFireBase.transfomTimeToNumber(this.currentUser.fin)-currentTime;
     }
 
     @computed get currentTime(){

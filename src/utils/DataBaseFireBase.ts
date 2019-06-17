@@ -77,7 +77,6 @@ function getHorario(user:string) {
       store.setCurrentUser('inicio', inicio);
       store.setCurrentUser('fin', final);
       let currentTime = transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos);
-      store.setCurrentUser('delay', (parseInt(dia.val()[0].inicio)-currentTime)+'');
       return;
     }
 
@@ -125,7 +124,6 @@ function getCloserHorario(dia: any) {
 
   store.setCurrentUser('inicio', inicio);
   store.setCurrentUser('fin', final);
-  store.setCurrentUser('delay', dist[cercano]+'');
 }
 
 function transfomNumberToTime(val:number) {

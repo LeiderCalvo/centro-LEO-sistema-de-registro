@@ -21,7 +21,11 @@ class Home extends  Component <any, any>{
   }
 
   handleClickLlegue(){
-    if(store.diferenceCurrentAndInitial>5)return;
+    if(store.diferenceCurrentAndInitial>5){
+      let time = DataBaseFireBase.transfomNumberToTime(store.diferenceCurrentAndInitial - 5);
+      store.displayToast('faltan: ' + time.split(':')[0] + ' Horas y ' + (parseInt(time.split(':')[1])) + ' Minutos, para poder marcar tu llegada', 'warning');
+      return;
+    }
     if(this.state.isDoneLlegue === true) return;
     this.setState({isDoneLlegue: true});
 
@@ -50,12 +54,14 @@ class Home extends  Component <any, any>{
           <Navigation/>
           {store.navItemSelected === 'Inicio'? 
             <div className="workArea uno">
-              <p className='time' style={parseInt(store.currentUser.delay)>=0? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
-              <p className='date' style={parseInt(store.currentUser.delay)>=0? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
+              <p className='time'
+              style={store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
+              <p className='date' 
+              style={store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
 
               <div className="btn-cont">
                 <div className="btn"
-                style={store.diferenceCurrentAndInitial>5? {opacity: 1} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
+                style={store.diferenceCurrentAndInitial>5? {opacity: .5} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
                 onClick={this.handleClickLlegue}>
                   Llegué</div>
 
