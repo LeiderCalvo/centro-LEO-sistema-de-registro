@@ -89,7 +89,9 @@ class SingUp extends Component<any, any>{
                 store.displayToast('Por favor llene todos los campos', 'warning'); return;
             }
             
-            if(this.state.step === 6)this.wrapInformationToSingUp();
+            if(this.state.step === 6){
+                this.wrapInformationToSingUp();
+            }
         }
     }
 

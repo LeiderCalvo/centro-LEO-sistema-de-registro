@@ -19,20 +19,20 @@ function addNewUser(DataBase: any, usuario: Usuario) {
 }
 
 function updateHorarioGeneral(DataBase: any, horario: Horario, nombre: string) {
-  addMonitor(horario.lunes, nombre);
-  addMonitor(horario.martes, nombre);
-  addMonitor(horario.miercoles, nombre);
-  addMonitor(horario.jueves, nombre);
-  addMonitor(horario.viernes, nombre);
+  if(horario.lunes[0].inicio !== null)addMonitor(horario.lunes, nombre);
+  if(horario.martes[0].inicio !== null)addMonitor(horario.martes, nombre);
+  if(horario.miercoles[0].inicio !== null)addMonitor(horario.miercoles, nombre);
+  if(horario.jueves[0].inicio !== null)addMonitor(horario.jueves, nombre);
+  if(horario.viernes[0].inicio !== null)addMonitor(horario.viernes, nombre);
 
   DataBase.ref('Horario').once('value').then(function (horarioGen:any) {
-    if(horarioGen.val() !== null && horarioGen.val() !== undefined){
+    if(horarioGen.exists()){
       let horarioJoined = {
-        lunes: [...horarioGen.val().lunes, ...horario.lunes],
-        martes: [...horarioGen.val().martes, ...horario.martes],
-        miercoles: [...horarioGen.val().miercoles, ...horario.miercoles],
-        jueves: [...horarioGen.val().jueves, ...horario.jueves],
-        viernes: [...horarioGen.val().viernes, ...horario.viernes]
+        lunes: horarioGen.child('lunes').exists()? [...horarioGen.val().lunes, ...horario.lunes] : [...horario.lunes],
+        martes: horarioGen.child('martes').exists()? [...horarioGen.val().martes, ...horario.martes] : [...horario.martes],
+        miercoles: horarioGen.child('miercoles').exists()? [...horarioGen.val().miercoles, ...horario.miercoles] : [...horario.miercoles],
+        jueves: horarioGen.child('jueves').exists()? [...horarioGen.val().jueves, ...horario.jueves] : [...horario.jueves],
+        viernes: horarioGen.child('viernes').exists()? [...horarioGen.val().viernes, ...horario.viernes] : [...horario.viernes]
       }
       DataBase.ref().update({Horario: horarioJoined});
     }else{
@@ -82,13 +82,12 @@ function getCloserHorario(dia: any) {
   let currentTime = transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos);
   dia.val().forEach((elem: any) => {
     dist.push(parseInt(elem.inicio)-currentTime);
-    console.log('_________________________');
+   /* console.log('_________________________');
     console.log(parseInt(elem.inicio), elem.inicio + 'elem.inicio');
     console.log(currentTime, 'currentTime');
-    console.log(parseInt(elem.inicio)-currentTime, 'dist');
+    console.log(parseInt(elem.inicio)-currentTime, 'dist');*/
   });
 
-  console.log('####################3');
   let min: number = 500;
   let cercano: number = 0;
 
@@ -106,11 +105,11 @@ function getCloserHorario(dia: any) {
       min = Math.abs(elem);
       cercano = i;
     }
-
+/*
     console.log('_____________');
     console.log(elem, 'dist'+i);
     console.log(min, 'min');
-    console.log(cercano, '');
+    console.log(cercano, '');*/
   }
 
   let inicio = transfomNumberToTime(dia.val()[cercano].inicio);

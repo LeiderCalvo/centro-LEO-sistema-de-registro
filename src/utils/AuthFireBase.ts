@@ -53,6 +53,7 @@ function SingUp(usuario : Usuario, callback : any){
     store.setCurrentUser('rol', 'monitor');
 
     store.displayToast('Bienvenido '+usuario.nombre, 'success');
+
   }).catch(function(error) {
     if (error) {
       callback(false);
