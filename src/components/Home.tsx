@@ -38,6 +38,12 @@ class Home extends  Component <any, any>{
   }
 
   handleClickTermine(){
+    console.log(store.diferenceCurrentAndFinal);
+    if(store.diferenceCurrentAndFinal>5){
+      let time = DataBaseFireBase.transfomNumberToTime(store.diferenceCurrentAndFinal - 5);
+      store.displayToast('faltan: ' + time.split(':')[0] + ' Horas y ' + (parseInt(time.split(':')[1])) + ' Minutos, para poder marcar tu Salida', 'warning');
+      return;
+    }
     if(this.state.isDoneTermine === true) return;
     this.setState({isDoneTermine: true});
   }
@@ -55,9 +61,9 @@ class Home extends  Component <any, any>{
           {store.navItemSelected === 'Inicio'? 
             <div className="workArea uno">
               <p className='time'
-              style={store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
+              style={this.state.isDoneLlegue? {color: '#c6c6c6'} : store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
               <p className='date' 
-              style={store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
+              style={this.state.isDoneLlegue? {color: '#c6c6c6'} :store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
 
               <div className="btn-cont">
                 <div className="btn"
@@ -66,7 +72,7 @@ class Home extends  Component <any, any>{
                   Llegué</div>
 
                 <div className="btn"
-                style={store.diferenceCurrentAndInitial>5? {opacity: 1} : this.state.isDoneTermine? {opacity: .5} : {opacity: 1}} 
+                style={store.diferenceCurrentAndFinal>5? {opacity: .5} : this.state.isDoneTermine? {opacity: .5} : {opacity: 1}} 
                 onClick={this.handleClickTermine}>
                   Terminé</div>
               </div>

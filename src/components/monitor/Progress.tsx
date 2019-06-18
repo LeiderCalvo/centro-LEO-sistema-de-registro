@@ -5,15 +5,10 @@ import { observer } from 'mobx-react';
 
 @observer
 class Progress extends Component<any, any> {
-
-    constructor(props: any){
-        super(props);
-    }
-
     render(){
         return(
         <div className='Progress two-colums'>
-            <div className="first"><div className="barra" style={{height: `${store.heightBar}px`}}></div></div>
+            <div className="first"><div className="barra" style={{height: `${store.heightBar}%`}}></div></div>
             <div className="second">
                 <h4 className='hora-final'>{store.currentUser.fin}</h4>
                 <div className="advices-cont">

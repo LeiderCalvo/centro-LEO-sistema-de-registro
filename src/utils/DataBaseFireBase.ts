@@ -76,7 +76,6 @@ function getHorario(user:string) {
       let final = transfomNumberToTime(dia.val()[0].fin);
       store.setCurrentUser('inicio', inicio);
       store.setCurrentUser('fin', final);
-      let currentTime = transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos);
       return;
     }
 

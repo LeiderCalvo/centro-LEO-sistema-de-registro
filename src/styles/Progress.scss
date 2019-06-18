@@ -19,7 +19,9 @@
     .first{
         @include width2(28px, 685px);
         background-color: rgba($color: #fff, $alpha: .5);
-
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
         .barra{
             background: $gradient-color;
             border-radius: 25px;

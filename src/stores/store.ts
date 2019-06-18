@@ -11,7 +11,6 @@ class Store {
     @observable isLoged : boolean = false;
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
-    @observable heightBar: number = 0;
     @observable navItemSelected: string = 'Inicio';
     @observable currentUser: {rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
@@ -28,9 +27,6 @@ class Store {
                 segundos: date.getSeconds(),
                 date: date
             }
-
-            //this.heightBar = this.fecha.hora / parseInt(this.currentUser.fin) * 100;
-            //console.log(this.heightBar);
         }, 1000);
     }
 
@@ -69,6 +65,19 @@ class Store {
         }
     }
 
+    @computed get heightBar(){
+        let currentTime = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
+        let inicio = DataBaseFireBase.transfomTimeToNumber(this.currentUser.inicio);
+        let final = DataBaseFireBase.transfomTimeToNumber(this.currentUser.fin);
+        /*console.log(inicio, 'inicio');
+        console.log(currentTime, 'current');
+        console.log(final, 'final');
+        console.log((currentTime - inicio));
+        console.log((final - inicio));
+        console.log((currentTime - inicio) / (final - inicio));*/
+        return (currentTime - inicio) / (final - inicio) * 100;
+    }
+
     @computed get diferenceCurrentAndInitial(){
         let currentTime = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
         return DataBaseFireBase.transfomTimeToNumber(this.currentUser.inicio)-currentTime;
@@ -96,9 +105,6 @@ class Store {
             
             case 'Horario':
                 return 'Los marcadores naranja en tu horario corresponden a las horas adicionales que te hayan sido asignadas últimamente.';
-
-            case 'Excusas':
-                return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga.';
 
             case 'Excusas':
                 return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga.';
