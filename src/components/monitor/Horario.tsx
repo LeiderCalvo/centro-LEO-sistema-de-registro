@@ -1,0 +1,111 @@
+import React, { Component }from "react";
+import { ViewState } from "@devexpress/dx-react-scheduler";
+import {
+  Scheduler,
+  WeekView,
+  Appointments
+} from "@devexpress/dx-react-scheduler-material-ui";
+import { withStyles } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
+import store from "../../stores/store";
+import { observer } from 'mobx-react';
+import { toJS } from "mobx";
+import DataBaseFireBase from "../../utils/DataBaseFireBase";
+
+const theme = createMuiTheme({ palette: { type: "light", primary: blue } });
+const style = (theme : any) => {return({
+  todayCell: {
+    backgroundColor: fade(theme.palette.primary.main, 0.1),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.primary.main, 0.14),
+    },
+    '&:focus': {
+      backgroundColor: fade(theme.palette.primary.main, 0.16),
+    },
+  },
+  weekendCell: {
+    backgroundColor: fade(theme.palette.action.disabledBackground, 0.04),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.action.disabledBackground, 0.04),
+    },
+    '&:focus': {
+      backgroundColor: fade(theme.palette.action.disabledBackground, 0.04),
+    },
+  },
+  today: {
+    backgroundColor: fade(theme.palette.primary.main, 0.16),
+  },
+  weekend: {
+    backgroundColor: fade(theme.palette.action.disabledBackground, 0.06),
+  },
+})};
+
+const TimeTableCellBase = ({ classes, ...restProps }: any) => {
+  const { startDate } = restProps;
+  const date = new Date(startDate);
+  if (date.getDate() === new Date().getDate()) {
+    return <WeekView.TimeTableCell {...restProps} className={classes.todayCell} />;
+  } if (date.getDay() === 0 || date.getDay() === 6) {
+    return <WeekView.TimeTableCell {...restProps} className={classes.weekendCell} />;
+  } return <WeekView.TimeTableCell {...restProps} />;
+};
+  
+const TimeTableCell : any = withStyles(style, { name: 'TimeTableCell' })(TimeTableCellBase);
+
+const DayScaleCellBase = ({ classes, ...restProps } : any) => {
+  const { startDate, today } = restProps;
+  if (today) {
+    return <WeekView.DayScaleCell {...restProps} className={classes.today} />;
+  } if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+    return <WeekView.DayScaleCell {...restProps} className={classes.weekend} />;
+  } return <WeekView.DayScaleCell {...restProps} />;
+};
+
+const DayScaleCell : any = withStyles(style, { name: 'DayScaleCell' })(DayScaleCellBase);
+
+@observer
+class Horario extends Component<any, any>{
+
+    formatHorario(){
+      let raw : any = store.currentUser.horario && toJS(store.currentUser.horario);
+      let temp : {title: string, startDate: Date, endDate: Date,}[] = [];
+
+      for (let prop in raw) {
+        if (raw.hasOwnProperty(prop)) {
+          let day = prop === 'lunes'? 25 : prop === 'martes'? 26 : prop === 'miercoles'? 27 : prop === 'jueves'? 28 : prop === 'viernes'? 29 : 0;
+
+          raw[prop].forEach((elem: any) => {
+            let ini = DataBaseFireBase.transfomNumberToTime(elem.inicio);
+            let fi = DataBaseFireBase.transfomNumberToTime(elem.fin);
+            temp.push({
+              title: store.currentUser.nombre,
+              startDate: new Date(2018, 5, day, parseInt(ini.split(':')[0]), parseInt(ini.split(':')[1])),
+              endDate: new Date(2018, 5, day, parseInt(fi.split(':')[0]), parseInt(fi.split(':')[1]))
+            });
+          });
+        }
+      }
+      return temp;
+    }
+
+    render(){
+      return(
+      <div className="workArea Horario">
+        <MuiThemeProvider theme={theme}>
+        
+          <Scheduler data={this.formatHorario()}>
+            <ViewState currentDate="2018-06-28" />
+            <WeekView startDayHour={9} endDayHour={18}
+            timeTableCellComponent={TimeTableCell}
+            dayScaleCellComponent={DayScaleCell}/>
+            <Appointments />
+          </Scheduler>
+        
+        </MuiThemeProvider>
+      </div>);
+    }
+}
+
+export default Horario;

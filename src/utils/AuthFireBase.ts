@@ -50,6 +50,7 @@ function SingUp(usuario : Usuario, callback : any){
     DataBaseFireBase.addNewUser(usuario);
 
     store.setCurrentUser('nombre', usuario.nombre);
+    store.setHorario(usuario.horario);
     DataBaseFireBase.getHorario(usuario.nombre);
     store.setCurrentUser('rol', 'monitor');
 

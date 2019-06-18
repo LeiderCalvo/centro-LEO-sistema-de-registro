@@ -60,6 +60,10 @@ function getRol(user:string) {
 }
 
 function getHorario(user:string) {
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario').once('value').then(function (horario:any) {
+    if(horario.exists())store.setHorario(horario.val());
+  });
+
   if(store.fecha.dia===0 || store.fecha.dia >5)return;
   let dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario/'+dias[store.fecha.dia - 1]).once('value').then(function (dia:any) {

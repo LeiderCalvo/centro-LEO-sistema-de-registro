@@ -12,7 +12,7 @@ class Store {
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
     @observable navItemSelected: string = 'Inicio';
-    @observable currentUser: {rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
+    @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
         setInterval(()=>{
@@ -117,6 +117,10 @@ class Store {
             default:
                 return 'Cargando ...';
         }
+    }
+
+    @action setHorario(val : Horario){
+        this.currentUser.horario = val;
     }
 
     @action setNavItemSelected(val: string){
