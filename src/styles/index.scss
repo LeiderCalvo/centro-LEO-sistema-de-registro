@@ -91,3 +91,33 @@ p{
     @include font-size(32px);
     color: $gris-color;
 }
+
+input{
+    border: none;
+    border-bottom: solid $gris-color 1px;
+    width: 396px;
+    @include font-size(32px);
+    color: $gris-color;
+    padding-bottom: 20px;
+
+    &::placeholder {
+        color: $gris-color;
+        line-height: 1.5em;
+    }
+
+    &:placeholder-shown {
+        padding-bottom: 20px;
+    }
+}
+
+.label-cont{
+    @include colums();
+    justify-content: flex-start;
+    .label{
+        color: $gris-color;
+        width: 70%;
+    }
+    input{
+        width: 30%;
+    }
+}

@@ -151,4 +151,15 @@ function setHorasPerdidas(cantidad:number) {
   });
 }
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas};
+function addNewExcuse(time : number, object : {}) {
+  DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/excusas').push({...object, date: time}, function (error : any) {
+    if(error){
+      store.displayToast(error, 'error');
+      console.log(error);
+    }else{
+      store.displayToast('Tu excusa ha sido guardada', 'success');
+    }
+  });
+}
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse};

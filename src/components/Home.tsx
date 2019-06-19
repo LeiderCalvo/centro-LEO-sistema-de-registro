@@ -6,6 +6,7 @@ import Progress from './monitor/Progress';
 import store from '../stores/store';
 import DataBaseFireBase from '../utils/DataBaseFireBase';
 import Horario from './monitor/Horario';
+import Excusas from './monitor/Excusas';
 
 @observer
 class Home extends  Component <any, any>{
@@ -81,6 +82,8 @@ class Home extends  Component <any, any>{
             </div>
           :store.navItemSelected === 'Horario'?
             <Horario/>
+          :store.navItemSelected === 'Excusas'?
+            <Excusas/>
           :
             <div className="workArea dos">
             </div>

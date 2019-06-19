@@ -19,29 +19,12 @@
             @include font-size(33px);
             text-decoration: none;
         }
+
         .inp-cont{
             display: flex;
             height: 145px;
             flex-direction: column;
             justify-content: space-between;
-            input{
-                border: none;
-                border-bottom: solid $gris-color 1px;
-                width: 396px;
-                @include font-size(32px);
-                color: $gris-color;
-                padding-bottom: 20px;
-    
-                &::placeholder {
-                    color: $gris-color;
-                    line-height: 1.5em;
-                }
-
-                &:placeholder-shown {
-                    padding-bottom: 20px;
-                }
-
-            }
         }
 
         .hora{
@@ -82,18 +65,6 @@
             height: 312px;
             flex-direction: column;
             justify-content: space-between;
-
-            .label-cont{
-                @include colums();
-                justify-content: flex-start;
-                .label{
-                    color: $gris-color;
-                    width: 70%;
-                }
-                input{
-                    width: 30%;
-                }
-            }
 
             .btn-mas{
                 color: $naranja-color;
