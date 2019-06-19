@@ -97,7 +97,8 @@ class Horario extends Component<any, any>{
         
           <Scheduler data={this.formatHorario()}>
             <ViewState currentDate="2018-06-28" />
-            <WeekView startDayHour={9} endDayHour={18}
+            <WeekView startDayHour={7}
+            cellDuration={30}
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}/>
             <Appointments />
