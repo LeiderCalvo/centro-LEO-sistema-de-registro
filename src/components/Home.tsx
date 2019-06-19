@@ -7,6 +7,7 @@ import store from '../stores/store';
 import DataBaseFireBase from '../utils/DataBaseFireBase';
 import Horario from './monitor/Horario';
 import Excusas from './monitor/Excusas';
+import AuthFireBase from '../utils/AuthFireBase';
 
 @observer
 class Home extends  Component <any, any>{
@@ -20,6 +21,11 @@ class Home extends  Component <any, any>{
 
     this.handleClickLlegue = this.handleClickLlegue.bind(this);
     this.handleClickTermine = this.handleClickTermine.bind(this);
+  }
+
+  componentDidMount(){
+    console.log(AuthFireBase.ReadLocal());
+    if(AuthFireBase.ReadLocal() === false) this.props.history.push('/');
   }
 
   handleClickLlegue(){

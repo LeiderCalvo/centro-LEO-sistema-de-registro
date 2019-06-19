@@ -27,6 +27,10 @@ class SingUp extends Component<any, any>{
         this.handleClickMas = this.handleClickMas.bind(this);
     }
 
+    componentDidMount(){
+        if(AuthFireBase.ReadLocal() === true) this.props.history.push('/Home');
+    }
+
     onSingUp(val : boolean){
         val? this.props.history.push('/Home') : this.setState({
             step: 0,

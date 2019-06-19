@@ -65,6 +65,10 @@ class Store {
         }
     }
 
+    @action setAllCurrentUser(val: any){
+        this.currentUser = val;
+    }
+
     @computed get heightBar(){
         let currentTime = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
         let inicio = DataBaseFireBase.transfomTimeToNumber(this.currentUser.inicio);

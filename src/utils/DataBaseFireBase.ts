@@ -22,6 +22,14 @@ function addNewUser(usuario: Usuario) {
       updateHorarioGeneral(user.horario, user.nombre);
     }
   });
+  
+  DataBase.ref('monitores').once('value').then(function (monitores: any) {
+    if(monitores.exists()){
+      DataBase.ref('monitores').set([...monitores.val(), usuario.nombre]);
+    }else{
+      DataBase.ref('monitores').set([usuario.nombre]);
+    }
+  });
 }
 
 function updateHorarioGeneral(horario: Horario, nombre: string) {

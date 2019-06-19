@@ -19,6 +19,10 @@ class Login extends Component<any, any>{
         this.handleClick = this.handleClick.bind(this);
     }
 
+    componentDidMount(){
+        if(AuthFireBase.ReadLocal() === true) this.props.history.push('/Home');
+    }
+
     onLogin(val : boolean){
         val? this.props.history.push('/Home') : this.setState({
             usuario : '',

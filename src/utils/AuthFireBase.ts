@@ -22,8 +22,8 @@ function Login(usuario : string, password  : string, callback : any){
     store.setLoged(true);
 
     DataBaseFireBase.getRol(usuario);
-    DataBaseFireBase.getHorario(usuario);
-    store.setCurrentUser('nombre', usuario+'');
+    updateStore(usuario)
+    addToLocal();
 
     store.displayToast('Bienvenido '+usuario, 'success');
     callback(true);
@@ -48,14 +48,12 @@ function SingUp(usuario : Usuario, callback : any){
     store.setLoged(true);
 
     DataBaseFireBase.addNewUser(usuario);
-
-    store.setCurrentUser('nombre', usuario.nombre);
-    store.setHorario(usuario.horario);
-    DataBaseFireBase.getHorario(usuario.nombre);
+    
     store.setCurrentUser('rol', 'monitor');
+    updateStore(usuario.nombre);
 
+    addToLocal();
     store.displayToast('Bienvenido '+usuario.nombre, 'success');
-
   }).catch(function(error) {
     if (error) {
       callback(false);
@@ -67,4 +65,25 @@ function SingUp(usuario : Usuario, callback : any){
   })
 }
 
-export default {Login, SingUp};
+function updateStore(usuario: string) {
+  DataBaseFireBase.getHorario(usuario);
+  store.setCurrentUser('nombre', usuario+'');
+}
+
+function addToLocal() {
+  localStorage.setItem('isCurrentUser', 'true');
+  localStorage.setItem('currentUser', JSON.stringify(store.currentUser));
+}
+
+function ReadLocal() {
+  if(localStorage.getItem('isCurrentUser') === 'true'){
+    let user = localStorage.getItem('currentUser');
+    let use = user !== null && JSON.parse(user);
+    store.setAllCurrentUser(use);
+    return true;
+  }else{
+    return false;
+  }
+}
+
+export default {Login, SingUp, ReadLocal};
