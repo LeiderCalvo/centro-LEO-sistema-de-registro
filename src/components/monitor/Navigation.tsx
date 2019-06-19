@@ -11,6 +11,18 @@ class Navigation extends React.Component<any, any>{
         this.state = {
             navigationItems : ['Inicio', 'Horario', 'Excusas', 'Logout', 'Historial']
         }
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(elem : string){
+        console.log(elem);
+        if(elem === 'Logout'){
+            localStorage.removeItem('currentUser');
+            localStorage.setItem('isCurrentUser', 'false');
+            this.props.his.push('/');
+            return;
+        }
+        store.setNavItemSelected(elem);
     }
 
     render(){
@@ -19,7 +31,7 @@ class Navigation extends React.Component<any, any>{
                 {this.state.navigationItems.map((elem : string, index: number) => {
                     return <div key={index+' nav-item'}
                     className={elem === 'Historial'? 'nav-item btn' : store.navItemSelected === elem? 'nav-item sel': 'nav-item'}
-                    onClick={()=>{store.setNavItemSelected(elem)}}>
+                    onClick={()=>this.handleClick(elem)}>
                     {elem}</div>
                 })}
             </div>

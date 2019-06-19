@@ -24,8 +24,9 @@ class Home extends  Component <any, any>{
   }
 
   componentDidMount(){
-    console.log(AuthFireBase.ReadLocal());
-    if(AuthFireBase.ReadLocal() === false) this.props.history.push('/');
+    setTimeout(() => {
+      if(AuthFireBase.ReadLocal() === false)this.props.history.push('/');
+    }, 500);
   }
 
   handleClickLlegue(){
@@ -65,7 +66,7 @@ class Home extends  Component <any, any>{
           <Progress/>
         </div>
         <div className="second">
-          <Navigation/>
+          <Navigation his={this.props.history}/>
           {store.navItemSelected === 'Inicio'? 
             <div className="workArea uno">
               <p className='time'
