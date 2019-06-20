@@ -170,4 +170,22 @@ function addNewExcuse(time : number, object : {}) {
   });
 }
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse};
+function getExcuces(user : string){
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/excusas').on('value',
+  function (excusas : any) {
+    if(excusas.exists()){
+      let excuces = [];
+      for (const prop in excusas.val()) {
+        if (excusas.val().hasOwnProperty(prop)) {
+          const element = excusas.val()[prop];
+          excuces.push(element);
+        }
+      }
+      store.setExcusas(excuces);
+    }else{
+      store.setExcusas([]);
+    }
+  });
+}
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces};

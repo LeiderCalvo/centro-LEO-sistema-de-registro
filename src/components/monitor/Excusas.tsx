@@ -19,13 +19,17 @@ class Excusas extends Component<any, any> {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    componentDidMount(){
+        DataBaseFireBase.getExcuces(store.currentUser.nombre);
+    }
+
     handleClick(){
         if(this.state.razon === '' || this.state.fecha === '' || this.state.inicio === '' || this.state.fin === ''){
             store.displayToast('Porfavor llene todos los campos', 'warning');
             return;
         }
 
-        DataBaseFireBase.addNewExcuse(Date.now(), {razon: this.state.razon, fecha: this.state.fecha, inicio: this.state.inicio, fin: this.state.fin === ''});
+        DataBaseFireBase.addNewExcuse(Date.now(), {razon: this.state.razon, fecha: this.state.fecha, inicio: this.state.inicio, fin: this.state.fin});
         this.setState({razon: '', fecha: '', inicio: '', fin: ''});
     }
 
@@ -70,7 +74,23 @@ class Excusas extends Component<any, any> {
 
                 <h2 className='titulo'>Anteriores</h2>
                 <div className="anteriores">
+                    <div className="exc-row">
+                        <p className="id tit">#</p>
+                        <p className="razon tit">Rrazón</p>
+                        <p className="fecha tit">Fecha</p>
+                        <p className="inicio tit">Inicio</p>
+                        <p className="fin tit">Fin</p>
+                    </div>
 
+                    {store.excusas.map((elem, index)=>{
+                        return <div key={index+'excuces'} className="exc-row">
+                            <p className="id item">{index}</p>
+                            <p className="razon item">{elem.razon}</p>
+                            <p className="fecha item">{elem.fecha}</p>
+                            <p className="inicio item">{elem.inicio}</p>
+                            <p className="fin item">{elem.fin}</p>
+                        </div> 
+                    })}
                 </div>
             </div>
             );

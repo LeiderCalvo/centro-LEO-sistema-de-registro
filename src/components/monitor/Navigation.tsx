@@ -15,7 +15,6 @@ class Navigation extends React.Component<any, any>{
     }
 
     handleClick(elem : string){
-        console.log(elem);
         if(elem === 'Logout'){
             localStorage.removeItem('currentUser');
             localStorage.setItem('isCurrentUser', 'false');

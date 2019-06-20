@@ -11,6 +11,7 @@ class Store {
     @observable isLoged : boolean = false;
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
+    @observable excusas : any[] = [];
     @observable navItemSelected: string = 'Inicio';
     @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
@@ -69,16 +70,18 @@ class Store {
         this.currentUser = val;
     }
 
+    @action setExcusas(val: any[]){
+        for (let i = 0; i < val.length; i++) {
+            const elem = val[i];
+            val[i].date = new Date(elem.date);
+        }
+        this.excusas = val;
+    }
+
     @computed get heightBar(){
         let currentTime = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
         let inicio = DataBaseFireBase.transfomTimeToNumber(this.currentUser.inicio);
         let final = DataBaseFireBase.transfomTimeToNumber(this.currentUser.fin);
-        /*console.log(inicio, 'inicio');
-        console.log(currentTime, 'current');
-        console.log(final, 'final');
-        console.log((currentTime - inicio));
-        console.log((final - inicio));
-        console.log((currentTime - inicio) / (final - inicio));*/
         return (currentTime - inicio) / (final - inicio) * 100;
     }
 
