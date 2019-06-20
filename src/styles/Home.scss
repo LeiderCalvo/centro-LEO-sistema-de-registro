@@ -50,5 +50,23 @@
         }
         .Cell-text-138{color: $gris-color;}
         .Cell-dayOfMonth-123{display:none}
+        
+        .MuiGrid-grid-xs-11{
+            .MuiTableRow-root{
+                height: 40px;
+            }
+        }
+        .MuiTableBody-root{
+            .MuiTableRow-root{
+                height: 29px;
+            }
+        }
+
+        .MuiGrid-wrap-xs-nowrap{
+            @include scrollBar();
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+        }
     }
 }
