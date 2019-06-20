@@ -43,13 +43,16 @@
 
     .Horario {
         padding-top: 5%;
-        .Cell-dayOfWeek-122{
-            @include font-size(33px);
-            text-align: center;
-            color: $gris-color;
+        .MuiTableRow-root{
+            p{
+                @include font-size(33px);
+                text-align: center;
+                color: $gris-color;
+            }
+
+            span{color: $gris-color}
+            p ~ span {display: none}
         }
-        .Cell-text-138{color: $gris-color;}
-        .Cell-dayOfMonth-123{display:none}
         
         .MuiGrid-grid-xs-11{
             .MuiTableRow-root{

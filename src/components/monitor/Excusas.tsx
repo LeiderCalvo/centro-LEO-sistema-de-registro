@@ -29,8 +29,20 @@ class Excusas extends Component<any, any> {
     }
 
     handleClick(){
+        
         if(this.state.razon === '' || this.state.fecha === '' || this.state.inicio === '' || this.state.fin === ''){
             store.displayToast('Porfavor llene todos los campos', 'warning');
+            return;
+        }
+        
+        let plaso = new Date();
+        plaso.setHours(this.state.inicio.split(':')[0]);
+        plaso.setMonth(parseInt(this.state.fecha.split('-')[1]) - 1);
+        plaso.setDate(this.state.fecha.split('-')[2]);
+        plaso.setMinutes(this.state.inicio.split(':')[1])
+        
+        if(Math.abs(plaso.getTime() - Date.now()) <= 172800000){
+            store.displayToast('La fecha es muy proxima, debe tener dos días minimo de anticipación', 'error');
             return;
         }
 

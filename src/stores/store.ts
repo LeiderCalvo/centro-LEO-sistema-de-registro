@@ -13,6 +13,9 @@ class Store {
     @observable callbackToast: any = null;
     @observable excusas : any[] = [];
     @observable navItemSelected: string = 'Inicio';
+    @observable horasLogradas: number = 0;
+    @observable horasAdiconales: number = 0;
+    @observable horasPerdidas: number = 0;
     @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
@@ -64,6 +67,18 @@ class Store {
             default:
                 break;
         }
+    }
+
+    @action setHorasLogradas(val: number){
+        this.horasLogradas = val;
+    }
+
+    @action setHorasAdicionales(val: number){
+        this.horasAdiconales = val;
+    }
+
+    @action setHorasPerdidas(val: number){
+        this.horasPerdidas = val;
     }
 
     @action setAllCurrentUser(val: any){

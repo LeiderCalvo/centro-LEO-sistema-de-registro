@@ -8,6 +8,7 @@ import DataBaseFireBase from '../utils/DataBaseFireBase';
 import Horario from './monitor/Horario';
 import Excusas from './monitor/Excusas';
 import AuthFireBase from '../utils/AuthFireBase';
+import Historial from './monitor/Historial';
 
 @observer
 class Home extends  Component <any, any>{
@@ -47,7 +48,6 @@ class Home extends  Component <any, any>{
   }
 
   handleClickTermine(){
-    console.log(store.diferenceCurrentAndFinal);
     if(store.diferenceCurrentAndFinal>5){
       let time = DataBaseFireBase.transfomNumberToTime(store.diferenceCurrentAndFinal - 5);
       store.displayToast('faltan: ' + time.split(':')[0] + ' Horas y ' + (parseInt(time.split(':')[1])) + ' Minutos, para poder marcar tu Salida', 'warning');
@@ -55,6 +55,15 @@ class Home extends  Component <any, any>{
     }
     if(this.state.isDoneTermine === true) return;
     this.setState({isDoneTermine: true});
+
+    if(store.diferenceCurrentAndFinal>5){
+      DataBaseFireBase.setHorasPerdidas(Math.abs(store.diferenceCurrentAndFinal/60));
+    }
+
+    DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60));
+
+    DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), store.currentDate, 'salida');
+    store.setCurrentUser('termine', 'true');
   }
 
   render(){
@@ -91,9 +100,8 @@ class Home extends  Component <any, any>{
             <Horario/>
           :store.navItemSelected === 'Excusas'?
             <Excusas/>
-          :
-            <div className="workArea dos">
-            </div>
+          :store.navItemSelected === 'Historial'&&
+            <Historial/>
         }
         </div>
       </section>

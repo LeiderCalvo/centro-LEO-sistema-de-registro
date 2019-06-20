@@ -74,6 +74,7 @@ function SingUp(usuario : Usuario, callback : any){
 function updateStore(usuario: string) {
   DataBaseFireBase.getHorario(usuario);
   store.setCurrentUser('nombre', usuario+'');
+  DataBaseFireBase.updateHoras(usuario);
 }
 
 function addToLocal() {

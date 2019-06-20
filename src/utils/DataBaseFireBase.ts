@@ -159,6 +159,16 @@ function setHorasPerdidas(cantidad:number) {
   });
 }
 
+function setHorasLogradas(cantidad:number) {
+  DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/horasLogradas').once('value').then(function (horasLogradas: any) {
+    if(horasLogradas.exists()){
+      DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()).update({horasLogradas: horasLogradas.val() + cantidad});
+    }else{
+      DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()).update({horasLogradas: cantidad});
+    }
+  });
+}
+
 function addNewExcuse(time : number, object : {}) {
   DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/excusas').push({...object, date: time}, function (error : any) {
     if(error){
@@ -188,4 +198,18 @@ function getExcuces(user : string){
   });
 }
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces};
+function updateHoras(user:string) {
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasLogradas').on('value', function (hora:any) {
+    hora.exists() && store.setHorasLogradas(hora.val());
+  });
+  
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasPerdidas').on('value', function (hora:any) {
+    hora.exists() && store.setHorasPerdidas(hora.val());
+  });
+
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasAdicionales').on('value',function (hora:any) {
+    hora.exists() && store.setHorasAdicionales(hora.val());
+  });
+}
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras};

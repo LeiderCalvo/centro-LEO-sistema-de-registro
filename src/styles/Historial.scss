@@ -1,0 +1,31 @@
+@import '../utils/vars';
+
+.Historial{
+    .horas{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        h2{
+            @include font-size(100px);
+            color: $azul-color;
+        }
+
+        #perdidas{
+            color: $naranja-color;
+        }
+    }
+
+    .scheduler{
+        height: 75%;
+    }
+
+    .MuiGrid-wrap-xs-nowrap{
+        @include scrollBar();
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+    }
+}
