@@ -28,17 +28,49 @@ class Historial extends Component<any, any>{
         }
     }
 
+    formatRegistro(){
+        let raw : any = store.registros && store.registros;
+        let temp : {title: string, startDate: Date, endDate: Date,}[] = [];
+
+        for (let prop in raw) {
+            if (raw.hasOwnProperty(prop)) {
+                let elem = raw[prop];
+                if(elem.fecha === null || elem.fecha === undefined)break;
+                
+                let ini = DataBaseFireBase.transfomNumberToTime(elem.hora);
+                let fi = DataBaseFireBase.transfomNumberToTime(elem.hora + 30);
+
+                elem.fecha = elem.fecha.replace(' de', '');
+
+                let fecIni = new Date(elem.fecha);
+                fecIni.setHours(parseInt(ini.split(':')[0]));
+                fecIni.setMinutes(parseInt(ini.split(':')[1]));
+
+                let fecFin = new Date(elem.fecha);
+                fecFin.setHours(parseInt(fi.split(':')[0]));
+                fecFin.setMinutes(parseInt(fi.split(':')[1]));
+
+                temp.push({
+                    title: elem.tipo,
+                    startDate: fecIni,
+                    endDate: fecFin
+                });
+            }
+        }
+        return temp;
+    }
+
     componentDidMount(){
         DataBaseFireBase.updateHoras(store.currentUser.nombre);
+        DataBaseFireBase.updateRegistro(store.currentUser.nombre);
     }
 
     render(){
-        const { data } = this.state;
         return(
             <div className="workArea Historial">
                 <div className="horas">
                     <div className="hora-cont">
-                        <h2>{store.horasLogradas % Math.floor(store.horasLogradas) === 0? store.horasLogradas : store.horasLogradas.toFixed(1)}</h2>
+                        <h2>{store.horasLogradas === 0? '0' :store.horasLogradas % Math.floor(store.horasLogradas) === 0? store.horasLogradas : store.horasLogradas.toFixed(1)}</h2>
                         <p>Logradas</p>
                     </div>
                     <div className="hora-cont">
@@ -46,14 +78,14 @@ class Historial extends Component<any, any>{
                         <p>Adicionales</p>
                     </div>
                     <div className="hora-cont">
-                        <h2 id='perdidas'>{store.horasPerdidas % Math.floor(store.horasPerdidas) === 0? store.horasPerdidas : store.horasPerdidas.toFixed(1)}</h2>
+                        <h2 id='perdidas'>{store.horasPerdidas === 0? '0' :store.horasPerdidas % Math.floor(store.horasPerdidas) === 0? store.horasPerdidas : store.horasPerdidas.toFixed(1)}</h2>
                         <p>Perdidas</p>
                     </div>
                 </div>
 
                 <div className="scheduler">
                     <MuiThemeProvider theme={theme}>
-                        <Scheduler data={data}>
+                        <Scheduler data={this.formatRegistro()}>
                             <ViewState defaultCurrentDate={this.state.dia} />
                             <MonthView />
                             <Toolbar />

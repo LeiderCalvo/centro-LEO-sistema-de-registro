@@ -198,6 +198,12 @@ function getExcuces(user : string){
   });
 }
 
+function updateRegistro(user:string) {
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/registros').on('value', function (registros:any) {
+    registros.exists() && store.setRegistros(registros.val());
+  });
+}
+
 function updateHoras(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasLogradas').on('value', function (hora:any) {
     hora.exists() && store.setHorasLogradas(hora.val());
@@ -212,4 +218,5 @@ function updateHoras(user:string) {
   });
 }
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras};
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro};

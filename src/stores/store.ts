@@ -16,6 +16,7 @@ class Store {
     @observable horasLogradas: number = 0;
     @observable horasAdiconales: number = 0;
     @observable horasPerdidas: number = 0;
+    @observable registros: any = {};
     @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
@@ -67,6 +68,10 @@ class Store {
             default:
                 break;
         }
+    }
+
+    @action setRegistros(val: any){
+        this.registros = val;
     }
 
     @action setHorasLogradas(val: number){
