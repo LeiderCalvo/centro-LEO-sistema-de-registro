@@ -47,9 +47,16 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 15%;
 
         h3{color: $naranja-color}
+
+        .dropZone{
+            border: solid 1px $naranja-color;
+            border-radius: 30px;
+            height: 150px;
+            width: 60%;
+            @include centrado();
+        }
     }
 
     .titulo{

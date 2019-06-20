@@ -18,6 +18,7 @@
     "mobx-react": "^6.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.5",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-toast-notifications": "^1.4.0",

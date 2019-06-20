@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import '../../styles/Excusas.css';
 import store from '../../stores/store';
 import DataBaseFireBase from '../../utils/DataBaseFireBase';
+import Dropzone from 'react-dropzone';
+import StorageFireBase from '../../utils/StorageFireBase';
 
 @observer
 class Excusas extends Component<any, any> {
@@ -13,10 +15,13 @@ class Excusas extends Component<any, any> {
             razon: '',
             fecha: '',
             inicio: '',
-            fin: ''
+            fin: '',
+            file: null,
+            isDropZoneActive: false
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this.addExcuse = this.addExcuse.bind(this);
     }
 
     componentDidMount(){
@@ -29,8 +34,17 @@ class Excusas extends Component<any, any> {
             return;
         }
 
-        DataBaseFireBase.addNewExcuse(Date.now(), {razon: this.state.razon, fecha: this.state.fecha, inicio: this.state.inicio, fin: this.state.fin});
-        this.setState({razon: '', fecha: '', inicio: '', fin: ''});
+        let date = Date.now();
+        if(this.state.file){
+            StorageFireBase.uploadImg(date, this.state.file, this.addExcuse);
+        }else{
+            this.addExcuse(date, '');
+        }
+    }
+
+    addExcuse(date: number, download: string){
+        DataBaseFireBase.addNewExcuse(date, {razon: this.state.razon, fecha: this.state.fecha, inicio: this.state.inicio, fin: this.state.fin, url: download});
+        this.setState({razon: '', fecha: '', inicio: '', fin: '', file: null, isDropZoneActive: false});
     }
 
     render(){
@@ -67,9 +81,35 @@ class Excusas extends Component<any, any> {
                     </div>
                 </div>
 
-                <div className="soporte-cont">
-                    <h3>Subir soporte fotográfico</h3>
+                <div className="soporte-cont" style={this.state.isDropZoneActive === false? {marginBottom: '15%'}:{marginBottom: '5%'}}>
+                    {this.state.isDropZoneActive === false? 
+                        <h3 onClick={()=>{
+                            this.setState({isDropZoneActive: true});
+                        }}>Subir soporte fotográfico</h3>
+                    :
+                        <Dropzone onDrop={(acceptedFiles) => {
+                            var reader = new FileReader();
+                            reader.onload = (e: any) => {
+                                this.setState({file : e.target.result});
+                            }
+                            reader.readAsDataURL(acceptedFiles[0]);
+                        }}>
+
+                            {({getRootProps, getInputProps}) => (
+                                <section className='dropZone'>
+                                    <div {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        {this.state.file === null && <p>Drag and drop zone</p>}
+                                    </div>
+                                    {this.state.file && <div className='img-container'><img src={this.state.file}/></div>}
+                                </section>
+                            )}
+
+                        </Dropzone>
+                    }
+
                     <div className="btn" onClick={this.handleClick}>Send</div>
+
                 </div>
 
                 <h2 className='titulo'>Anteriores</h2>

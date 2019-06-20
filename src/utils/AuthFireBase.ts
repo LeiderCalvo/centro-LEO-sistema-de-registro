@@ -3,15 +3,21 @@ import store, { Usuario } from "../stores/store";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import "firebase/storage";
 import firebaseCredentials from "./firebaseCredentials";
 import DataBaseFireBase from "./DataBaseFireBase";
+import StorageFireBase from "./StorageFireBase";
 
 const firebaseConfig = firebaseCredentials;
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
 const dataBase = firebase.database();
 DataBaseFireBase.setRef(dataBase);
+
+const storage = firebase.storage();
+StorageFireBase.setRef(storage);
 
 function Login(usuario : string, password  : string, callback : any){
   if(store.isLoging)return;
