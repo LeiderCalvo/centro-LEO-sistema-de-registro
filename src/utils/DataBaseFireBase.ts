@@ -78,6 +78,20 @@ function getHorarioGen() {
   });
 }
 
+function getMonitores() {
+  DataBase.ref('monitores').once('value').then(function (monitores:any) {
+    if(monitores.exists()){
+      let temp : {nombre: string, activo: boolean}[] = [];
+      monitores.val().forEach((elem : any)=> {
+        temp.push({nombre: elem, activo: false});
+      });
+      store.setMonitores(temp);
+    }else{
+      store.setMonitores([]);
+    }
+  });
+}
+
 function getHorario(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario').once('value').then(function (horario:any) {
     if(horario.exists()){
@@ -234,4 +248,4 @@ function updateHoras(user:string) {
 }
 
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen};
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores};

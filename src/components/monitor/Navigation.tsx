@@ -37,6 +37,7 @@ class Navigation extends React.Component<any, any>{
             </div>
             :
             <div className='Navigation'>
+                <div className='nav-item' onClick={()=>this.handleClick('Inicio')}>Inicio</div>
                 <div className='nav-item' onClick={()=>this.handleClick('Horario')}>Horario</div>
                 <div className='nav-item' onClick={()=>this.handleClick('Logout')}>Logout</div>
             </div>

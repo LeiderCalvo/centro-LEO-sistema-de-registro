@@ -9,6 +9,7 @@ import Horario from './monitor/Horario';
 import Excusas from './monitor/Excusas';
 import AuthFireBase from '../utils/AuthFireBase';
 import Historial from './monitor/Historial';
+import Monitor from './Monitors';
 
 @observer
 class Home extends  Component <any, any>{
@@ -28,7 +29,10 @@ class Home extends  Component <any, any>{
     //AuthFireBase.updateStore(store.currentUser.nombre);
     setTimeout(() => {
       if(AuthFireBase.ReadLocal() === false)this.props.history.push('/');
-      if(store.currentUser.rol === 'admin')DataBaseFireBase.getHorarioGen();
+      if(store.currentUser.rol === 'admin'){
+        DataBaseFireBase.getHorarioGen();
+        DataBaseFireBase.getMonitores();
+      }
     }, 3000);
   }
 
@@ -74,7 +78,11 @@ class Home extends  Component <any, any>{
 
       <section className="Home two-colums">
         <div className="first">
+        {store.currentUser.rol === 'monitor'?
           <Progress/>
+        :
+          <Monitor/>
+        }
         </div>
         <div className="second">
 

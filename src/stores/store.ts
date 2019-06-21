@@ -17,6 +17,7 @@ class Store {
     @observable horasAdiconales: number = 0;
     @observable horasPerdidas: number = 0;
     @observable registros: any = {};
+    @observable monitores: {nombre: string, activo: boolean}[] = [];
     @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
@@ -68,6 +69,10 @@ class Store {
             default:
                 break;
         }
+    }
+
+    @action setMonitores(val: {nombre: string, activo: boolean}[]){
+        this.monitores = val;
     }
 
     @action setRegistros(val: any){
