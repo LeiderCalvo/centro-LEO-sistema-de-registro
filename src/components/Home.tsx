@@ -37,16 +37,24 @@ class Home extends  Component <any, any>{
   }
 
   handleClickLlegue(){
+      if(store.currentUser.nombre === '')return;
+
     if(store.diferenceCurrentAndInitial>5){
       let time = DataBaseFireBase.transfomNumberToTime(store.diferenceCurrentAndInitial - 5);
       store.displayToast('faltan: ' + time.split(':')[0] + ' Horas y ' + (parseInt(time.split(':')[1])) + ' Minutos, para poder marcar tu llegada', 'warning');
+      return;
+    }
+    if(store.currentUser.inicio === 'null'){
+      store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
       return;
     }
     if(this.state.isDoneLlegue === true) return;
     this.setState({isDoneLlegue: true});
 
     if(store.diferenceCurrentAndInitial<-5){
-      DataBaseFireBase.setHorasPerdidas(Math.abs(store.diferenceCurrentAndInitial/60));
+      let temp = Math.abs(store.diferenceCurrentAndInitial/60);
+      DataBaseFireBase.setHorasPerdidas(temp);
+      store.displayToast('Llegas tarde, se te agregan '+temp.toFixed(2) +' horas pendientes', 'info');
     }
 
     DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), store.currentDate, 'llegada');
@@ -54,9 +62,15 @@ class Home extends  Component <any, any>{
   }
 
   handleClickTermine(){
+    if(store.currentUser.nombre === '')return; 
+
     if(store.diferenceCurrentAndFinal>5){
       let time = DataBaseFireBase.transfomNumberToTime(store.diferenceCurrentAndFinal - 5);
       store.displayToast('faltan: ' + time.split(':')[0] + ' Horas y ' + (parseInt(time.split(':')[1])) + ' Minutos, para poder marcar tu Salida', 'warning');
+      return;
+    }
+    if(store.currentUser.inicio === 'null'){
+      store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
       return;
     }
     if(this.state.isDoneTermine === true) return;
@@ -98,12 +112,12 @@ class Home extends  Component <any, any>{
             {store.currentUser.rol === 'monitor'&& 
               <div className="btn-cont">
                 <div className="btn"
-                style={store.diferenceCurrentAndInitial>5? {opacity: .5} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
+                style={store.currentUser.inicio === 'null'? {opacity: .5}:store.diferenceCurrentAndInitial>5? {opacity: .5} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
                 onClick={this.handleClickLlegue}>
                   Llegué</div>
 
                 <div className="btn"
-                style={store.diferenceCurrentAndFinal>5? {opacity: .5} : this.state.isDoneTermine? {opacity: .5} : {opacity: 1}} 
+                style={store.currentUser.fin === 'null'? {opacity: .5}: store.diferenceCurrentAndFinal>5? {opacity: .5} : this.state.isDoneTermine? {opacity: .5} : {opacity: 1}} 
                 onClick={this.handleClickTermine}>
                   Terminé</div>
               </div>
