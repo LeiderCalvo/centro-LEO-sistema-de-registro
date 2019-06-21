@@ -1,9 +1,9 @@
-let Storage : any = null;
+//let Storage : any = null;
 // Create a root reference
 var storageRef :any = null;
 
 function setRef(storage: any) {
-  Storage = storage;
+  //Storage = storage;
   storageRef = storage.ref();
 }
 

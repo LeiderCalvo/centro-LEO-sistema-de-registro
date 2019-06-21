@@ -146,7 +146,7 @@ class Store {
         }
     }
 
-    @action setHorario(val : Horario){
+    @action setHorario(val : Horario | null){
         this.currentUser.horario = val;
     }
 

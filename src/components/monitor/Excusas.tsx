@@ -113,7 +113,7 @@ class Excusas extends Component<any, any> {
                                         <input {...getInputProps()} />
                                         {this.state.file === null && <p>Drag and drop zone</p>}
                                     </div>
-                                    {this.state.file && <div className='img-container'><img src={this.state.file}/></div>}
+                                    {this.state.file && <div className='img-container'><img alt='temp' src={this.state.file}/></div>}
                                 </section>
                             )}
 

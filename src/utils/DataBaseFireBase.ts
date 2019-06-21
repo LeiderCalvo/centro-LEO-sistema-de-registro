@@ -64,12 +64,27 @@ function addMonitor(array: any, nombre: string) {
 function getRol(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/rol').once('value').then(function (rol:any) {
     store.setCurrentUser('rol', rol.val()+'');
+    return rol.val()+'';
+  });
+}
+
+function getHorarioGen() {
+  DataBase.ref('Horario').once('value').then(function (horario:any) {
+    if(horario.exists()){
+      store.setHorario(horario.val());
+    }else{
+      store.setHorario(null);
+    }
   });
 }
 
 function getHorario(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario').once('value').then(function (horario:any) {
-    if(horario.exists())store.setHorario(horario.val());
+    if(horario.exists()){
+      store.setHorario(horario.val());
+    }else{
+      store.setHorario(null);
+    }
   });
 
   if(store.fecha.dia===0 || store.fecha.dia >5)return;
@@ -219,4 +234,4 @@ function updateHoras(user:string) {
 }
 
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro};
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen};

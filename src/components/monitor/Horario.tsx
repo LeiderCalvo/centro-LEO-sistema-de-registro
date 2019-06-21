@@ -80,7 +80,7 @@ class Horario extends Component<any, any>{
             let ini = DataBaseFireBase.transfomNumberToTime(elem.inicio);
             let fi = DataBaseFireBase.transfomNumberToTime(elem.fin);
             temp.push({
-              title: store.currentUser.nombre,
+              title: store.currentUser.rol === 'admin'? elem.monitor: store.currentUser.nombre,
               startDate: new Date(2018, 5, day, parseInt(ini.split(':')[0]), parseInt(ini.split(':')[1])),
               endDate: new Date(2018, 5, day, parseInt(fi.split(':')[0]), parseInt(fi.split(':')[1]))
             });
@@ -88,6 +88,10 @@ class Horario extends Component<any, any>{
         }
       }
       return temp;
+    }
+
+    componentDidMount(){
+      console.log(store.currentUser.horario);
     }
 
     render(){

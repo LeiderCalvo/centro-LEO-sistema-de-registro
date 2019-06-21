@@ -26,6 +26,7 @@ class Navigation extends React.Component<any, any>{
 
     render(){
         return(
+            store.currentUser.rol === 'monitor'?
             <div className='Navigation'>
                 {this.state.navigationItems.map((elem : string, index: number) => {
                     return <div key={index+' nav-item'}
@@ -33,6 +34,11 @@ class Navigation extends React.Component<any, any>{
                     onClick={()=>this.handleClick(elem)}>
                     {elem}</div>
                 })}
+            </div>
+            :
+            <div className='Navigation'>
+                <div className='nav-item' onClick={()=>this.handleClick('Horario')}>Horario</div>
+                <div className='nav-item' onClick={()=>this.handleClick('Logout')}>Logout</div>
             </div>
         );
     }

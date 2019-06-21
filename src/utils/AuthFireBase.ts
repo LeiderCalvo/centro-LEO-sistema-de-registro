@@ -28,7 +28,7 @@ function Login(usuario : string, password  : string, callback : any){
     store.setLoged(true);
 
     DataBaseFireBase.getRol(usuario);
-    updateStore(usuario)
+    updateStore(usuario);
     addToLocal();
 
     store.displayToast('Bienvenido '+usuario, 'success');
@@ -79,19 +79,21 @@ function updateStore(usuario: string) {
 }
 
 function addToLocal() {
-  localStorage.setItem('isCurrentUser', 'true');
-  localStorage.setItem('currentUser', JSON.stringify(store.currentUser));
+  setTimeout(() => {
+    localStorage.setItem('isCurrentUser', 'true');
+    localStorage.setItem('currentUser', JSON.stringify(store.currentUser));
+  }, 2000);
 }
 
 function ReadLocal() {
   if(localStorage.getItem('isCurrentUser') === 'true'){
     let user = localStorage.getItem('currentUser');
     let use = user !== null && JSON.parse(user);
-    store.setAllCurrentUser(use);
+    use !== null && store.setAllCurrentUser(use);
     return true;
   }else{
     return false;
   }
 }
 
-export default {Login, SingUp, ReadLocal};
+export default {Login, SingUp, ReadLocal, updateStore};

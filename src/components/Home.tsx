@@ -25,9 +25,11 @@ class Home extends  Component <any, any>{
   }
 
   componentDidMount(){
+    //AuthFireBase.updateStore(store.currentUser.nombre);
     setTimeout(() => {
       if(AuthFireBase.ReadLocal() === false)this.props.history.push('/');
-    }, 500);
+      if(store.currentUser.rol === 'admin')DataBaseFireBase.getHorarioGen();
+    }, 3000);
   }
 
   handleClickLlegue(){
@@ -68,14 +70,16 @@ class Home extends  Component <any, any>{
 
   render(){
     return (
-     // store.currentUser.rol === 'monitor'?
+     //store.currentUser.rol === 'monitor'?
 
       <section className="Home two-colums">
         <div className="first">
           <Progress/>
         </div>
         <div className="second">
+
           <Navigation his={this.props.history}/>
+
           {store.navItemSelected === 'Inicio'? 
             <div className="workArea uno">
               <p className='time'
@@ -83,6 +87,7 @@ class Home extends  Component <any, any>{
               <p className='date' 
               style={this.state.isDoneLlegue? {color: '#c6c6c6'} :store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
 
+            {store.currentUser.rol === 'monitor'&& 
               <div className="btn-cont">
                 <div className="btn"
                 style={store.diferenceCurrentAndInitial>5? {opacity: .5} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
@@ -94,7 +99,7 @@ class Home extends  Component <any, any>{
                 onClick={this.handleClickTermine}>
                   Terminé</div>
               </div>
-
+            }
             </div>
           :store.navItemSelected === 'Horario'?
             <Horario/>
@@ -105,13 +110,13 @@ class Home extends  Component <any, any>{
         }
         </div>
       </section>
-  /*
-      :store.currentUser.rol === 'admin'&&
+  
+      /*:store.currentUser.rol === 'admin'&&
 
       <section className="Home two-colums">
         admin
-      </section>
-      */
+      </section>*/
+      
     );
   }
 }
