@@ -10,12 +10,12 @@ class Progress extends Component<any, any> {
         <div className='Progress two-colums'>
             <div className="first"><div className="barra" style={{height: `${store.heightBar}%`}}></div></div>
             <div className="second">
-                <h4 className='hora-final'>{store.currentUser.fin}</h4>
+                <h4 className='hora-final'>{store.currentUser.fin !== 'null'&& store.currentUser.fin}</h4>
                 <div className="advices-cont">
                     <h3>¡{store.currentUser.nombre}!</h3>
                     <p>{store.progressAdvice}</p>
                 </div>
-                <h4 className='hora-inicial'>{store.currentUser.inicio}</h4>
+                <h4 className='hora-inicial'>{store.currentUser.inicio !== 'null'&& store.currentUser.inicio}</h4>
             </div>
             <div className="img-container"><img src="./images/aside.png" alt=""/></div>
         </div>

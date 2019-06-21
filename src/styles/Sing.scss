@@ -37,6 +37,12 @@
             @include font-size(32px);
         }
 
+        .titulo-dia{
+            color: $naranja-color;
+            //@include font-size(34px);
+            font-weight: 600;
+        }
+
         .new-cont{
             display: flex;
             height: 312px;

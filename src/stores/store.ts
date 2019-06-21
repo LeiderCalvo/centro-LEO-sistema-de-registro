@@ -136,7 +136,7 @@ class Store {
                 return 'Recuerda que si no registras tu llegada o salida con 5 minutos máximo de tardanza, se te descontará de tus horas.';
             
             case 'Horario':
-                return 'Los marcadores naranja en tu horario corresponden a las horas adicionales que te hayan sido asignadas últimamente.';
+                return 'El marcador naranja en tu horario corresponde a las horas adicionales que te hayan sido asignadas últimamente.';
 
             case 'Excusas':
                 return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga.';

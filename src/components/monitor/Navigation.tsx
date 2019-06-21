@@ -9,7 +9,7 @@ class Navigation extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            navigationItems : ['Inicio', 'Horario', 'Excusas', 'Logout', 'Historial']
+            navigationItems : ['Inicio', 'Horario', 'Excusas', 'Historial', 'Logout']
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -30,7 +30,7 @@ class Navigation extends React.Component<any, any>{
             <div className='Navigation'>
                 {this.state.navigationItems.map((elem : string, index: number) => {
                     return <div key={index+' nav-item'}
-                    className={elem === 'Historial'? 'nav-item btn' : store.navItemSelected === elem? 'nav-item sel': 'nav-item'}
+                    className={store.navItemSelected === elem? 'nav-item sel': 'nav-item'}
                     onClick={()=>this.handleClick(elem)}>
                     {elem}</div>
                 })}

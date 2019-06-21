@@ -154,11 +154,11 @@ class SingUp extends Component<any, any>{
                         <div className="new-cont">
                             <div className="inp-cont">
                                 <h3>¡{this.state.nombre}!</h3>
-                                <p>Para continuar con tu registro, necesitaremos tener a mano los horarios en los que trabajaras cada día.</p>
+                                <p>Para continuar con tu registro, necesitas tener a mano tus horarios de monitoría.</p>
                             </div>
                             <div className="btn-cont">
-                                <button className="btn" onClick={()=>{this.setState({step: 2})}}>Next</button>
                                 <button className="btn" onClick={()=>{this.setState({step: 0, nombre: '', password: ''})}}>Back</button>
+                                <button className="btn" onClick={()=>{this.setState({step: 2})}}>Next</button>
                             </div>
                         </div>
                     :this.state.step === 7?
@@ -168,7 +168,7 @@ class SingUp extends Component<any, any>{
                     :this.state.step >=2 &&
                     <div className="new-cont-2">
                         <div className="inp-cont horarios">
-                            <h3>{this.state.dias[this.state.step-2]}</h3>
+                            <h3 className='titulo-dia'>{this.state.dias[this.state.step-2]}</h3>
                             <div className="label-cont">
                                 <h3 className='label'>Comienzo de Jornada</h3>
                                 <input type="time" value={this.state.temp}
@@ -186,8 +186,8 @@ class SingUp extends Component<any, any>{
                             <p className='btn-mas' onClick={this.handleClickMas}>Más</p>
                         </div>
                         <div className="btn-cont">
-                            <button className="btn" onClick={this.handleClick}>{this.state.step === 6? 'Done' : 'Next'}</button>
                             <button className="btn" onClick={this.handleClickSkip}>Skip</button>
+                            <button className="btn" onClick={this.handleClick}>{this.state.step === 6? 'Done' : 'Next'}</button>
                         </div>
                     </div>
                     }
