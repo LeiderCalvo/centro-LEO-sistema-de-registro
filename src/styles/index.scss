@@ -122,3 +122,34 @@ input{
         width: 30%;
     }
 }
+
+
+
+///////////////////////
+.MuiPaper-root.MuiPaper-elevation8.MuiPopover-paper.MuiPaper-rounded{
+    overflow: hidden;
+    height: 200px;
+    &>div{
+        height: 50%;
+        width: 300px;
+        *{font-size: 24px; width: 100%;margin: 0;}
+        
+        button{
+            //margin-left: 130px;
+            border-radius: 0;
+            width: 550px;
+            *{
+                &:hover{
+                    background: none;
+                }
+            }
+        }
+
+        .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-8.MuiGrid-align-items-xs-center{
+            &>div{padding: 0; width: 50%;}
+            .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-10{
+                margin-top: 0px;
+            }
+        }
+    }
+}

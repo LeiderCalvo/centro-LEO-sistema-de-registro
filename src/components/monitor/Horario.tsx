@@ -3,7 +3,8 @@ import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   WeekView,
-  Appointments
+  Appointments,
+  AppointmentTooltip
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -90,10 +91,6 @@ class Horario extends Component<any, any>{
       return temp;
     }
 
-    componentDidMount(){
-      console.log(store.currentUser.horario);
-    }
-
     render(){
       return(
       <div className="workArea Horario">
@@ -106,6 +103,9 @@ class Horario extends Component<any, any>{
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}/>
             <Appointments />
+            <AppointmentTooltip
+            showCloseButton
+            />
           </Scheduler>
         
         </MuiThemeProvider>
