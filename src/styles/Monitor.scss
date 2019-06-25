@@ -25,7 +25,7 @@
         color: white;
     }
 
-    div{width: 65%;}
+    div{width: 55%;}
     .saludo-cont{
         margin-bottom: 90px / 1080px * 100%;
         h3{
@@ -41,6 +41,36 @@
         justify-content: space-between;
 
         span{color: white}
+    }
+
+    .list-cont{
+        width: 55%;
+        height: 300px;
+        @include scrollBar();
+        div{
+            @include centrado();
+            justify-content: space-between;
+            width: 100%;
+            height: 50px;
+            background-color: rgba($color: #fff, $alpha: .75);
+            border-radius: 70px;
+            margin: 10px 0;
+
+            p{
+                color: $azul-color;
+                text-align: left;
+                margin-left: 30px;
+                @include font-size(33px);
+            }
+
+            span{
+                width: 25px;
+                height: 25px;
+                border-radius: 100%;
+                background-color: $gris-color;;
+                margin-right: 30px;
+            }
+        }
     }
 
 }

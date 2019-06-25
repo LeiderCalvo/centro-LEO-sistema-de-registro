@@ -21,7 +21,10 @@ class Monitor extends React.Component<any, any>{
                 <div className="list-cont">
                     {
                         store.monitores.map((elem, index)=>{
-                            return <div key={index+'monitor'} className="monitor">{elem.nombre}</div>
+                            return <div key={index+'monitor'} className="monitor">
+                            <p>{elem.nombre}</p>
+                            <span></span>
+                            </div>
                         })
                     }
                 </div>

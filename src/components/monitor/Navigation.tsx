@@ -31,14 +31,15 @@ class Navigation extends React.Component<any, any>{
                 {this.state.navigationItems.map((elem : string, index: number) => {
                     return <div key={index+' nav-item'}
                     className={store.navItemSelected === elem? 'nav-item sel': 'nav-item'}
+                    style={elem === 'Logout'? {marginRight: 0} : {marginRight: '65px'}}
                     onClick={()=>this.handleClick(elem)}>
                     {elem}</div>
                 })}
             </div>
             :
             <div className='Navigation'>
-                <div className='nav-item' onClick={()=>this.handleClick('Inicio')}>Inicio</div>
-                <div className='nav-item' onClick={()=>this.handleClick('Horario')}>Horario</div>
+                <div className={store.navItemSelected === 'Inicio'? 'nav-item sel': 'nav-item'} style={{marginRight: '65px'}} onClick={()=>this.handleClick('Inicio')}>Inicio</div>
+                <div className={store.navItemSelected === 'Horario'? 'nav-item sel': 'nav-item'} style={{marginRight: '65px'}} onClick={()=>this.handleClick('Horario')}>Horario</div>
                 <div className='nav-item' onClick={()=>this.handleClick('Logout')}>Logout</div>
             </div>
         );

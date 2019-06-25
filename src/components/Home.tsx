@@ -25,30 +25,21 @@ class Home extends  Component <any, any>{
     this.handleClickTermine = this.handleClickTermine.bind(this);
   }
 
-  componentDidMount(){
-    //AuthFireBase.updateStore(store.currentUser.nombre);
-    setTimeout(() => {
-      if(AuthFireBase.ReadLocal() === false)this.props.history.push('/');
-      if(store.currentUser.rol === 'admin'){
-        DataBaseFireBase.getHorarioGen();
-        DataBaseFireBase.getMonitores();
-      }
-    }, 3000);
-  }
-
   handleClickLlegue(){
-      if(store.currentUser.nombre === '')return;
+    if(this.state.isDoneLlegue === true) return;
+    if(store.currentUser.nombre === '')return;
 
     if(store.diferenceCurrentAndInitial>5){
       let time = DataBaseFireBase.transfomNumberToTime(store.diferenceCurrentAndInitial - 5);
       store.displayToast('faltan: ' + time.split(':')[0] + ' Horas y ' + (parseInt(time.split(':')[1])) + ' Minutos, para poder marcar tu llegada', 'warning');
       return;
     }
+
     if(store.currentUser.inicio === 'null'){
       store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
       return;
     }
-    if(this.state.isDoneLlegue === true) return;
+    
     this.setState({isDoneLlegue: true});
 
     if(store.diferenceCurrentAndInitial<-5){
@@ -62,6 +53,7 @@ class Home extends  Component <any, any>{
   }
 
   handleClickTermine(){
+    if(this.state.isDoneTermine === true) return;
     if(store.currentUser.nombre === '')return; 
 
     if(store.diferenceCurrentAndFinal>5){
@@ -73,7 +65,6 @@ class Home extends  Component <any, any>{
       store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
       return;
     }
-    if(this.state.isDoneTermine === true) return;
     this.setState({isDoneTermine: true});
 
     if(store.diferenceCurrentAndFinal>5){
@@ -88,18 +79,12 @@ class Home extends  Component <any, any>{
 
   render(){
     return (
-     //store.currentUser.rol === 'monitor'?
-
       <section className="Home two-colums">
         <div className="first">
-        {store.currentUser.rol === 'monitor'?
           <Progress/>
-        :
-          <Monitor/>
-        }
         </div>
-        <div className="second">
 
+        <div className="second">
           <Navigation his={this.props.history}/>
 
           {store.navItemSelected === 'Inicio'? 
@@ -109,7 +94,6 @@ class Home extends  Component <any, any>{
               <p className='date' 
               style={this.state.isDoneLlegue? {color: '#c6c6c6'} :store.diferenceCurrentAndInitial>=5? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
 
-            {store.currentUser.rol === 'monitor'&& 
               <div className="btn-cont">
                 <div className="btn"
                 style={store.currentUser.inicio === 'null'? {opacity: .5}:store.diferenceCurrentAndInitial>5? {opacity: .5} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
@@ -121,7 +105,6 @@ class Home extends  Component <any, any>{
                 onClick={this.handleClickTermine}>
                   Terminé</div>
               </div>
-            }
             </div>
           :store.navItemSelected === 'Horario'?
             <Horario/>
@@ -132,13 +115,6 @@ class Home extends  Component <any, any>{
         }
         </div>
       </section>
-  
-      /*:store.currentUser.rol === 'admin'&&
-
-      <section className="Home two-colums">
-        admin
-      </section>*/
-      
     );
   }
 }

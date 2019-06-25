@@ -13,7 +13,7 @@ import * as serviceWorker from './serviceWorker';
 import Login from './components/Login';
 import ToastProv from './components/ToastProvider';
 import SingUp from './components/SingUp';
-import Home from './components/Home';
+import App from './components/App';
 
 
 const routing = (
@@ -22,7 +22,7 @@ const routing = (
         <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/SingUp" component={SingUp} />
-            <Route exact path="/Home" component={Home} />
+            <Route exact path="/Home" component={App} />
         </Switch>
     </Router>
   )

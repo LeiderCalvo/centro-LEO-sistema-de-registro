@@ -21,7 +21,7 @@ class Store {
     @observable horasPerdidas: number = 0;
     @observable registros: any = {};
     @observable monitores: {nombre: string, activo: boolean}[] = [];
-    @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: 'monitor', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
+    @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
         setInterval(()=>{
