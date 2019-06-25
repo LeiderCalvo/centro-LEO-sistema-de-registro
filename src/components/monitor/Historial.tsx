@@ -15,6 +15,19 @@ import { observer } from "mobx-react";
 import DataBaseFireBase from "../../utils/DataBaseFireBase";
 const theme = createMuiTheme({ palette: { type: "light", primary: blue } });
 
+const Appointment = ({children, style, ...restProps}: any) => (
+    <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: children[1].props.data.title === 'excusa'? '#c6c6c6' : '#88b3ff',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+  );
+
 @observer
 class Historial extends Component<any, any>{
 
@@ -90,7 +103,7 @@ class Historial extends Component<any, any>{
                             <MonthView />
                             <Toolbar />
                             <DateNavigator />
-                            <Appointments />
+                            <Appointments appointmentComponent={Appointment}/>
                         </Scheduler>
                     </MuiThemeProvider>
                 </div>

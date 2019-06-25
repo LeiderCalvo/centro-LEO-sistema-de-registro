@@ -28,4 +28,21 @@
             width: 10px;
         }
     }
+
+    .MuiButton-label{
+        color: $gris-color;
+    }
+
+    .MuiToolbar-gutters{
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+    }
+
+    .MuiTableRow-root{
+        div{
+            color: $gris-color;
+            font-size: 15px;
+        }
+    }
 }
