@@ -66,6 +66,31 @@ const DayScaleCellBase = ({ classes, ...restProps } : any) => {
 
 const DayScaleCell : any = withStyles(style, { name: 'DayScaleCell' })(DayScaleCellBase);
 
+let names : string[] = [];
+let colors : string[] = ['#88b3ff', '#d6833c', '#f0c85e', '#a6c6e1', '#008057', '#365374', '#c44131', '#fef160', 'ac96c1', 'ab619d', '00967f', '544199'];
+let cont: number= 0;
+
+const Appointment = ({children, style, ...restProps}: any) => {
+  if(names.indexOf(children[1].props.data.title) === -1){
+    names.push(children[1].props.data.title);
+  }
+
+  cont = names.indexOf(children[1].props.data.title);
+
+return (<Appointments.Appointment
+    {...restProps}
+    style={{
+      ...style,
+      backgroundColor: colors[cont],
+      opacity: .8,
+      borderRadius: '8px',
+    }}
+  >
+    {children}
+    {}
+  </Appointments.Appointment>
+)};
+
 @observer
 class Horario extends Component<any, any>{
 
@@ -102,7 +127,7 @@ class Horario extends Component<any, any>{
             cellDuration={30}
             timeTableCellComponent={TimeTableCell}
             dayScaleCellComponent={DayScaleCell}/>
-            <Appointments />
+            <Appointments appointmentComponent={Appointment}/>
             <AppointmentTooltip
             showCloseButton
             />
