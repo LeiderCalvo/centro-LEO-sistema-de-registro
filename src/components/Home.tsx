@@ -7,9 +7,7 @@ import store from '../stores/store';
 import DataBaseFireBase from '../utils/DataBaseFireBase';
 import Horario from './monitor/Horario';
 import Excusas from './monitor/Excusas';
-import AuthFireBase from '../utils/AuthFireBase';
 import Historial from './monitor/Historial';
-import Monitor from './Monitors';
 
 @observer
 class Home extends  Component <any, any>{
@@ -23,6 +21,7 @@ class Home extends  Component <any, any>{
 
     this.handleClickLlegue = this.handleClickLlegue.bind(this);
     this.handleClickTermine = this.handleClickTermine.bind(this);
+    DataBaseFireBase.setActivo(store.currentUser.nombre);
   }
 
   handleClickLlegue(){
@@ -85,7 +84,7 @@ class Home extends  Component <any, any>{
         </div>
 
         <div className="second">
-          <Navigation his={this.props.history}/>
+          <Navigation his={this.props.his}/>
 
           {store.navItemSelected === 'Inicio'? 
             <div className="workArea uno">

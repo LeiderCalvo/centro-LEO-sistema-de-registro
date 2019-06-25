@@ -17,8 +17,7 @@ class SingUp extends Component<any, any>{
             password: '',
             horario: [],
             temp: '',
-            temp2: '',
-            dias : ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
+            temp2: ''
         }
 
         this.onSingUp = this.onSingUp.bind(this);
@@ -39,8 +38,7 @@ class SingUp extends Component<any, any>{
             password: '',
             horario: [],
             temp: '',
-            temp2: '',
-            dias : ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
+            temp2: ''
         });
     }
     
@@ -168,7 +166,7 @@ class SingUp extends Component<any, any>{
                     :this.state.step >=2 &&
                     <div className="new-cont-2">
                         <div className="inp-cont horarios">
-                            <h3 className='titulo-dia'>{this.state.dias[this.state.step-2]}</h3>
+                            <h3 className='titulo-dia'>{store.dias[this.state.step-2]}</h3>
                             <div className="label-cont">
                                 <h3 className='label'>Comienzo de Jornada</h3>
                                 <input type="time" value={this.state.temp}

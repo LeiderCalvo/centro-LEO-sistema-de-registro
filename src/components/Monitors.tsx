@@ -5,6 +5,13 @@ import store from '../stores/store';
 
 @observer
 class Monitor extends React.Component<any, any>{
+    constructor(props: any){
+        super(props);
+        this.state = {
+            isAllMonitors: false,
+        }
+    }
+
     render(){
         return(
             <div className="Monitor">
@@ -14,15 +21,23 @@ class Monitor extends React.Component<any, any>{
                 </div>
 
                 <div className="tipo-lista">
-                    <p>Monitores de turno.</p>
-                    <span className="btn-cambio">></span>
+                    <p>{this.state.isAllMonitors? 'Todos los monitores': 'Monitores de turno.'}</p>
+                    <span className="btn-cambio" onClick={()=>{
+                        this.setState((prevState : any)=>{return {isAllMonitors: !prevState.isAllMonitors}})
+                    }}>{this.state.isAllMonitors? '<': '>'}</span>
                 </div>
 
                 <div className="list-cont">
-                    {
+                    {this.state.isAllMonitors?
                         store.monitores.map((elem, index)=>{
                             return <div key={index+'monitor'} className="monitor">
                             <p>{elem.nombre}</p>
+                            </div>
+                        })
+                    :
+                        store.currentMonitors.map((elem: any, index : number)=>{
+                            return <div key={index+'monitor'} className="monitor">
+                            <p>{elem}</p>
                             <span></span>
                             </div>
                         })

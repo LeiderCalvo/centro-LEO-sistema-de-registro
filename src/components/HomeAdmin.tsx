@@ -3,9 +3,16 @@ import { observer } from "mobx-react";
 import store from "../stores/store";
 import Monitor from "./Monitors";
 import Navigation from "./monitor/Navigation";
+import DataBaseFireBase from "../utils/DataBaseFireBase";
+import Horario from "./monitor/Horario";
 
 @observer
 class HomeAdmin extends Component <any, any>{
+    constructor(props: any){
+        super(props);
+        DataBaseFireBase.getActivos();
+    }
+
     render(){
         return(
             <section className="Home two-colums">
@@ -22,7 +29,7 @@ class HomeAdmin extends Component <any, any>{
                         <p className='date' style={{color: '#88b3ff'}}>{store.currentDate}</p>
                     </div>
                 :store.navItemSelected === 'Horario'&&
-                    <div className="horgen"></div>
+                    <Horario/>
                 }
                 </div>
             </section>

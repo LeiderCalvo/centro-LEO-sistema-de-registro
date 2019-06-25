@@ -248,4 +248,35 @@ function updateHoras(user:string) {
 }
 
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores};
+//////////////////////////////////////////////////////////
+
+function getActivos() {
+  DataBase.ref('monitoresActivos').on('value', function (activos: any) {
+    activos.exists()&& store.setMonitoresActivos(activos.val());
+  });
+}
+
+function setActivo(name:string) {
+  DataBase.ref('monitoresActivos').once('value').then(function (activos: any) {
+    if(activos.exists()){
+      DataBase.ref('monitoresActivos').set([...activos.val(), name]);
+    }else{
+      DataBase.ref('monitoresActivos').set([name]);
+    }
+  });
+}
+
+function removeActivo(name:string) {
+  DataBase.ref('monitoresActivos').once('value').then(function (activos: any) {
+    let temp = [];
+    for (let i = 0; i < activos.length; i++) {
+      const elem = activos[i];
+      if(elem === name)break;
+      temp.push(elem);
+    }
+    DataBase.ref('monitoresActivos').set(temp);
+  });
+}
+
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos};

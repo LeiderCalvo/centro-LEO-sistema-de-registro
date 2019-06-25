@@ -7,6 +7,9 @@
         color: $gris-color;
         @include font-size(33px);
         text-decoration: none;
+        border: none;
+        background: none;
+        cursor: pointer;
     }
 
     .sel{

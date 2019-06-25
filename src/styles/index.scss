@@ -81,6 +81,7 @@ code {
   color: white;
   @include font-size(33px);
   border: none;
+  cursor: pointer;
 
   &:hover{
       opacity: .8;

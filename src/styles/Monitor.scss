@@ -40,7 +40,11 @@
         flex-direction: row;
         justify-content: space-between;
 
-        span{color: white}
+        span{color: white;
+            width: 20px;
+            text-align: right;
+            font-weight: 800;
+            cursor: pointer;}
     }
 
     .list-cont{
@@ -55,6 +59,7 @@
             background-color: rgba($color: #fff, $alpha: .75);
             border-radius: 70px;
             margin: 10px 0;
+            cursor: pointer;
 
             p{
                 color: $azul-color;

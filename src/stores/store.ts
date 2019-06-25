@@ -20,6 +20,7 @@ class Store {
     @observable horasAdiconales: number = 0;
     @observable horasPerdidas: number = 0;
     @observable registros: any = {};
+    @observable monitoresActivos : string[] = [];
     @observable monitores: {nombre: string, activo: boolean}[] = [];
     @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
@@ -98,12 +99,26 @@ class Store {
         this.currentUser = val;
     }
 
+    @action setMonitoresActivos(val: any){
+        this.monitoresActivos = val;
+    }
+
     @action setExcusas(val: any[]){
         for (let i = 0; i < val.length; i++) {
             const elem = val[i];
             val[i].date = new Date(elem.date);
         }
         this.excusas = val;
+    }
+
+    @computed get currentMonitors(){
+        let temp :any = this.currentUser.horario;
+        let temp2 : any = [];
+        let currentHour = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
+        this.currentUser.horario && temp[this.currentUser.dia].map((user : any)=>{
+            if(currentHour>user.inicio && currentHour<user.fin)temp2.push(user.monitor);
+        });
+        return temp2;
     }
 
     @computed get heightBar(){
