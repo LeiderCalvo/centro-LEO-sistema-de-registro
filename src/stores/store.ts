@@ -7,6 +7,9 @@ export type Usuario = {nombre: string, password: string, horario: Horario};
 
 class Store {
 
+    @observable dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+    @observable meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
     @observable fecha : {year: number,mes: number,fecha: number,dia: number,hora: number,minutos: number,segundos: number, date: any} = {year: 0,mes: 0,fecha: 0,dia: 0,hora: 0,minutos: 0,segundos: 0, date : 0};
     @observable isLoged : boolean = false;
     @observable isLoging : boolean = false;
@@ -125,9 +128,7 @@ class Store {
     }
 
     @computed get currentDate(){
-        let dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
-        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        return dias[this.fecha.dia - 1] + ', ' + this.fecha.fecha + ' de ' + meses[this.fecha.mes] + ' ' + this.fecha.year;
+        return this.dias[this.fecha.dia - 1] + ', ' + this.fecha.fecha + ' de ' + this.meses[this.fecha.mes] + ' ' + this.fecha.year;
     }
 
     @computed get progressAdvice(){
@@ -136,15 +137,13 @@ class Store {
                 return 'Recuerda que si no registras tu llegada o salida con 5 minutos máximo de tardanza, se te descontará de tus horas.';
             
             case 'Horario':
-                return 'El marcador naranja en tu horario corresponde a las horas adicionales que te hayan sido asignadas últimamente.';
+                return 'El marcador naranja en tu horario, corresponde a las horas adicionales que te hayan sido asignadas últimamente.';
 
             case 'Excusas':
                 return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga.';
 
             case 'Historial':
-                return `Hecha un vistazo a tu registro de trabajo en horas.
-
-                Los marcadores grises en tu historial corresponden a las horas que has faltado con o sin excusa.`;
+                return `Hecha un vistazo a tu registro de trabajo en horas. El marcador gris en tu historial corresponde a los días que has con excusa.`;
         
             default:
                 return 'Cargando ...';

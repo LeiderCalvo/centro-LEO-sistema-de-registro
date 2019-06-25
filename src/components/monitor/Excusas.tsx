@@ -39,24 +39,29 @@ class Excusas extends Component<any, any> {
         plaso.setHours(this.state.inicio.split(':')[0]);
         plaso.setMonth(parseInt(this.state.fecha.split('-')[1]) - 1);
         plaso.setDate(this.state.fecha.split('-')[2]);
-        plaso.setMinutes(this.state.inicio.split(':')[1])
-        
-        if(Math.abs(plaso.getTime() - Date.now()) <= 172800000){
-            store.displayToast('La fecha es muy proxima, debe tener dos días minimo de anticipación', 'error');
-            return;
-        }
+        plaso.setMinutes(this.state.inicio.split(':')[1]);
 
-        let date = Date.now();
-        if(this.state.file){
-            StorageFireBase.uploadImg(date, this.state.file, this.addExcuse);
-        }else{
-            this.addExcuse(date, '');
-        }
+        this.setState({plaso: plaso}, ()=>{
+            let date = Date.now();
+            if(Math.abs(plaso.getTime() - date) <= 172800000){
+                store.displayToast('La fecha es muy proxima, debe tener dos días minimo de anticipación', 'error');
+                return;
+            }
+    
+            if(this.state.file){
+                StorageFireBase.uploadImg(date, this.state.file, this.addExcuse);
+            }else{
+                this.addExcuse(date, '');
+            }
+        });
+        
     }
 
     addExcuse(date: number, download: string){
+        let temp = store.dias[this.state.plaso.getDay() - 1] + ', ' + this.state.plaso.getDate() + ' de ' + store.meses[this.state.plaso.getMonth()] + ' ' + this.state.plaso.getFullYear();
+
         DataBaseFireBase.addNewExcuse(date, {razon: this.state.razon, fecha: this.state.fecha, inicio: this.state.inicio, fin: this.state.fin, url: download});
-        DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), this.state.fecha, 'excusa');
+        DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), temp, 'excusa');
         this.setState({razon: '', fecha: '', inicio: '', fin: '', file: null, isDropZoneActive: false});
     }
 
