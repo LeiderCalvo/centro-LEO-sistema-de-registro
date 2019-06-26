@@ -51,7 +51,7 @@
         width: 55%;
         height: 300px;
         @include scrollBar();
-        div{
+        .monitor{
             @include centrado();
             justify-content: space-between;
             width: 100%;
@@ -75,6 +75,11 @@
                 background-color: $gris-color;;
                 margin-right: 30px;
             }
+        }
+
+        .selected{
+            background-color: $azul-color;
+            p{color: #fff;}
         }
     }
 

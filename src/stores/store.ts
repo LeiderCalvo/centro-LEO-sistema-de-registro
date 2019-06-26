@@ -22,6 +22,7 @@ class Store {
     @observable registros: any = {};
     @observable monitoresActivos : string[] = [];
     @observable monitores: {nombre: string, activo: boolean}[] = [];
+    @observable monitorSelected : string | null = null;
     @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
 
     constructor(){
@@ -75,6 +76,10 @@ class Store {
         }
     }
 
+    @action setMonitorSelected(val: string | null){
+        this.monitorSelected = val;
+    }
+
     @action setMonitores(val: {nombre: string, activo: boolean}[]){
         this.monitores = val;
     }
@@ -117,6 +122,7 @@ class Store {
         let currentHour = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
         this.currentUser.horario && temp[this.currentUser.dia].map((user : any)=>{
             if(currentHour>user.inicio && currentHour<user.fin)temp2.push(user.monitor);
+            return true;
         });
         return temp2;
     }

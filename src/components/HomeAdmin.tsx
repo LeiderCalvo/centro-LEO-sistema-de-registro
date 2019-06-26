@@ -10,6 +10,9 @@ import Horario from "./monitor/Horario";
 class HomeAdmin extends Component <any, any>{
     constructor(props: any){
         super(props);
+        this.state = {
+            selected: null
+        }
         DataBaseFireBase.getActivos();
     }
 
@@ -23,7 +26,9 @@ class HomeAdmin extends Component <any, any>{
                 <div className="second">
                 <Navigation his={this.props.his}/>
 
-                {store.navItemSelected === 'Inicio'? 
+                {store.monitorSelected !== null?
+                    <div className="workArea uno">{store.monitorSelected}</div>
+                :store.navItemSelected === 'Inicio'? 
                     <div className="workArea uno">
                         <p className='time' style={{color: '#88b3ff'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
                         <p className='date' style={{color: '#88b3ff'}}>{store.currentDate}</p>
