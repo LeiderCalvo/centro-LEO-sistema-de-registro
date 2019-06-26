@@ -5,6 +5,7 @@ import Monitor from "./Monitors";
 import Navigation from "./monitor/Navigation";
 import DataBaseFireBase from "../utils/DataBaseFireBase";
 import Horario from "./monitor/Horario";
+import Historial from "./monitor/Historial";
 
 @observer
 class HomeAdmin extends Component <any, any>{
@@ -27,7 +28,7 @@ class HomeAdmin extends Component <any, any>{
                 <Navigation his={this.props.his}/>
 
                 {store.monitorSelected !== null?
-                    <div className="workArea uno">{store.monitorSelected}</div>
+                    <Historial/>
                 :store.navItemSelected === 'Inicio'? 
                     <div className="workArea uno">
                         <p className='time' style={{color: '#88b3ff'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>

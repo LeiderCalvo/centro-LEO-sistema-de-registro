@@ -77,7 +77,13 @@ class Store {
     }
 
     @action setMonitorSelected(val: string | null){
-        this.monitorSelected = val;
+        if(val !== null){
+            this.monitorSelected = val;
+            DataBaseFireBase.getInfoMonitor(val);
+            console.log('done');
+        }else{
+            this.monitorSelected = val;
+        }
     }
 
     @action setMonitores(val: {nombre: string, activo: boolean}[]){

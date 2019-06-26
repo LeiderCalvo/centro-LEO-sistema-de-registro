@@ -229,21 +229,21 @@ function getExcuces(user : string){
 
 function updateRegistro(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/registros').on('value', function (registros:any) {
-    registros.exists() && store.setRegistros(registros.val());
+    registros.exists()? store.setRegistros(registros.val()) : store.setRegistros({});
   });
 }
 
 function updateHoras(user:string) {
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasLogradas').on('value', function (hora:any) {
-    hora.exists() && store.setHorasLogradas(hora.val());
+    hora.exists() ? store.setHorasLogradas(hora.val()) : store.setHorasLogradas(0);
   });
   
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasPerdidas').on('value', function (hora:any) {
-    hora.exists() && store.setHorasPerdidas(hora.val());
+    hora.exists() ? store.setHorasPerdidas(hora.val()) : store.setHorasPerdidas(0);
   });
 
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasAdicionales').on('value',function (hora:any) {
-    hora.exists() && store.setHorasAdicionales(hora.val());
+    hora.exists() ? store.setHorasAdicionales(hora.val()) : store.setHorasAdicionales(0);
   });
 }
 
@@ -278,5 +278,11 @@ function removeActivo(name:string) {
   });
 }
 
+function getInfoMonitor(nombre:string) {
+  updateHoras(nombre);
+  updateRegistro(nombre);
+  console.log(nombre);
+}
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos};
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor};
