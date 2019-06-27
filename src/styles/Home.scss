@@ -31,15 +31,27 @@
                 @include font-size(66px);
                 margin-bottom: 30px;
             }
-            .excusa{
-                margin-bottom: 20px;
-                p{
-
+            .Slider{
+                display: flex;
+                flex-direction: row;
+                width: 460px;
+                justify-content: space-between;
+                *{transition: all 700ms ease-in-out;}
+                .excusa{
+                    #fecha{
+                        color: $naranja-color;
+                    }
                 }
-                #fecha{
-                    color: $naranja-color;
+
+                button{
+                    border: none;
+                    background: none;
+                    cursor: pointer;
+                    @include font-size(36px);
+                    color: $azul-color;
                 }
             }
+
             .btn-cont{
                 @include width2(560px, 1234px);
                 min-width: 450px;
