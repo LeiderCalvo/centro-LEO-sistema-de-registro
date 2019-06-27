@@ -15,6 +15,9 @@ class HomeAdmin extends Component <any, any>{
             selected: null
         }
         DataBaseFireBase.getActivos();
+        setTimeout(function () {
+            DataBaseFireBase.getAllExcuces();
+        }, 4000);
     }
 
     render(){
@@ -33,6 +36,14 @@ class HomeAdmin extends Component <any, any>{
                     <div className="workArea uno">
                         <p className='time' style={{color: '#88b3ff'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
                         <p className='date' style={{color: '#88b3ff'}}>{store.currentDate}</p>
+
+                        {store.excusas.map((elem, index)=>{
+                            return <div key={index+'exc'} className="excusa">
+                                <p id='fecha'>{elem.fecha+', '+DataBaseFireBase.transfomNumberToTime(elem.inicio)+' - '+DataBaseFireBase.transfomNumberToTime(elem.fin)}</p>
+                                <p>"{elem.razon}".</p>
+                                <p>({elem.monitor})</p>
+                            </div>
+                        })}
                     </div>
                 :store.navItemSelected === 'Horario'&&
                     <Horario/>

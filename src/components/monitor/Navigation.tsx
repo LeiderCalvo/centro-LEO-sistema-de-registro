@@ -19,7 +19,7 @@ class Navigation extends React.Component<any, any>{
         if(elem === 'Logout'){
             localStorage.removeItem('currentUser');
             localStorage.setItem('isCurrentUser', 'false');
-            DataBaseFireBase.removeActivo(store.currentUser.nombre);
+            store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
             this.props.his.push('/');
             return;
         }

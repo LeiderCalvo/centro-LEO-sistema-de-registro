@@ -24,14 +24,21 @@
         .uno{
             .time{
                 @include font-size(240px);
-                //color: $azul-color;
                 font-weight: 400;
                 margin-bottom: 0;
             }
             .date{
                 @include font-size(66px);
-                //color: $azul-color;
-                margin-bottom: 90px;
+                margin-bottom: 30px;
+            }
+            .excusa{
+                margin-bottom: 20px;
+                p{
+
+                }
+                #fecha{
+                    color: $naranja-color;
+                }
             }
             .btn-cont{
                 @include width2(560px, 1234px);

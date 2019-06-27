@@ -209,6 +209,30 @@ function addNewExcuse(time : number, object : {}) {
   });
 }
 
+function getAllExcuces(){
+  let temp2 : any[]= [];
+  for (let i = 0; i < store.monitores.length; i++) {    
+    const elem = store.monitores[i];
+    DataBase.ref('Usuarios/'+elem.nombre.toLowerCase()+'/excusas').on('value',
+    function (excusas : any) {
+      if(excusas.exists()){
+        for (const prop in excusas.val()) {
+          if (excusas.val().hasOwnProperty(prop)) {
+            const element = excusas.val()[prop];
+            let temp = new Date(element.fecha.replace(' de', ''));
+            if(temp.getTime() - Date.now() > 0){
+              store.displayToast(elem.nombre+' tiene excusas pendientes', 'info');
+              element.monitor = elem.nombre;
+              temp2.push(element);
+            }
+          }
+        } 
+        store.setExcusas(temp2);
+      }
+    });
+  }
+}
+
 function getExcuces(user : string){
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/excusas').on('value',
   function (excusas : any) {
@@ -252,7 +276,7 @@ function updateHoras(user:string) {
 
 function getActivos() {
   DataBase.ref('monitoresActivos').on('value', function (activos: any) {
-    activos.exists()&& store.setMonitoresActivos(activos.val());
+    activos.exists()? store.setMonitoresActivos(activos.val()):store.setMonitoresActivos([]);
   });
 }
 
@@ -285,4 +309,4 @@ function getInfoMonitor(nombre:string) {
 }
 
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor};
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces};

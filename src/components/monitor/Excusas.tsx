@@ -17,7 +17,8 @@ class Excusas extends Component<any, any> {
             inicio: '',
             fin: '',
             file: null,
-            isDropZoneActive: false
+            isDropZoneActive: false,
+            plaso: new Date()
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -47,6 +48,11 @@ class Excusas extends Component<any, any> {
                 store.displayToast('La fecha es muy proxima, debe tener dos días minimo de anticipación', 'error');
                 return;
             }
+
+            if(plaso.getTime() - date < 0){
+                store.displayToast('La fecha es anterior al día de hoy', 'error');
+                return;
+            }
     
             if(this.state.file){
                 StorageFireBase.uploadImg(date, this.state.file, this.addExcuse);
@@ -60,7 +66,8 @@ class Excusas extends Component<any, any> {
     addExcuse(date: number, download: string){
         let temp = store.dias[this.state.plaso.getDay() - 1] + ', ' + this.state.plaso.getDate() + ' de ' + store.meses[this.state.plaso.getMonth()] + ' ' + this.state.plaso.getFullYear();
 
-        DataBaseFireBase.addNewExcuse(date, {razon: this.state.razon, fecha: this.state.fecha, inicio: this.state.inicio, fin: this.state.fin, url: download});
+        DataBaseFireBase.addNewExcuse(date, {razon: this.state.razon, fecha: temp, inicio: DataBaseFireBase.transfomTimeToNumber(this.state.inicio), fin: DataBaseFireBase.transfomTimeToNumber(this.state.fin), url: download});
+
         DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), temp, 'excusa');
         this.setState({razon: '', fecha: '', inicio: '', fin: '', file: null, isDropZoneActive: false});
     }
@@ -144,9 +151,9 @@ class Excusas extends Component<any, any> {
                         return <div key={index+'excuces'} className="exc-row">
                             <p className="id item">{index}</p>
                             <p className="razon item">{elem.razon}</p>
-                            <p className="fecha item">{elem.fecha}</p>
-                            <p className="inicio item">{elem.inicio}</p>
-                            <p className="fin item">{elem.fin}</p>
+                            <p className="fecha item">{elem.fecha.split(',')[1].trim()}</p>
+                            <p className="inicio item">{DataBaseFireBase.transfomNumberToTime(elem.inicio)}</p>
+                            <p className="fin item">{DataBaseFireBase.transfomNumberToTime(elem.fin)}</p>
                         </div> 
                     })}
                 </div>

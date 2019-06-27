@@ -33,11 +33,9 @@ class Historial extends Component<any, any>{
 
     constructor(porps: any){
         super(porps);
-        let Appointments = [{title: 'holi', startDate: new Date(2019, 5, 20, 9, 30), endDate: new Date(2019, 6, 20, 11, 30)}];
 
         this.state = {
-            dia: Date.now(),
-            data : Appointments
+            dia: Date.now()
         }
     }
 
