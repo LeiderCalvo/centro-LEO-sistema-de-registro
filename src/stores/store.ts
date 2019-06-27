@@ -126,7 +126,7 @@ class Store {
         let temp :any = this.currentUser.horario;
         let temp2 : any = [];
         let currentHour = DataBaseFireBase.transfomTimeToNumber(this.fecha.hora+':'+this.fecha.minutos);
-        this.currentUser.horario && temp[this.currentUser.dia].map((user : any)=>{
+        this.currentUser.horario &&  temp[this.currentUser.dia]&& temp[this.currentUser.dia].map((user : any)=>{
             if(currentHour>user.inicio && currentHour<user.fin)temp2.push(user.monitor);
             return true;
         });

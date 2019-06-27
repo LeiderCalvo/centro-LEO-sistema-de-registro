@@ -12,7 +12,8 @@ class Login extends Component<any, any>{
         super(props);
         this.state = {
             usuario : '',
-            password : ''
+            password : '',
+            op: 1,
         }
 
         this.onLogin = this.onLogin.bind(this);
@@ -21,6 +22,10 @@ class Login extends Component<any, any>{
 
     componentDidMount(){
         if(AuthFireBase.ReadLocal() === true) this.props.history.push('/Home');
+        this.setState({op: 0});
+        setTimeout(() => {
+            this.setState({op: 1});
+        }, 300);
     }
 
     onLogin(val : boolean){
@@ -40,7 +45,7 @@ class Login extends Component<any, any>{
 
     render(){
         return(
-            <section className='Sing Login two-colums'>
+            <section className='Sing Login two-colums' style={{opacity: this.state.op}}>
                 <div className="colum first">
                     <div className="img-container"><img src="./images/banner.png" alt=""/></div>
                 </div>

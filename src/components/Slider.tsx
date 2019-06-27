@@ -28,7 +28,7 @@ class Slider extends React.Component<any,any> {
 
     render(){
         return(
-            store.excusas[this.state.pos] !== null && store.excusas[this.state.pos] !== undefined ?
+            store.excusas.length>=1 && store.excusas[this.state.pos] !== null && store.excusas[this.state.pos] !== undefined ?
                 <div className="Slider">
                     {store.excusas.length>1&&<button onClick={()=>this.handleClick('back')}>{'<'}</button>
                     }

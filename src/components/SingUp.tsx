@@ -17,7 +17,8 @@ class SingUp extends Component<any, any>{
             password: '',
             horario: [],
             temp: '',
-            temp2: ''
+            temp2: '',
+            op: 1,
         }
 
         this.onSingUp = this.onSingUp.bind(this);
@@ -28,6 +29,10 @@ class SingUp extends Component<any, any>{
 
     componentDidMount(){
         if(AuthFireBase.ReadLocal() === true) this.props.history.push('/Home');
+        this.setState({op: 0});
+        setTimeout(() => {
+            this.setState({op: 1});
+        }, 700);
     }
 
     onSingUp(val : boolean){
@@ -129,7 +134,7 @@ class SingUp extends Component<any, any>{
 
     render(){
         return(
-            <section className='Sing Singup two-colums'>
+            <section className='Sing Singup two-colums' style={{opacity: this.state.op}}>
                 <div className="colum first">
                     <div className="img-container"><img src="./images/banner.png" alt=""/></div>
                 </div>

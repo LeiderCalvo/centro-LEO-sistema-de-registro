@@ -8,7 +8,8 @@ class Monitor extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            isAllMonitors: false
+            isAllMonitors: false,
+            op: 1,
         }
 
         this.handleSelected = this.handleSelected.bind(this);
@@ -33,12 +34,15 @@ class Monitor extends React.Component<any, any>{
                     <p>{this.state.isAllMonitors? 'Todos los monitores': 'Monitores de turno.'}</p>
                     <span className="btn-cambio" 
                     onClick={()=>{
-                        this.setState((prevState : any)=>{return {isAllMonitors: !prevState.isAllMonitors}})
+                        this.setState({op: 0});
+                        setTimeout(() => {
+                            this.setState((prevState : any)=>{return {isAllMonitors: !prevState.isAllMonitors, mar:500, op:1}});
+                        }, 700);
                     }}
                     >{this.state.isAllMonitors? '<': '>'}</span>
                 </div>
 
-                <div className="list-cont">
+                <div className="list-cont" style={{opacity: this.state.op}}>
                     {this.state.isAllMonitors?
                         store.monitores.map((elem, index)=>{
                             return <div key={index+'monitor'}

@@ -16,13 +16,21 @@ class Home extends  Component <any, any>{
     super(props);
     this.state = {
       isDoneLlegue: false,
-      isDoneTermine: false
+      isDoneTermine: false,
+      op: 1
     }
 
     this.handleClickLlegue = this.handleClickLlegue.bind(this);
     this.handleClickTermine = this.handleClickTermine.bind(this);
     DataBaseFireBase.setActivo(store.currentUser.nombre);
   }
+
+  componentDidMount(){
+    this.setState({op: 0});
+    setTimeout(() => {
+        this.setState({op: 1});
+    }, 700);
+}
 
   handleClickLlegue(){
     if(this.state.isDoneLlegue === true) return;
@@ -78,7 +86,7 @@ class Home extends  Component <any, any>{
 
   render(){
     return (
-      <section className="Home two-colums">
+      <section className="Home two-colums" style={{opacity: this.state.op}}>
         <div className="first">
           <Progress/>
         </div>

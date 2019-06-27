@@ -13,7 +13,8 @@ class HomeAdmin extends Component <any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            selected: null
+            selected: null,
+            op: 1,
         }
         DataBaseFireBase.getActivos();
         setTimeout(function () {
@@ -21,9 +22,16 @@ class HomeAdmin extends Component <any, any>{
         }, 4000);
     }
 
+    componentDidMount(){
+        this.setState({op: 0});
+        setTimeout(() => {
+            this.setState({op: 1});
+        }, 700);
+    }
+
     render(){
         return(
-            <section className="Home two-colums">
+            <section className="Home two-colums" style={{opacity: this.state.op}}>
                 <div className="first">
                     <Monitor/>
                 </div>
@@ -38,17 +46,6 @@ class HomeAdmin extends Component <any, any>{
                         <p className='time' style={{color: '#88b3ff'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
                         <p className='date' style={{color: '#88b3ff'}}>{store.currentDate}</p>
                         <Slider/>
-
-                        {/*store.excusas.map((elem, index)=>{
-                            return <div key={index+'exc'} className="excusa">
-                                <p id='fecha'>{elem.fecha+', '+DataBaseFireBase.transfomNumberToTime(elem.inicio)+' - '+DataBaseFireBase.transfomNumberToTime(elem.fin)}</p>
-                                <p>"{elem.razon}".</p>
-                                <p>({elem.monitor})</p>
-                            </div>
-                        })
-
-                        */
-                        }
                     </div>
                 :store.navItemSelected === 'Horario'&&
                     <Horario/>
