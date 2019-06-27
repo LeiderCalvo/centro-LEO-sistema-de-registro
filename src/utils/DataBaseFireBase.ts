@@ -1,4 +1,5 @@
 import store, { Usuario, Horario } from "../stores/store";
+import { display } from "@material-ui/system";
 
 let DataBase : any = null;
 
@@ -252,12 +253,14 @@ function getExcuces(user : string){
 }
 
 function updateRegistro(user:string) {
+  if(user === null || user == undefined)return;
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/registros').on('value', function (registros:any) {
     registros.exists()? store.setRegistros(registros.val()) : store.setRegistros({});
   });
 }
 
 function updateHoras(user:string) {
+  if(user === null || user == undefined)return;
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasLogradas').on('value', function (hora:any) {
     hora.exists() ? store.setHorasLogradas(hora.val()) : store.setHorasLogradas(0);
   });
@@ -305,8 +308,12 @@ function removeActivo(name:string) {
 function getInfoMonitor(nombre:string) {
   updateHoras(nombre);
   updateRegistro(nombre);
-  console.log(nombre);
+}
+
+function setHoraAdicional(user: string, hora : number, date: string){
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/adicionalesPendientes').push({hora: hora, fecha: date});
+  store.displayToast('el horario adiconal se ha asignado con éxito', 'success');
 }
 
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces};
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional};

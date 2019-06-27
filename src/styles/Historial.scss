@@ -1,6 +1,7 @@
 @import '../utils/vars';
 
 .Historial{
+    z-index: 0;
     .horas{
         width: 100%;
         display: flex;
