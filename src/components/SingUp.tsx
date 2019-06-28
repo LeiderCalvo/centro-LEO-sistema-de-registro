@@ -105,7 +105,12 @@ class SingUp extends Component<any, any>{
                     return;
                 }
 
-                this.setState({ horario: [...hor, [{ inicio: inicio, fin: final }]], step: step + 1, temp: '', temp2: '', isMas: false});
+                this.setState({ horario: [...hor, [{ inicio: inicio, fin: final }]], step: step + 1, temp: '', temp2: '', isMas: false},
+                ()=>{
+                    if (this.state.step >= 6) {
+                        this.wrapInformationToSingUp();
+                    }
+                });
             } else {
                 store.displayToast('Por favor llene todos los campos', 'warning'); return;
             }

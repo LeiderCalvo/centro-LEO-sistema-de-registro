@@ -122,6 +122,7 @@ function getHorario(user: string) {
             const elem = adicional.val()[prop];
             let temp = new Date(elem.fecha.replace(' de', ''));
             if (temp.getFullYear() === store.fecha.year && temp.getMonth() === store.fecha.mes && temp.getDay() === store.fecha.dia) {
+              elem.id = prop;
               arr.push(elem);
             }
           }
@@ -169,6 +170,10 @@ function getCloserHorario(dia: any) {
 
   let inicio = transfomNumberToTime(dia[cercano].inicio);
   let final = transfomNumberToTime(dia[cercano].fin);
+
+  if(dia[cercano].fecha !== null && dia[cercano].fecha!== undefined){ 
+    DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/adicionalesPendientes/'+dia[cercano].id).set({});
+  }
 
   store.setCurrentUser('inicio', inicio);
   store.setCurrentUser('fin', final);

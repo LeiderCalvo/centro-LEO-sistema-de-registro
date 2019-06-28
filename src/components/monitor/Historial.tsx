@@ -41,7 +41,7 @@ class Historial extends Component<any, any>{
 
     formatRegistro(){
         let raw : any = store.registros && store.registros;
-        console.log(raw);
+        
         let temp : {title: string, startDate: Date, endDate: Date,}[] = [];
 
         for (let prop in raw) {
