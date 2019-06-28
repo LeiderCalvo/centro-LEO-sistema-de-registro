@@ -1,5 +1,4 @@
 import store, { Usuario, Horario } from "../stores/store";
-import { display } from "@material-ui/system";
 
 let DataBase : any = null;
 
@@ -103,14 +102,14 @@ function getHorario(user:string) {
   });
 
   if(store.fecha.dia===0 || store.fecha.dia >5)return;
-  let dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario/'+dias[store.fecha.dia - 1]).once('value').then(function (dia:any) {
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/horario/'+store.dias[store.fecha.dia - 1]).once('value').then(function (dia:any) {
 
-    store.setCurrentUser('dia', dias[store.fecha.dia - 1]);
+    store.setCurrentUser('dia', store.dias[store.fecha.dia - 1]);
     if(dia.val() === null || dia.val() === undefined){
+      //onCurrentAditional();
       store.setCurrentUser('inicio', 'null');
-      store.setCurrentUser('fin', 'null');
-      return;
+        store.setCurrentUser('fin', 'null');
+      return
     }
 
     if(dia.val().length === 1){
@@ -121,19 +120,54 @@ function getHorario(user:string) {
       return;
     }
 
-    getCloserHorario(dia);
+    getCloserHorario(dia.val());
   });
+}
+
+function onCurrentAditional() {
+  DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/adicionalesPendientes').once('value').then(function (adicional:any) {
+    if (adicional.exists()) {
+      let arr = [];
+      for (const prop in adicional.val()) {
+        if (adicional.val().hasOwnProperty(prop)) {
+          const elem = adicional.val()[prop];
+          let temp = new Date(elem.fecha.replace(' de', ''));
+          if(temp.getFullYear() === store.fecha.year && temp.getMonth() === store.fecha.mes && temp.getDay() === store.fecha.dia){
+            arr.push(elem);
+          }
+        }
+      }
+
+      if(arr.length === 1){
+        let inicio = transfomNumberToTime(arr[0].inicio);
+        let final = transfomNumberToTime(arr[0].fin);
+        store.setCurrentUser('inicio', inicio);
+        store.setCurrentUser('fin', final);
+        return;
+      }
+      
+      if(arr.length === 0){
+        store.setCurrentUser('inicio', 'null');
+        store.setCurrentUser('fin', 'null');
+        return;
+      }
+
+      getCloserHorario(arr);
+    }else{
+      store.setCurrentUser('inicio', 'null');
+      store.setCurrentUser('fin', 'null');
+      return;
+    }
+  });
+  return true;
 }
 
 function getCloserHorario(dia: any) {
   let dist: any = [];
   let currentTime = transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos);
-  dia.val().forEach((elem: any) => {
+  dia.forEach((elem: any) => {
+    console.log(elem, 'haber');
     dist.push(parseInt(elem.inicio)-currentTime);
-   /* console.log('_________________________');
-    console.log(parseInt(elem.inicio), elem.inicio + 'elem.inicio');
-    console.log(currentTime, 'currentTime');
-    console.log(parseInt(elem.inicio)-currentTime, 'dist');*/
   });
 
   let min: number = 500;
@@ -153,15 +187,10 @@ function getCloserHorario(dia: any) {
       min = Math.abs(elem);
       cercano = i;
     }
-/*
-    console.log('_____________');
-    console.log(elem, 'dist'+i);
-    console.log(min, 'min');
-    console.log(cercano, '');*/
   }
 
-  let inicio = transfomNumberToTime(dia.val()[cercano].inicio);
-  let final = transfomNumberToTime(dia.val()[cercano].fin);
+  let inicio = transfomNumberToTime(dia[cercano].inicio);
+  let final = transfomNumberToTime(dia[cercano].fin);
 
   store.setCurrentUser('inicio', inicio);
   store.setCurrentUser('fin', final);
@@ -177,6 +206,10 @@ function transfomTimeToNumber(val:string) {
 
 function setRegistro(currentTime : number, currentDate: string, tipo: string) {
   DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/registros').push({hora: currentTime, fecha: currentDate, tipo: tipo});
+}
+
+function setRegistroEsp(monitor:string ,currentTime : number, currentDate: string, tipo: string) {
+  DataBase.ref('Usuarios/'+monitor.toLowerCase()+'/registros').push({hora: currentTime, fecha: currentDate, tipo: tipo});
 }
 
 function setHorasPerdidas(cantidad:number) {
@@ -253,14 +286,14 @@ function getExcuces(user : string){
 }
 
 function updateRegistro(user:string) {
-  if(user === null || user == undefined)return;
+  if(user === null || user === undefined)return;
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/registros').on('value', function (registros:any) {
     registros.exists()? store.setRegistros(registros.val()) : store.setRegistros({});
   });
 }
 
 function updateHoras(user:string) {
-  if(user === null || user == undefined)return;
+  if(user === null || user === undefined)return;
   DataBase.ref('Usuarios/'+user.toLowerCase()+'/horasLogradas').on('value', function (hora:any) {
     hora.exists() ? store.setHorasLogradas(hora.val()) : store.setHorasLogradas(0);
   });
@@ -310,10 +343,24 @@ function getInfoMonitor(nombre:string) {
   updateRegistro(nombre);
 }
 
-function setHoraAdicional(user: string, hora : number, date: string){
-  DataBase.ref('Usuarios/'+user.toLowerCase()+'/adicionalesPendientes').push({hora: hora, fecha: date});
+function setHoraAdicional(user: string, hora : number, horafin : number, date: string){
+  DataBase.ref('Usuarios/'+user.toLowerCase()+'/adicionalesPendientes').push({inicio: hora, fin: horafin, fecha: date});
   store.displayToast('el horario adiconal se ha asignado con éxito', 'success');
 }
 
+function getMyAditionals() {
+  DataBase.ref('Usuarios/'+store.currentUser.nombre.toLowerCase()+'/adicionalesPendientes').on('value', function (adicional:any) {
+    if(adicional.exists()){
+      for (const prop in adicional.val()) {
+        if (adicional.val().hasOwnProperty(prop)) {
+          const elem = adicional.val()[prop];
+          store.displayToast('Tienes horas adcionales pendientes para el ' + elem.fecha + ' a las '+ transfomNumberToTime(elem.inicio) + ' hasta las '+ transfomNumberToTime(elem.fin), 'info');
+        }
+      }
+    }
+  });
+}
 
-export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional};
+
+export default {addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional, setRegistroEsp,
+getMyAditionals};

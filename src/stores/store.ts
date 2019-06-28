@@ -79,8 +79,9 @@ class Store {
     @action setMonitorSelected(val: string | null){
         if(val !== null){
             this.monitorSelected = val;
-            DataBaseFireBase.getInfoMonitor(val);
-            console.log('done');
+            setTimeout(() => {
+                DataBaseFireBase.getInfoMonitor(val);
+            }, 300);
         }else{
             this.monitorSelected = val;
         }

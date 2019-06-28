@@ -77,6 +77,7 @@ function updateStore(usuario: string) {
   DataBaseFireBase.updateHoras(usuario);
   DataBaseFireBase.updateRegistro(store.currentUser.nombre);
   store.setNavItemSelected('Inicio');
+  store.setMonitorSelected(null);
 }
 
 function addToLocal() {

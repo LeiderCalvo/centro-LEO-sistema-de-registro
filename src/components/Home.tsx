@@ -26,6 +26,7 @@ class Home extends  Component <any, any>{
   }
 
   componentDidMount(){
+    DataBaseFireBase.getMyAditionals();
     this.setState({op: 0});
     setTimeout(() => {
         this.setState({op: 1});

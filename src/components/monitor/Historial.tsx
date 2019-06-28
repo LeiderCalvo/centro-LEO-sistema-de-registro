@@ -20,7 +20,7 @@ const Appointment = ({children, style, ...restProps}: any) => (
       {...restProps}
       style={{
         ...style,
-        backgroundColor: children[1].props.data.title === 'excusa'? '#c6c6c6' : '#88b3ff',
+        backgroundColor: children[1].props.data.title === 'excusa'? '#c6c6c6' : children[1].props.data.title === 'adicional'? '#d6833c':'#88b3ff',
         borderRadius: '8px',
       }}
     >
@@ -41,6 +41,7 @@ class Historial extends Component<any, any>{
 
     formatRegistro(){
         let raw : any = store.registros && store.registros;
+        console.log(raw);
         let temp : {title: string, startDate: Date, endDate: Date,}[] = [];
 
         for (let prop in raw) {
