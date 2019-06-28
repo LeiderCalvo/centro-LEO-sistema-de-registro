@@ -39,7 +39,6 @@ function Login(usuario : string, password  : string, callback : any){
       store.setLoged(false);
       callback(false);
       store.displayToast(error+'', 'error');
-      console.log('Login error ', error);
     }
   });
 }
@@ -66,7 +65,6 @@ function SingUp(usuario : Usuario, callback : any){
       store.setLoging(false);
       store.setLoged(false);
       store.displayToast(error+'', 'error');
-      console.log('sing Up error ', error);
     }
   })
 }
