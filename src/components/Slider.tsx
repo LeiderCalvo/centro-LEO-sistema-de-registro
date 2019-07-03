@@ -29,7 +29,7 @@ class Slider extends React.Component<any,any> {
     render(){
         return(
             store.excusas.length>=1 && store.excusas[this.state.pos] !== null && store.excusas[this.state.pos] !== undefined ?
-                <div className="Slider">
+                <div className="Slider" style={store.excusas.length>1?{justifyContent:'space-between'}:{justifyContent: 'center'}}>
                     {store.excusas.length>1&&<button onClick={()=>this.handleClick('back')}>{'<'}</button>
                     }
                     <div className="excusa" style={{opacity: this.state.op}}>
