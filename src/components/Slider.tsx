@@ -41,7 +41,7 @@ class Slider extends React.Component<any,any> {
                                 this.setState({opImg:1});
                             }, 700);
                         }}
-                        style={store.excusas[this.state.pos].url?{textDecoration: "underline"}:{textDecoration: "none"}}>
+                        style={store.excusas[this.state.pos].url?{textDecoration: "underline", cursor: "pointer"}:{textDecoration: "none"}}>
                         {store.excusas[this.state.pos].fecha+', '+DataBaseFireBase.transfomNumberToTime(store.excusas[this.state.pos].inicio)+' - '+DataBaseFireBase.transfomNumberToTime(store.excusas[this.state.pos].fin)}</p>
                         <p>"{store.excusas[this.state.pos].razon}".</p>
                         <p>({store.excusas[this.state.pos].monitor})</p>
