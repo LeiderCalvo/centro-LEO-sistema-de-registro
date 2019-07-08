@@ -50,6 +50,16 @@
                     @include font-size(36px);
                     color: $azul-color;
                 }
+
+                .img-container{
+                    position: fixed;
+                    left: 10%;
+                    top: 20%;
+                    height: 500px;
+                    img{
+                        border: solid #88b3ff 10px ;
+                    }
+                }
             }
 
             .btn-cont{

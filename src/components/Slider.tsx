@@ -9,7 +9,9 @@ class Slider extends React.Component<any,any> {
         super(props);
         this.state = {
             pos:0,
-            op: 1
+            showImg: false,
+            op: 1,
+            opImg: 0
         }
     }
 
@@ -33,9 +35,25 @@ class Slider extends React.Component<any,any> {
                     {store.excusas.length>1&&<button onClick={()=>this.handleClick('back')}>{'<'}</button>
                     }
                     <div className="excusa" style={{opacity: this.state.op}}>
-                        <p id='fecha'>{store.excusas[this.state.pos].fecha+', '+DataBaseFireBase.transfomNumberToTime(store.excusas[this.state.pos].inicio)+' - '+DataBaseFireBase.transfomNumberToTime(store.excusas[this.state.pos].fin)}</p>
+                        <p id='fecha' onClick={()=>{
+                            store.excusas[this.state.pos].url&& this.setState({showImg: true, opImg: 0});
+                            setTimeout(() => {
+                                this.setState({opImg:1});
+                            }, 700);
+                        }}
+                        style={store.excusas[this.state.pos].url?{textDecoration: "underline"}:{textDecoration: "none"}}>
+                        {store.excusas[this.state.pos].fecha+', '+DataBaseFireBase.transfomNumberToTime(store.excusas[this.state.pos].inicio)+' - '+DataBaseFireBase.transfomNumberToTime(store.excusas[this.state.pos].fin)}</p>
                         <p>"{store.excusas[this.state.pos].razon}".</p>
                         <p>({store.excusas[this.state.pos].monitor})</p>
+
+                        {this.state.showImg && <div className="img-container" style={{opacity: this.state.opImg}}
+                        onClick={()=>{
+                            this.setState({opImg: 0});
+                            setTimeout(() => {
+                                this.setState({showImg: false});
+                            }, 700);
+                        }}
+                        ><img src={store.excusas[this.state.pos].url} alt=""/></div>}
                     </div>
                     {store.excusas.length>1&&
                     <button onClick={()=>this.handleClick('next')}>{'>'}</button>
