@@ -2,6 +2,7 @@
   "name": "centro-leo-sistema-de-registro",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@devexpress/dx-react-core": "^1.11.1",
     "@devexpress/dx-react-scheduler": "^1.11.1",

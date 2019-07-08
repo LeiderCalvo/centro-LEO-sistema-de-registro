@@ -186,8 +186,8 @@ class SingUp extends Component<any, any>{
                                     <p>Para continuar con tu registro, necesitas tener a mano tus horarios de monitoría.</p>
                                 </div>
                                 <div className="btn-cont">
-                                    <button className="btn" onClick={() => { this.setState({ step: 0, nombre: '', password: '' }) }}>Back</button>
-                                    <button className="btn" onClick={() => { this.setState({ step: 2 }) }}>Next</button>
+                                    <button className="btn" onClick={() => { this.setState({ step: 0, nombre: '', password: '' }) }}>Regresar</button>
+                                    <button className="btn" onClick={() => { this.setState({ step: 2 }) }}>Seguir</button>
                                 </div>
                             </div>
                             : this.state.step === 7 ?
@@ -215,13 +215,13 @@ class SingUp extends Component<any, any>{
                                         <p className='btn-mas' onClick={this.handleClickMas}>Más</p>
                                     </div>
                                     <div className="btn-cont">
-                                        <button className="btn" onClick={this.handleClickSkip}>Skip</button>
-                                        <button className="btn" onClick={this.handleClick}>{this.state.step === 6 ? 'Done' : 'Next'}</button>
+                                        <button className="btn" onClick={this.handleClickSkip}>Saltar</button>
+                                        <button className="btn" onClick={this.handleClick}>{this.state.step === 6 ? 'Terminar' : 'Guardar'}</button>
                                     </div>
                                 </div>
                     }
 
-                    {this.state.step === 0 && this.state.step < 7 && <button className="btn" onClick={this.handleClick}>Next</button>}
+                    {this.state.step === 0 && this.state.step < 7 && <button className="btn" onClick={this.handleClick}>Registrar</button>}
 
                     <p className='hora'>{store.currentTime}</p>
                 </div>

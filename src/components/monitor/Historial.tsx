@@ -83,15 +83,15 @@ class Historial extends Component<any, any>{
                 <div className="horas">
                     <div className="hora-cont">
                         <h2>{store.horasLogradas === 0? '0' :store.horasLogradas % Math.floor(store.horasLogradas) === 0? store.horasLogradas : store.horasLogradas.toFixed(1)}</h2>
-                        <p>Logradas</p>
+                        <p>Horas<br/>Logradas</p>
                     </div>
                     <div className="hora-cont">
                         <h2>{store.horasAdiconales === 0? '0' : store.horasAdiconales % Math.floor(store.horasAdiconales) === 0? store.horasAdiconales : store.horasAdiconales.toFixed(1)}</h2>
-                        <p>Adicionales</p>
+                        <p>Horas<br/>Adicionales</p>
                     </div>
                     <div className="hora-cont">
                         <h2 id='perdidas'>{store.horasPerdidas === 0? '0' :store.horasPerdidas % Math.floor(store.horasPerdidas) === 0? store.horasPerdidas : store.horasPerdidas.toFixed(1)}</h2>
-                        <p>Pendientes</p>
+                        <p>Horas<br/>Pendientes</p>
                     </div>
                 </div>
 

@@ -171,7 +171,7 @@ class Store {
                 return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga.';
 
             case 'Historial':
-                return `Hecha un vistazo a tu registro de trabajo en horas. El marcador gris en tu historial corresponde a los días que has con excusa.`;
+                return `Hecha un vistazo a tu registro de trabajo en horas. El marcador gris en tu historial corresponde a los días que has faltado con excusa.`;
         
             default:
                 return 'Cargando ...';
