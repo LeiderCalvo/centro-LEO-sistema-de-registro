@@ -161,7 +161,7 @@ input{
 ///////////////////////
 .MuiPaper-root.MuiPaper-elevation8.MuiPopover-paper.MuiPaper-rounded{
     overflow: hidden;
-    height: 200px;
+    
     &>div{
         height: 50%;
         width: 300px;
@@ -186,3 +186,11 @@ input{
         }
     }
 }
+/*
+.MuiMenu-paper{
+    max-height: 120px;
+}
+
+.MuiPaper-root.MuiPaper-elevation8.MuiPopover-paper.MuiPaper-rounded{
+    height: 120px;
+}*/

@@ -98,7 +98,7 @@
     }
 
     .Horario {
-        padding-top: 5%;
+        //padding-top: 5%;
         .MuiTableRow-root{
             p{
                 @include font-size(33px);
@@ -108,6 +108,11 @@
 
             span{color: $gris-color}
             p ~ span {display: none}
+        }
+
+        .MuiToolbar-root{
+            display: flex;
+            flex-direction: row-reverse;
         }
         
         .MuiGrid-grid-xs-11{
