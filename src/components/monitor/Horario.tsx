@@ -76,6 +76,7 @@ const Appointment = ({children, style, ...restProps}: any) => {
   }
 
   cont = names.indexOf(children[1].props.data.title);
+  if(colors.length === cont) cont = 0;
 
 return (<Appointments.Appointment
     {...restProps}
@@ -100,7 +101,7 @@ class Horario extends Component<any, any>{
 
       for (let prop in raw) {
         if (raw.hasOwnProperty(prop)) {
-          let day = prop === 'lunes'? 25 : prop === 'martes'? 26 : prop === 'miercoles'? 27 : prop === 'jueves'? 28 : prop === 'viernes'? 29 : 0;
+          let day = prop === 'lunes'? 25 : prop === 'martes'? 26 : prop === 'miercoles'? 27 : prop === 'jueves'? 28 : prop === 'viernes'? 29 : prop === 'sabado'? 30 : 0;
 
           raw[prop].forEach((elem: any) => {
             let ini = DataBaseFireBase.transfomNumberToTime(elem.inicio);

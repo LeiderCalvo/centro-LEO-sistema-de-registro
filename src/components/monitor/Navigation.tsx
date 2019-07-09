@@ -17,6 +17,14 @@ class Navigation extends React.Component<any, any>{
 
     handleClick(elem : string){
         if(elem === 'Logout'){
+            if(store.currentUser.termine==='false' && store.currentUser.llegue==='true'){
+                store.displayToast('No puedes salir de tu sesion hasta terminar el horario', 'info');
+                return;
+            }
+
+            localStorage.setItem('isTerminado', 'false');
+            localStorage.setItem('isLlegado', 'false');
+            localStorage.setItem('isCurrentUser', 'false');
             localStorage.removeItem('currentUser');
             localStorage.setItem('isCurrentUser', 'false');
             store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);

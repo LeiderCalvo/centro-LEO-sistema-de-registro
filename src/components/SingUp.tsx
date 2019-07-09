@@ -49,6 +49,7 @@ class SingUp extends Component<any, any>{
 
     wrapInformationToSingUp() {
         setTimeout(() => {
+            console.log(this.state.horario);
             AuthFireBase.SingUp(
                 {
                     nombre: this.state.nombre,
@@ -59,6 +60,7 @@ class SingUp extends Component<any, any>{
                         miercoles: this.state.horario[2],
                         jueves: this.state.horario[3],
                         viernes: this.state.horario[4],
+                        sabado: this.state.horario[5],
                     }
                 },
                 this.onSingUp);
@@ -88,7 +90,8 @@ class SingUp extends Component<any, any>{
 
                 if (hor.length === 0) {
                     this.setState({ horario: [[{ inicio: inicio, fin: final }]], step: step + 1, temp: '', temp2: '', isMas: false}, ()=>{
-                        if (this.state.step >= 6) {
+                        //weird
+                        if (this.state.step >= 8) {
                             this.wrapInformationToSingUp();
                         }
                     });
@@ -98,7 +101,7 @@ class SingUp extends Component<any, any>{
                     hor[hor.length - 1].push({ inicio: inicio, fin: final });
                     this.setState({ horario: [...hor], temp: '', temp2: '', isMas: false, step: step + 1 },
                     ()=>{
-                        if (this.state.step >= 6) {
+                        if (this.state.step >= 8) {
                             this.wrapInformationToSingUp();
                         }
                     });
@@ -107,7 +110,7 @@ class SingUp extends Component<any, any>{
 
                 this.setState({ horario: [...hor, [{ inicio: inicio, fin: final }]], step: step + 1, temp: '', temp2: '', isMas: false},
                 ()=>{
-                    if (this.state.step >= 6) {
+                    if (this.state.step >= 8) {
                         this.wrapInformationToSingUp();
                     }
                 });
@@ -127,7 +130,7 @@ class SingUp extends Component<any, any>{
         }
 
         this.setState({ horario: [...hor, [{ inicio: null, fin: null }]], step: step + 1, isMas:false},()=>{
-            if (this.state.step === 7) this.wrapInformationToSingUp();
+            if (this.state.step === 8) this.wrapInformationToSingUp();
         });
     }
 
@@ -190,7 +193,7 @@ class SingUp extends Component<any, any>{
                                     <button className="btn" onClick={() => { this.setState({ step: 2 }) }}>Seguir</button>
                                 </div>
                             </div>
-                            : this.state.step === 7 ?
+                            : this.state.step === 8 ?
                                 <div className="loading">
                                     <h3>Cargando</h3>
                                 </div>
@@ -216,7 +219,7 @@ class SingUp extends Component<any, any>{
                                     </div>
                                     <div className="btn-cont">
                                         <button className="btn" onClick={this.handleClickSkip}>Saltar</button>
-                                        <button className="btn" onClick={this.handleClick}>{this.state.step === 6 ? 'Terminar' : 'Guardar'}</button>
+                                        <button className="btn" onClick={this.handleClick}>{this.state.step === 7 ? 'Terminar' : 'Guardar'}</button>
                                     </div>
                                 </div>
                     }

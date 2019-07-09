@@ -22,9 +22,13 @@ const Appointment = ({children, style, ...restProps}: any) => (
         ...style,
         backgroundColor: children[1].props.data.title === 'excusa'? '#c6c6c6' : children[1].props.data.title === 'adicional'? '#d6833c':'#88b3ff',
         borderRadius: '8px',
+        color: '#fff'
       }}
     >
       {children}
+      {new Date(children[1].props.data.startDate).getHours() +':'+new Date(children[1].props.data.startDate).getMinutes()}
+
+      {children[1].props.data.title !== 'llegada' && ' - ' + new Date(children[1].props.data.endDate).getHours() +':'+new Date(children[1].props.data.endDate).getMinutes()}
     </Appointments.Appointment>
   );
 

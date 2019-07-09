@@ -32,7 +32,17 @@ class Home extends  Component <any, any>{
     setTimeout(() => {
         this.setState({op: 1});
     }, 700);
-}
+
+    let llegado = localStorage.getItem('isLlegado');
+    let val = llegado !== null && JSON.parse(llegado);
+    val !== null && store.setCurrentUser('llegue',val+'');
+    this.setState({isDoneLlegue: val});
+
+    let terminado = localStorage.getItem('isTerminado');
+    let val2 = terminado !== null && JSON.parse(terminado);
+    val2 !== null && store.setCurrentUser('termine',val2+'');
+    this.setState({isDoneTermine: val2});
+  }
 
   handleClickLlegue(){
     if(this.state.isDoneLlegue === true) return;
@@ -48,11 +58,11 @@ class Home extends  Component <any, any>{
       store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
       return;
     }
-
+/*
     if(store.diferenceCurrentAndFinal<5){
       return;
     }
-    
+  */  
     this.setState({isDoneLlegue: true});
 
     if(store.diferenceCurrentAndInitial<-5){
@@ -64,16 +74,18 @@ class Home extends  Component <any, any>{
 
     DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), store.currentDate, 'llegada');
     store.setCurrentUser('llegue', 'true');
+    localStorage.setItem('isLlegado', 'true');
   }
 
   handleClickTermine(){
     if(this.state.isDoneTermine === true) return;
     if(store.currentUser.nombre === '')return; 
-    
-        if(store.diferenceCurrentAndFinal<5){
-          return;
-        }
-
+    /*
+    if(store.diferenceCurrentAndFinal<-5){
+      store.displayToast('Aun no puedes marcar tu salida', 'warning');
+      return;
+    }
+*/
     if(this.state.isDoneLlegue === false){
       store.displayToast('Primero debes marcar tu llegada', 'warning');
       return;
@@ -100,6 +112,7 @@ class Home extends  Component <any, any>{
 
     DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), store.currentDate, 'salida');
     store.setCurrentUser('termine', 'true');
+    localStorage.setItem('isTerminado', 'true');
   }
 
   render(){

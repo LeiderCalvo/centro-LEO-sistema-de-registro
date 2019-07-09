@@ -27,7 +27,7 @@ class Monitor extends React.Component<any, any>{
             <div className="Monitor">
                 <div className="saludo-cont">
                     <h3>¡{store.currentUser.nombre}!</h3>
-                    <p>Bienvenido al trabajo hoy.</p>
+                    <p>Bienvenida.</p>
                 </div>
 
                 <div className="tipo-lista">

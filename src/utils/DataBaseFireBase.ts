@@ -39,6 +39,7 @@ function updateHorarioGeneral(horario: Horario, nombre: string) {
   if (horario.miercoles[0].inicio !== null) addMonitor(horario.miercoles, nombre);
   if (horario.jueves[0].inicio !== null) addMonitor(horario.jueves, nombre);
   if (horario.viernes[0].inicio !== null) addMonitor(horario.viernes, nombre);
+  if (horario.sabado[0].inicio !== null) addMonitor(horario.sabado, nombre);
 
   DataBase.ref('Horario').once('value').then(function (horarioGen: any) {
     if (horarioGen.exists()) {
@@ -47,7 +48,8 @@ function updateHorarioGeneral(horario: Horario, nombre: string) {
         martes: horarioGen.child('martes').exists() ? [...horarioGen.val().martes, ...horario.martes] : [...horario.martes],
         miercoles: horarioGen.child('miercoles').exists() ? [...horarioGen.val().miercoles, ...horario.miercoles] : [...horario.miercoles],
         jueves: horarioGen.child('jueves').exists() ? [...horarioGen.val().jueves, ...horario.jueves] : [...horario.jueves],
-        viernes: horarioGen.child('viernes').exists() ? [...horarioGen.val().viernes, ...horario.viernes] : [...horario.viernes]
+        viernes: horarioGen.child('viernes').exists() ? [...horarioGen.val().viernes, ...horario.viernes] : [...horario.viernes],
+        sabado: horarioGen.child('sabado').exists() ? [...horarioGen.val().sabado, ...horario.sabado] : [...horario.sabado]
       }
 
       DataBase.ref().update({ Horario: horarioJoined });
@@ -103,7 +105,7 @@ function getHorario(user: string) {
     }
   });
 
-  if (store.fecha.dia === 0 || store.fecha.dia > 5) return;
+  if (store.fecha.dia === 0 || store.fecha.dia > 6) return;
   let dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
   store.setCurrentUser('dia', dias[store.fecha.dia - 1]);
   let arrayTemp: any[] = [];

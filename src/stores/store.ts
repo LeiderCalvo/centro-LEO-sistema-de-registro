@@ -2,7 +2,7 @@ import { observable, computed, action } from 'mobx';
 import DataBaseFireBase from '../utils/DataBaseFireBase';
 
 export type Dia = {inicio: string, fin: string};
-export type Horario = {lunes: Dia[], martes: Dia[], miercoles: Dia[], jueves: Dia[], viernes: Dia[]};
+export type Horario = {lunes: Dia[], martes: Dia[], miercoles: Dia[], jueves: Dia[], viernes: Dia[], sabado: Dia[]};
 export type Usuario = {nombre: string, password: string, horario: Horario};
 
 class Store {
@@ -23,7 +23,7 @@ class Store {
     @observable monitoresActivos : string[] = [];
     @observable monitores: {nombre: string, activo: boolean}[] = [];
     @observable monitorSelected : string | null = null;
-    @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'', termine:''};
+    @observable currentUser: {horario: Horario | null, rol: string, nombre: string, dia: string, inicio: string, fin: string, llegue: string, termine:string} = {horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'false', termine:'false'};
 
     constructor(){
         setInterval(()=>{
