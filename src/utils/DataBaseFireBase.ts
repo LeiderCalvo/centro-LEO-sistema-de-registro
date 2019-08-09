@@ -189,11 +189,11 @@ function transfomTimeToNumber(val: string) {
   return (parseInt(val.split(':')[0]) * 60) + parseInt(val.split(':')[1]);
 }
 
-function setRegistro(currentTime: number, currentDate: string, tipo: string) {
+function setRegistro(currentTime: number, currentDate: number, tipo: string) {
   DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/registros').push({ hora: currentTime, fecha: currentDate, tipo: tipo });
 }
 
-function setRegistroEsp(monitor: string, currentTime: number, currentDate: string, tipo: string) {
+function setRegistroEsp(monitor: string, currentTime: number, currentDate: number, tipo: string) {
   DataBase.ref('Usuarios/' + monitor.toLowerCase() + '/registros').push({ hora: currentTime, fecha: currentDate, tipo: tipo });
 }
 
@@ -274,6 +274,7 @@ function updateRegistro(user: string) {
   DataBase.ref('Usuarios/' + user.toLowerCase() + '/registros').on('value', function (registros: any) {
     registros.exists() ? store.setRegistros(registros.val()) : store.setRegistros({});
   });
+  return;
 }
 
 function updateHoras(user: string) {

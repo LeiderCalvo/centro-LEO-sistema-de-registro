@@ -68,7 +68,7 @@ class Excusas extends Component<any, any> {
 
         DataBaseFireBase.addNewExcuse(date, {razon: this.state.razon, fecha: temp, inicio: DataBaseFireBase.transfomTimeToNumber(this.state.inicio), fin: DataBaseFireBase.transfomTimeToNumber(this.state.fin), url: download});
 
-        DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), temp, 'excusa');
+        DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), this.state.plaso.getTime(), 'excusa');
         this.setState({razon: '', fecha: '', inicio: '', fin: '', file: null, isDropZoneActive: false});
     }
 

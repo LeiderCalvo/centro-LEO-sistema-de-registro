@@ -168,8 +168,8 @@ class SingUp extends Component<any, any>{
                     <div className="img-container"><img src="./images/banner.png" alt="" /></div>
                 </div>
                 <div className="colum second">
-                    <Link to={'/'} className='btn-nav'>Login</Link>
-                    <h2 className='titulo'>Sing Up</h2>
+                    <Link to={'/'} className='btn-nav'>Inicia Sesión</Link>
+                    <h2 className='titulo'>Registro</h2>
 
                     {this.state.step === 0 ?
                         <div className="inp-cont">

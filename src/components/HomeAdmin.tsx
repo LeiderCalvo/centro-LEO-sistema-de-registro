@@ -61,7 +61,7 @@ class HomeAdmin extends Component<any, any>{
             store.monitorSelected&&DataBaseFireBase.setHoraAdicional(store.monitorSelected, DataBaseFireBase.transfomTimeToNumber(store.fecha.hora + ':' + store.fecha.minutos),
             DataBaseFireBase.transfomTimeToNumber(this.state.fin),temp);
 
-            store.monitorSelected&&DataBaseFireBase.setRegistroEsp(store.monitorSelected, DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), temp, 'adicional');
+            store.monitorSelected&&DataBaseFireBase.setRegistroEsp(store.monitorSelected, DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), plaso.getTime(), 'adicional');
             this.setState({ fecha: '', inicio: '', fin: '', isNewHorario: false});
         } else {
             this.setState({ isNewHorario: true, op2: 0 });

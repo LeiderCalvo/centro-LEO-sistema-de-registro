@@ -72,7 +72,7 @@ class Home extends  Component <any, any>{
       store.displayToast('Llegas tarde, se te agregan '+temp.toFixed(2) +' horas pendientes', 'info');
     }
 
-    DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), store.currentDate, 'llegada');
+    DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'llegada');
     store.setCurrentUser('llegue', 'true');
     localStorage.setItem('isLlegado', 'true');
   }
@@ -110,7 +110,7 @@ class Home extends  Component <any, any>{
     DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
     store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
 
-    DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), store.currentDate, 'salida');
+    DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
     store.setCurrentUser('termine', 'true');
     localStorage.setItem('isTerminado', 'true');
   }

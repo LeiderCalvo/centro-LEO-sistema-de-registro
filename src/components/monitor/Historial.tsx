@@ -56,7 +56,7 @@ class Historial extends Component<any, any>{
                 let ini = DataBaseFireBase.transfomNumberToTime(elem.hora);
                 let fi = DataBaseFireBase.transfomNumberToTime(elem.hora + 30);
 
-                elem.fecha = elem.fecha.replace(' de', '');
+                //elem.fecha = elem.fecha.replace(' de', '');
 
                 let fecIni = new Date(elem.fecha);
                 fecIni.setHours(parseInt(ini.split(':')[0]));
@@ -73,6 +73,7 @@ class Historial extends Component<any, any>{
                 });
             }
         }
+        console.log(temp);
         return temp;
     }
 

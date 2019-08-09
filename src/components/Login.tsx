@@ -50,8 +50,8 @@ class Login extends Component<any, any>{
                     <div className="img-container"><img src="./images/banner.png" alt=""/></div>
                 </div>
                 <div className="colum second">
-                    <Link to={'/SingUp'} className='btn-nav'>Sing Up</Link>
-                    <h2 className='titulo'>Login</h2>
+                    <Link to={'/SingUp'} className='btn-nav'>Regístrate</Link>
+                    <h2 className='titulo'>Iniciar Sesión</h2>
                     <div className="inp-cont">
                         <input type="text" placeholder='Mi nombre es ...' value={this.state.usuario}
                         onChange={(e)=>{
@@ -62,7 +62,7 @@ class Login extends Component<any, any>{
                             this.setState({password : e.target.value + ''})
                         }}/>
                     </div>
-                    <button className="btn" onClick={this.handleClick}>Login</button>
+                    <button className="btn" onClick={this.handleClick}>Iniciar</button>
                     <p className='hora'>{store.currentTime}</p>
                 </div>
             </section>
