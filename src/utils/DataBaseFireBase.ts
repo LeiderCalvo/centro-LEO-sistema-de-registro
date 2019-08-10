@@ -122,7 +122,8 @@ function getHorario(user: string) {
         for (const prop in adicional.val()) {
           if (adicional.val().hasOwnProperty(prop)) {
             const elem = adicional.val()[prop];
-            let temp = new Date(elem.fecha.replace(' de', ''));
+            //let temp = new Date(elem.fecha.replace(' de', ''));
+            let temp = new Date(parseInt(elem.fecha));
             if (temp.getFullYear() === store.fecha.year && temp.getMonth() === store.fecha.mes && temp.getDay() === store.fecha.dia) {
               elem.id = prop;
               arr.push(elem);
@@ -136,7 +137,7 @@ function getHorario(user: string) {
     });
   });
 }
-
+/*
 function getCloserHorario(dia: any) {
 
   if (dia.length === 0) {
@@ -174,6 +175,56 @@ function getCloserHorario(dia: any) {
   let final = transfomNumberToTime(dia[cercano].fin);
 
   if(dia[cercano].fecha !== null && dia[cercano].fecha!== undefined){ 
+    DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/adicionalesPendientes/'+dia[cercano].id).set({});
+  }
+
+  store.setCurrentUser('inicio', inicio);
+  store.setCurrentUser('fin', final);
+}
+*/
+function getCloserHorario(dia: any) {
+
+  if (dia.length === 0) {
+    store.setCurrentUser('inicio', 'null');
+    store.setCurrentUser('fin', 'null');
+    return;
+  }
+
+  let currentTime = transfomTimeToNumber(store.fecha.hora + ':' + store.fecha.minutos);
+  let dist: any = [];
+  dia.forEach((elem: any) => {
+    dist.push(parseInt(elem.inicio) - currentTime);
+  });
+
+  let min: number = 500;
+  let cercano: number = 0;
+
+  for (let i = 0; i < dist.length; i++) {
+    const elem = dist[i];
+    if (Math.abs(elem) === min) {
+      if (elem >= 0) {
+        min = Math.abs(elem);
+        cercano = i;
+        break;
+      }
+    }
+
+    if (Math.abs(elem) < min) {
+      min = Math.abs(elem);
+      cercano = i;
+    }
+  }
+
+  if (dia[cercano].fin <= currentTime) {
+    store.setCurrentUser('inicio', 'null');
+    store.setCurrentUser('fin', 'null');
+    return;
+  }
+
+  let inicio = transfomNumberToTime(dia[cercano].inicio);
+  let final = transfomNumberToTime(dia[cercano].fin);
+
+  if(dia[cercano].fecha !== null && dia[cercano].fecha!== undefined && dia[cercano].id !== null && dia[cercano].id!== undefined){ 
     DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/adicionalesPendientes/'+dia[cercano].id).set({});
   }
 
