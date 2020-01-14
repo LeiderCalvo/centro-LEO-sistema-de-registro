@@ -43,7 +43,7 @@ function Login(usuario : string, password  : string, callback : any){
   });
 }
 
-function SingUp(usuario : Usuario, callback : any){
+function SingUp(usuario : { nombre: '', password: ''}, callback : any){
   if(store.isLoging)return;
   store.setLoging(true);
 

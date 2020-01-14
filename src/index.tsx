@@ -14,6 +14,7 @@ import Login from './components/Login';
 import ToastProv from './components/ToastProvider';
 import SingUp from './components/SingUp';
 import App from './components/App';
+import EditSchedule from './components/EditSchedule';
 
 
 const routing = (
@@ -23,6 +24,7 @@ const routing = (
             <Route exact path="/" component={Login} />
             <Route exact path="/SingUp" component={SingUp} />
             <Route exact path="/Home" component={App} />
+            <Route exact path="/editarHorario" component={EditSchedule} />
         </Switch>
     </Router>
   )

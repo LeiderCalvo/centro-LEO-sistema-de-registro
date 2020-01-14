@@ -6,20 +6,20 @@ function setRef(Database: any) {
   DataBase = Database;
 }
 
-function addNewUser(usuario: Usuario) {
+function addNewUser(usuario: { nombre: '', password: ''}) {
   DataBase.ref('cantidadUsuarios').once('value').then(function (cantUsuarios: any) {
     if (cantUsuarios.val() !== null || cantUsuarios.val() !== undefined) {
       let user = { ...usuario, rol: 'monitor', horasLogradas: 0, id: cantUsuarios.val() + 1 }
       DataBase.ref('Usuarios/' + usuario.nombre.toLowerCase()).update(user);
       DataBase.ref().update({ cantidadUsuarios: cantUsuarios.val() + 1 });
 
-      updateHorarioGeneral(user.horario, user.nombre);
+      //updateHorarioGeneral(user.horario, user.nombre);
     } else {
       let user = { ...usuario, rol: 'monitor', horasLogradas: 0, id: 0 }
       DataBase.ref('Usuarios/' + usuario.nombre.toLowerCase()).update(user);
       DataBase.ref().update({ cantidadUsuarios: 0 });
 
-      updateHorarioGeneral(user.horario, user.nombre);
+      //updateHorarioGeneral(user.horario, user.nombre);
     }
   });
 
@@ -384,6 +384,10 @@ function setHoraAdicional(user: string, hora: number, horafin: number, date: str
   store.displayToast('el horario adiconal se ha asignado con éxito', 'success');
 }
 
+function setHorario(user: String, hor: Horario){
+  DataBase.ref('Usuarios/' + user.toLowerCase()).update({horario: hor});
+}
+
 function getMyAditionals() {
   DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/adicionalesPendientes').on('value', function (adicional: any) {
     if (adicional.exists()) {
@@ -400,5 +404,5 @@ function getMyAditionals() {
 
 export default {
   addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional, setRegistroEsp,
-  getMyAditionals
+  getMyAditionals, setHorario
 };

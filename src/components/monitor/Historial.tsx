@@ -78,6 +78,7 @@ class Historial extends Component<any, any>{
     }
 
     componentDidMount(){
+        console.log(store.currentUser);
         DataBaseFireBase.updateHoras(store.currentUser.nombre);
         DataBaseFireBase.updateRegistro(store.currentUser.nombre);
     }

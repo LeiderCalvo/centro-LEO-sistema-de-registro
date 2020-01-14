@@ -40,7 +40,11 @@ class HomeAdmin extends Component<any, any>{
     handleClick() {
         if (this.state.isNewHorario) {
             if (this.state.razon === '' || this.state.fecha === '' || this.state.inicio === '' || this.state.fin === '') {
-                store.displayToast('Porfavor llene todos los campos', 'warning');
+                store.displayToast('Porfavor llene todos los campos', 'error');
+                this.setState({ isNewHorario: false, op2: 0 });
+                setTimeout(() => {
+                    this.setState({ op2: 1 });
+                }, 500);
                 return;
             }
 
@@ -122,7 +126,11 @@ class HomeAdmin extends Component<any, any>{
                                             }} />
                                     </div>
                                 </div>
-                                : <div className="inps-cont"></div>
+                                : 
+                                    <div className="btn" onClick={()=>{
+                                        this.props.his.push('/editarHorario');
+                                    }}>Editar Horario</div>
+                                  
                             }
                             <div className="btn" onClick={this.handleClick}>{this.state.isNewHorario ? 'Listo' : 'Añadir Horas'}</div>
                         </div>
