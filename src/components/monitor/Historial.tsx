@@ -73,12 +73,12 @@ class Historial extends Component<any, any>{
                 });
             }
         }
-        console.log(temp);
+        //console.log(temp);
         return temp;
     }
 
     componentDidMount(){
-        console.log(store.currentUser);
+        //console.log(store.currentUser);
         DataBaseFireBase.updateHoras(store.currentUser.nombre);
         DataBaseFireBase.updateRegistro(store.currentUser.nombre);
     }

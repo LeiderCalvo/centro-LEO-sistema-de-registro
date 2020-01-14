@@ -33,24 +33,44 @@ function addNewUser(usuario: { nombre: '', password: ''}) {
 }
 
 function updateHorarioGeneral(horario: Horario, nombre: string) {
-
-  if (horario.lunes[0].inicio !== null) addMonitor(horario.lunes, nombre);
-  if (horario.martes[0].inicio !== null) addMonitor(horario.martes, nombre);
-  if (horario.miercoles[0].inicio !== null) addMonitor(horario.miercoles, nombre);
-  if (horario.jueves[0].inicio !== null) addMonitor(horario.jueves, nombre);
-  if (horario.viernes[0].inicio !== null) addMonitor(horario.viernes, nombre);
-  if (horario.sabado[0].inicio !== null) addMonitor(horario.sabado, nombre);
+  let hor : any = horario;
+  for (const prop in hor) {
+    if (hor[prop][0].inicio !== null) addMonitor(hor[prop], nombre);
+  }
 
   DataBase.ref('Horario').once('value').then(function (horarioGen: any) {
     if (horarioGen.exists()) {
-      let horarioJoined = {
-        lunes: horarioGen.child('lunes').exists() ? [...horarioGen.val().lunes, ...horario.lunes] : [...horario.lunes],
-        martes: horarioGen.child('martes').exists() ? [...horarioGen.val().martes, ...horario.martes] : [...horario.martes],
-        miercoles: horarioGen.child('miercoles').exists() ? [...horarioGen.val().miercoles, ...horario.miercoles] : [...horario.miercoles],
-        jueves: horarioGen.child('jueves').exists() ? [...horarioGen.val().jueves, ...horario.jueves] : [...horario.jueves],
-        viernes: horarioGen.child('viernes').exists() ? [...horarioGen.val().viernes, ...horario.viernes] : [...horario.viernes],
-        sabado: horarioGen.child('sabado').exists() ? [...horarioGen.val().sabado, ...horario.sabado] : [...horario.sabado]
+      let ARR : any = horarioGen.val();
+      
+      for (const prop in horarioGen.val()) {
+        if (horarioGen.val().hasOwnProperty(prop)) {
+          ARR[prop] = horarioGen.val()[prop].filter((object: any)=>{
+            //console.log(object.monitor, nombre);
+            return object.monitor !== nombre;
+          });
+        }
       }
+
+      let horarioJoined : any = ARR;
+      for (const prop in hor) {
+        if(horarioGen.child(prop+'').exists()){
+          horarioJoined[prop] = [...ARR[prop], ...hor[prop]];
+        }else {
+          horarioJoined[prop] = [...hor[prop]];
+        }
+      }
+      /*
+            let horarioJoined = {
+              lunes: horarioGen.child('lunes').exists() ? [...horarioGen.val().lunes, ...horario.lunes] : [...horario.lunes],
+              martes: horarioGen.child('martes').exists() ? [...horarioGen.val().martes, ...horario.martes] : [...horario.martes],
+              miercoles: horarioGen.child('miercoles').exists() ? [...horarioGen.val().miercoles, ...horario.miercoles] : [...horario.miercoles],
+              jueves: horarioGen.child('jueves').exists() ? [...horarioGen.val().jueves, ...horario.jueves] : [...horario.jueves],
+              viernes: horarioGen.child('viernes').exists() ? [...horarioGen.val().viernes, ...horario.viernes] : [...horario.viernes],
+              sabado: horarioGen.child('sabado').exists() ? [...horarioGen.val().sabado, ...horario.sabado] : [...horario.sabado]
+            }
+      */
+
+
 
       DataBase.ref().update({ Horario: horarioJoined });
     } else {
@@ -386,6 +406,7 @@ function setHoraAdicional(user: string, hora: number, horafin: number, date: str
 
 function setHorario(user: String, hor: Horario){
   DataBase.ref('Usuarios/' + user.toLowerCase()).update({horario: hor});
+  updateHorarioGeneral(hor,user+'');
 }
 
 function getMyAditionals() {

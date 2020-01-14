@@ -15,7 +15,7 @@ class EditSchedule extends Component<any, any>{
             op: 1,
         }
 
-        console.log(store.monitorSelected);
+        //console.log(store.monitorSelected);
         this.wrapInformationToHorario = this.wrapInformationToHorario.bind(this);
     }
     
@@ -38,7 +38,7 @@ class EditSchedule extends Component<any, any>{
                     temp[dia] = this.state.horario[i];
                 }
             }
-            
+
             store.monitorSelected && DataBaseFireBase.setHorario(store.monitorSelected, temp);
             store.displayToast('horario actualizado', 'success');
             this.props.history.push('/Home');
