@@ -84,7 +84,7 @@ class Store {
             }, 300);
         }else{
             this.monitorSelected = val;
-            DataBaseFireBase.getHorarioGen();
+            if(this.currentUser.rol === 'admin') DataBaseFireBase.getHorarioGen();
         }
     }
 
