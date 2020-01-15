@@ -55,10 +55,10 @@ class Monitor extends React.Component<any, any>{
                         store.currentMonitors.map((elem: any, index : number)=>{
                             return <div key={index+'monitor'}
                             onClick={()=>this.handleSelected(elem)}
-                            style={store.monitoresActivos.includes(elem)? {opacity: 1}:{opacity: .5}}
+                            style={store.monitoresActivos.includes(elem.toLocaleLowerCase())? {opacity: 1}:{opacity: .5}}
                             className={store.monitorSelected === elem? "monitor selected": 'monitor'}>
                                 <p>{elem}</p>
-                                <span style={store.monitoresActivos.includes(elem)?{backgroundColor: '#d6833c'}:{backgroundColor: '#c6c6c6'}}></span>
+                                <span style={store.monitoresActivos.includes(elem.toLocaleLowerCase())?{backgroundColor: '#d6833c'}:{backgroundColor: '#c6c6c6'}}></span>
                             </div>
                         })
                     }

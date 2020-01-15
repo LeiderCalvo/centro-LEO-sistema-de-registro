@@ -27,6 +27,7 @@ class Home extends  Component <any, any>{
     this.handleClickLlegue = this.handleClickLlegue.bind(this);
     this.handleClickTermine = this.handleClickTermine.bind(this);
     this.cerrarSesionAutomatico = this.cerrarSesionAutomatico.bind(this);
+
     DataBaseFireBase.setActivo(store.currentUser.nombre);
   }
 
@@ -57,7 +58,7 @@ class Home extends  Component <any, any>{
 
   cerrarSesionAutomatico(){
     let intervalId = setInterval(() => {
-      if(store.diferenceCurrentAndFinal<-2 && store.currentUser.llegue === 'true'){
+      if(store.diferenceCurrentAndFinal<0 && store.currentUser.llegue === 'true'){
         localStorage.setItem('isTerminado', 'false');
         localStorage.setItem('isLlegado', 'false');
         localStorage.setItem('isCurrentUser', 'false');
@@ -74,7 +75,7 @@ class Home extends  Component <any, any>{
         store.setAllCurrentUser({horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'false', termine:'false'});
         this.props.his.push('/');
       }
-    }, 60000/2);
+    }, 60000*30);
     this.setState({intervalId: intervalId});
   }
 
