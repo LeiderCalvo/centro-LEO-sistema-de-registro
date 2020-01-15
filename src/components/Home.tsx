@@ -20,11 +20,13 @@ class Home extends  Component <any, any>{
       isDoneLlegue: false,
       isDoneTermine: false,
       horasPendientes: 0,
-      op: 1
+      op: 1,
+      isSalidaAutoHabilitada: true
     }
 
     this.handleClickLlegue = this.handleClickLlegue.bind(this);
     this.handleClickTermine = this.handleClickTermine.bind(this);
+    this.cerrarSesionAutomatico = this.cerrarSesionAutomatico.bind(this);
     DataBaseFireBase.setActivo(store.currentUser.nombre);
   }
 
@@ -44,6 +46,36 @@ class Home extends  Component <any, any>{
     let val2 = terminado !== null ? JSON.parse(terminado) : null;
     val2 !== null && store.setCurrentUser('termine',val2+'');
     this.setState({isDoneTermine: val2});
+
+    this.cerrarSesionAutomatico();
+
+  }
+  
+  componentWillUnmount(){
+    clearInterval(this.state.intervalId);
+  }
+
+  cerrarSesionAutomatico(){
+    let intervalId = setInterval(() => {
+      if(store.diferenceCurrentAndFinal<-2 && store.currentUser.llegue === 'true'){
+        localStorage.setItem('isTerminado', 'false');
+        localStorage.setItem('isLlegado', 'false');
+        localStorage.setItem('isCurrentUser', 'false');
+        localStorage.removeItem('currentUser');
+
+        store.setCurrentUser('termine', 'true');
+        store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
+
+        DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
+        store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
+
+        DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
+
+        store.setAllCurrentUser({horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'false', termine:'false'});
+        this.props.his.push('/');
+      }
+    }, 60000/2);
+    this.setState({intervalId: intervalId});
   }
 
   handleClickLlegue(){

@@ -27,6 +27,7 @@ class Navigation extends React.Component<any, any>{
             localStorage.setItem('isCurrentUser', 'false');
             localStorage.removeItem('currentUser');
             store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
+            store.setAllCurrentUser({horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'false', termine:'false'});
             this.props.his.push('/');
             return;
         }
