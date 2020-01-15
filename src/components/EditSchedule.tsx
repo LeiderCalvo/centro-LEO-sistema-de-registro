@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import store from '../stores/store';
-import AuthFireBase from '../utils/AuthFireBase';
-import '../styles/Sing.css';
+import '../styles/EditSchedule.css';
 import DataBaseFireBase from '../utils/DataBaseFireBase';
 
 @observer
@@ -15,7 +14,6 @@ class EditSchedule extends Component<any, any>{
             op: 1,
         }
 
-        //console.log(store.monitorSelected);
         this.wrapInformationToHorario = this.wrapInformationToHorario.bind(this);
     }
     
@@ -40,27 +38,31 @@ class EditSchedule extends Component<any, any>{
             }
 
             store.monitorSelected && DataBaseFireBase.setHorario(store.monitorSelected, temp);
-            store.displayToast('horario actualizado', 'success');
+            store.setMonitorSelected(null);
+            store.displayToast('Horario actualizado', 'success');
             this.props.history.push('/Home');
         }, 1500);
     }
 
     render() {
         return (
-            <section className='Sing Singup' style={{ opacity: this.state.op }}>
-                <Link to={'/Home'} className='btn-nav'>Regresar</Link>
-                <h2 className='titulo'>Editar horario de {store.monitorSelected}</h2>
+            <section className='EditSchedule' style={{ opacity: this.state.op }}>
+                <div className="nav">
+                    <Link to={'/Home'} className='nav__btn'>Regresar</Link>
+                    <h2 className='titulo'>Editar horario de {store.monitorSelected}</h2>
+                    <p className='nav__hora'>{store.currentTime}</p>
+                </div>
 
-                <p>Recuerda que reemplazarás completamente el horario de este monitor</p>
+                <p className='alert'>Recuerda que reemplazarás completamente el horario de este monitor, Verifica que la informaciòn sea correcta</p>
                                 
                 {
                     this.state.horario.map((jornadas: [], i: number)=>{
-                        return <div className="cont" key={i}>
-                            <h3 className='titulo-dia'>{store.dias[i]}</h3>
+                        return <div className="dia" key={i}>
+                            <h3 className='dia__titulo'>{store.dias[i]}</h3>
                             {
                                 jornadas.map((jornada: {inicio: number, fin: number}, j: number)=>{
-                                    return <div className="inp-cont horarios" key={i+'-'+j}>
-                                    <h3>{i+'.'+j}</h3>
+                                    return <div className="inp-cont" key={i+'-'+j}>
+                                    <h3>{(i+1)+'.'+(j+1)}</h3>
                                         <div className="label-cont">
                                             <h3 className='label'>Comienzo de Jornada</h3>
                                             <input type="time"
@@ -92,13 +94,12 @@ class EditSchedule extends Component<any, any>{
                                 let temp = [...this.state.horario];
                                 temp[i].push({inicio: '', fin: ''});
                                 this.setState({horario: temp});
-                            }}>Más</p>
+                            }}>Agregar más campos</p>
                         </div>
                     })
                 }
                 
-                <button className="btn" onClick={this.wrapInformationToHorario}>Guardar</button>
-                <p className='hora'>{store.currentTime}</p>
+                <button className="btn" onClick={this.wrapInformationToHorario}>Guardar Cambios</button>
             </section>
         )
     }

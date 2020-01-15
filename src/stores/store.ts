@@ -84,6 +84,7 @@ class Store {
             }, 300);
         }else{
             this.monitorSelected = val;
+            DataBaseFireBase.getHorarioGen();
         }
     }
 
@@ -162,7 +163,7 @@ class Store {
     @computed get progressAdvice(){
         switch (this.navItemSelected) {
             case 'Inicio':
-                return 'Recuerda que si no registras tu llegada o salida con 5 minutos máximo de tardanza, se te descontará de tus horas.';
+                return 'Recuerda que si no registras tu llegada con 7 minutos máximo de tardanza, se te descontará de tus horas.';
             
             case 'Horario':
                 return 'El marcador naranja en tu horario, corresponde a las horas adicionales que te hayan sido asignadas últimamente.';

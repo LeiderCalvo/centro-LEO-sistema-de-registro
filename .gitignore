@@ -23,21 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 src/utils/firebaseCredentials.js
-src/styles/App.css
-src/styles/App.css.map
-src/styles/Sing.css
-src/styles/Sing.css.map
-src/styles/index.css
-src/styles/index.css.map
-src/styles/Home.css
-src/styles/Home.css.map
-src/styles/Progress.css
-src/styles/Progress.css.map
-src/styles/Navigation.css
-src/styles/Navigation.css.map
-src/styles/Excusas.css
-src/styles/Excusas.css.map
-src/styles/Historial.css
-src/styles/Historial.css.map
-src/styles/Monitor.css
-src/styles/Monitor.css.map
+src/styles/*.css
+src/styles/*.css.map

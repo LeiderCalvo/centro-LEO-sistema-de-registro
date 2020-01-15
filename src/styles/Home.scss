@@ -94,6 +94,22 @@
             }
 
             .btn{width: 20%;margin-bottom: 50px;}
+
+            .change {
+                position: fixed;
+                top: 35%;
+                bottom: 35%;
+                right: 0;
+                width: 50px;
+                height: 30%;
+                opacity: .2;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
     }
 
@@ -127,6 +143,7 @@
         }
 
         .MuiGrid-wrap-xs-nowrap{
+            height: 90% !important;
             @include scrollBar();
             &::-webkit-scrollbar {
                 width: 10px;

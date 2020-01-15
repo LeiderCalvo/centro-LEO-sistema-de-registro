@@ -115,6 +115,16 @@ function getMonitores() {
     }
   });
 }
+//aqui perro
+function updateHorarioMonitor(user:string) {
+  DataBase.ref('Usuarios/' + user.toLowerCase() + '/horario').once('value').then(function (horario: any) {
+    if (horario.exists()) {
+      store.setHorario(horario.val());
+    } else {
+      store.setHorario(null);
+    }
+  });
+}
 
 function getHorario(user: string) {
   DataBase.ref('Usuarios/' + user.toLowerCase() + '/horario').once('value').then(function (horario: any) {
@@ -397,6 +407,7 @@ function removeActivo(name: string) {
 function getInfoMonitor(nombre: string) {
   updateHoras(nombre);
   updateRegistro(nombre);
+  updateHorarioMonitor(nombre);
 }
 
 function setHoraAdicional(user: string, hora: number, horafin: number, date: string) {
@@ -425,5 +436,5 @@ function getMyAditionals() {
 
 export default {
   addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional, setRegistroEsp,
-  getMyAditionals, setHorario
+  getMyAditionals, setHorario, updateHorarioMonitor
 };

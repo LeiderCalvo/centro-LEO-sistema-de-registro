@@ -15,6 +15,7 @@ class HomeAdmin extends Component<any, any>{
         this.state = {
             selected: null,
             isNewHorario: false,
+            horario: false,
             op: 1,
             op2: 0,
             wid: 70,
@@ -87,15 +88,18 @@ class HomeAdmin extends Component<any, any>{
                     <Navigation his={this.props.his} />
 
                     {store.monitorSelected !== null ?
-                        <Historial />
-                        : store.navItemSelected === 'Inicio' ?
-                            <div className="workArea uno">
-                                <p className='time' style={{ color: '#88b3ff' }}>{store.currentTime.split(':')[0] + ' : ' + store.currentTime.split(':')[1]}</p>
-                                <p className='date' style={{ color: '#88b3ff' }}>{store.currentDate}</p>
-                                <Slider />
-                            </div>
-                            : store.navItemSelected === 'Horario' &&
+                            this.state.horario?
                             <Horario />
+                            :
+                            <Historial />
+                    : store.navItemSelected === 'Inicio' ?
+                        <div className="workArea uno">
+                            <p className='time' style={{ color: '#88b3ff' }}>{store.currentTime.split(':')[0] + ' : ' + store.currentTime.split(':')[1]}</p>
+                            <p className='date' style={{ color: '#88b3ff' }}>{store.currentDate}</p>
+                            <Slider />
+                        </div>
+                    : store.navItemSelected === 'Horario' &&
+                        <Horario />
                     }
 
                     {store.monitorSelected !== null &&
@@ -126,13 +130,17 @@ class HomeAdmin extends Component<any, any>{
                                             }} />
                                     </div>
                                 </div>
-                                : 
-                                    <div className="btn" onClick={()=>{
-                                        this.props.his.push('/editarHorario');
-                                    }}>Editar Horario</div>
-                                  
+                            : 
+                                <div className="btn" onClick={()=>{
+                                    this.props.his.push('/editarHorario');
+                                }}>Editar Horario</div>                                  
                             }
+
                             <div className="btn" onClick={this.handleClick}>{this.state.isNewHorario ? 'Listo' : 'Añadir Horas'}</div>
+
+                            <div className="btn change" onClick={()=>{
+                                this.setState((prev: any)=>{return {horario: !prev.horario}})
+                            }}>></div>
                         </div>
                     }
                 </div>
