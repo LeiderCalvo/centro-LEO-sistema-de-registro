@@ -26,7 +26,6 @@ class Navigation extends React.Component<any, any>{
             localStorage.setItem('isLlegado', 'false');
             localStorage.setItem('isCurrentUser', 'false');
             localStorage.removeItem('currentUser');
-            localStorage.setItem('isCurrentUser', 'false');
             store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
             this.props.his.push('/');
             return;

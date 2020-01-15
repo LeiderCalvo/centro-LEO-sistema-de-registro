@@ -28,8 +28,9 @@ class EditSchedule extends Component<any, any>{
     wrapInformationToHorario() {
         setTimeout(() => {
             let temp : any =  {};
+            let dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'Sabado', 'Domingo'];
             for (let i = 0; i < this.state.horario.length; i++) {
-                let dia = store.dias[i].toLocaleLowerCase();
+                let dia = dias[i].toLocaleLowerCase();
                 for (let j = 0; j < this.state.horario[i].length; j++) {
                     const jornada = this.state.horario[i][j];
                     if (jornada.inicio === '' || jornada.fin === '') break;

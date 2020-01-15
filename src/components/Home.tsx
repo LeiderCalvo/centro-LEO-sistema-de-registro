@@ -36,12 +36,12 @@ class Home extends  Component <any, any>{
     }, 700);
 
     let llegado = localStorage.getItem('isLlegado');
-    let val = llegado !== null && JSON.parse(llegado);
+    let val = llegado !== null ? JSON.parse(llegado) : null;
     val !== null && store.setCurrentUser('llegue',val+'');
     this.setState({isDoneLlegue: val});
 
     let terminado = localStorage.getItem('isTerminado');
-    let val2 = terminado !== null && JSON.parse(terminado);
+    let val2 = terminado !== null ? JSON.parse(terminado) : null;
     val2 !== null && store.setCurrentUser('termine',val2+'');
     this.setState({isDoneTermine: val2});
   }
@@ -66,6 +66,8 @@ class Home extends  Component <any, any>{
     }
   */  
     this.setState({isDoneLlegue: true});
+    store.setCurrentUser('llegue', 'true');
+    localStorage.setItem('isLlegado', 'true');
 
     if(store.diferenceCurrentAndInitial<-7){
       let temp = Math.abs(store.diferenceCurrentAndInitial/60);
@@ -75,8 +77,6 @@ class Home extends  Component <any, any>{
     }
 
     DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'llegada');
-    store.setCurrentUser('llegue', 'true');
-    localStorage.setItem('isLlegado', 'true');
   }
 
   handleClickTermine(){
@@ -87,7 +87,12 @@ class Home extends  Component <any, any>{
       store.displayToast('Aun no puedes marcar tu salida', 'warning');
       return;
     }
-*/
+    */
+    if(store.currentUser.inicio === 'null'){
+      store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
+      return;
+    }
+
     if(this.state.isDoneLlegue === false){
       store.displayToast('Primero debes marcar tu llegada', 'warning');
       return;
@@ -99,11 +104,9 @@ class Home extends  Component <any, any>{
       return;
     }
 
-    if(store.currentUser.inicio === 'null'){
-      store.displayToast('No estás en tiempo de monitoria, lo lamentamos', 'warning');
-      return;
-    }
     this.setState({isDoneTermine: true});
+    store.setCurrentUser('termine', 'true');
+    localStorage.setItem('isTerminado', 'true');
 /*
     if(store.diferenceCurrentAndFinal>LAPSO){
       DataBaseFireBase.setHorasPerdidas(Math.abs(store.diferenceCurrentAndFinal/60));
@@ -113,8 +116,6 @@ class Home extends  Component <any, any>{
     store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
 
     DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
-    store.setCurrentUser('termine', 'true');
-    localStorage.setItem('isTerminado', 'true');
   }
 
   render(){
@@ -131,17 +132,23 @@ class Home extends  Component <any, any>{
             <div className="workArea uno">
               <p className='time'
               style={this.state.isDoneLlegue? {color: '#c6c6c6'} : store.diferenceCurrentAndInitial>=LAPSO? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentTime.split(':')[0] + ' : '+store.currentTime.split(':')[1]}</p>
+
               <p className='date' 
-              style={this.state.isDoneLlegue? {color: '#c6c6c6'} :store.diferenceCurrentAndInitial>=LAPSO? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
+              style={this.state.isDoneLlegue? {color: '#c6c6c6'} : store.diferenceCurrentAndInitial>=LAPSO? {color: '#88b3ff'} : {color: '#d6833c'}}>{store.currentDate}</p>
 
               <div className="btn-cont">
                 <div className="btn"
-                style={store.diferenceCurrentAndFinal<LAPSO? {opacity: .5} : store.currentUser.inicio === 'null'? {opacity: .5}:store.diferenceCurrentAndInitial>LAPSO? {opacity: .5} : this.state.isDoneLlegue? {opacity: .5} : {opacity: 1}}
-                onClick={this.handleClickLlegue}>
-                  Llegué</div>
+                style={this.state.isDoneLlegue || store.diferenceCurrentAndInitial>LAPSO || store.currentUser.inicio === 'null'?
+                    {opacity: .5}
+                  : 
+                    {opacity: 1}}
+                onClick={this.handleClickLlegue}>Llegué</div>
 
                 <div className="btn"
-                style={store.diferenceCurrentAndFinal<LAPSO? {opacity: .5} : store.currentUser.fin === 'null'? {opacity: .5}: store.diferenceCurrentAndFinal>LAPSO? {opacity: .5} : this.state.isDoneTermine? {opacity: .5} : {opacity: 1}} 
+                style={this.state.isDoneTermine || this.state.isDoneLlegue === false || store.currentUser.fin === 'null'? 
+                  {opacity: .5}
+                :
+                  {opacity: 1}} 
                 onClick={this.handleClickTermine}>
                   Terminé</div>
               </div>

@@ -405,6 +405,7 @@ function removeActivo(name: string) {
 }
 
 function getInfoMonitor(nombre: string) {
+  if(nombre === null || nombre === undefined) return;
   updateHoras(nombre);
   updateRegistro(nombre);
   updateHorarioMonitor(nombre);

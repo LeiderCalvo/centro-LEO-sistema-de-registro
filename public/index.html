@@ -14,4 +14,12 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
+  <script type="text/javascript">
+    window.onbeforeunload = function (e) {
+      let message = 'Si no has cerrado sesión se perderan los cambios si cierras esta pestaña. ¿Seguro de cerrar?';
+      var e = e || window.event;
+      e.returnValue = message;
+      return message;
+    }
+    </script>
 </html>

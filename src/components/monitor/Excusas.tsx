@@ -44,8 +44,8 @@ class Excusas extends Component<any, any> {
 
         this.setState({plaso: plaso}, ()=>{
             let date = Date.now();
-            if(Math.abs(plaso.getTime() - date) <= 172800000){
-                store.displayToast('La fecha es muy proxima, debe tener dos días minimo de anticipación', 'error');
+            if(Math.abs(plaso.getTime() - date) <= 259200000){
+                store.displayToast('La fecha es muy proxima, debe tener tres (3) días minimo de anticipación', 'error');
                 return;
             }
 
