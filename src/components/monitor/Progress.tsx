@@ -18,6 +18,8 @@ class Progress extends Component<any, any> {
                 <h4 className='hora-inicial'>{store.currentUser.inicio !== 'null'&& store.currentUser.inicio}</h4>
             </div>
             <div className="img-container"><img src="./images/aside.png" alt=""/></div>
+            <div className="img-container logo"><img src="./images/logo.svg" alt=""/></div>
+            <div className="img-container pluma"><img src="./images/pluma.svg" alt=""/></div>
         </div>
         );
     }

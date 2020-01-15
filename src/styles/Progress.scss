@@ -16,6 +16,20 @@
         }
     }
 
+    .logo {
+        min-height: 5%;
+        height: 5%;
+        top: 90%;
+        left: 10%;
+    }
+
+    .pluma {
+        min-height: 7%;
+        height: 7%;
+        top: 3%;
+        left: 19%;
+    }
+
     .first{
         @include width2(28px, 685px);
         background-color: rgba($color: #fff, $alpha: .5);

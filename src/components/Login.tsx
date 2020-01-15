@@ -48,6 +48,7 @@ class Login extends Component<any, any>{
             <section className='Sing Login two-colums' style={{opacity: this.state.op}}>
                 <div className="colum first">
                     <div className="img-container"><img src="./images/banner.png" alt=""/></div>
+                    <p className='tag'><em>#SoyTutorLeoAprendoEnseñando</em></p>
                 </div>
                 <div className="colum second">
                     <Link to={'/SingUp'} className='btn-nav'>Regístrate</Link>

@@ -1,4 +1,4 @@
-import store, { Usuario } from "../stores/store";
+import store from "../stores/store";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";

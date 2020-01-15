@@ -1,4 +1,4 @@
-import store, { Usuario, Horario } from "../stores/store";
+import store, { Horario } from "../stores/store";
 
 let DataBase: any = null;
 

@@ -5,6 +5,13 @@
     height: 100%;
     .first{
         @include width(1033px);
+
+        .tag {
+            position: fixed;
+            bottom: 5%;
+            left: 4%;
+            color: white;
+        }
     }
     
     .second{

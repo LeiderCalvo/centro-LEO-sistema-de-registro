@@ -163,16 +163,16 @@ class Store {
     @computed get progressAdvice(){
         switch (this.navItemSelected) {
             case 'Inicio':
-                return 'Recuerda que si no registras tu llegada con 7 minutos máximo de tardanza, se te descontará de tus horas.';
+                return `Recuerda que si no registras tu llegada con 7 minutos máximo de tardanza, se te descontará de tus horas. #SoyTutorLeo`;
             
             case 'Horario':
-                return 'El marcador naranja en tu horario, corresponde a las horas adicionales que te hayan sido asignadas últimamente.';
+                return 'El marcador naranja en tu horario, corresponde a las horas adicionales que te hayan sido asignadas últimamente. #AprendoEnseñando';
 
             case 'Excusas':
-                return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga.';
+                return 'El soporte fotográfico es opcional, pero sin duda es mejor tenerlo, presiona el link naranja y luego arrastra una foto de tu excusa hasta la zona de carga. #SoyTutorLeo';
 
             case 'Historial':
-                return `Hecha un vistazo a tu registro de trabajo en horas. El marcador gris en tu historial corresponde a los días que has faltado con excusa.`;
+                return `Hecha un vistazo a tu registro de trabajo en horas. El marcador gris en tu historial corresponde a los días que has faltado con excusa. #AprendoEnseñando`;
         
             default:
                 return 'Cargando ...';
