@@ -69,7 +69,7 @@ class Home extends  Component <any, any>{
         store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
 
         DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
-        DataBaseFireBase.setHorasTotales(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
+        //DataBaseFireBase.setHorasTotales(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
         store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
 
         DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
@@ -148,7 +148,7 @@ class Home extends  Component <any, any>{
     }
 */
     DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
-    DataBaseFireBase.setHorasTotales(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
+    //DataBaseFireBase.setHorasTotales(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
     store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
 
     DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
