@@ -298,6 +298,16 @@ function setHorasLogradas(cantidad: number) {
   });
 }
 
+function addNewOpinion (object: {}) {
+  DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/opiniones').push(object, function (error: any) {
+    if (error) {
+      store.displayToast(error, 'error');
+    } else {
+      store.displayToast('Tu opinion ha sido guardada', 'success');
+    }
+  });
+}
+
 function addNewExcuse(time: number, object: {}) {
   DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/excusas').push({ ...object, date: time }, function (error: any) {
     if (error) {
@@ -330,6 +340,24 @@ function getAllExcuces() {
         }
       });
   }
+}
+
+function getOpiniones(user: string) {
+  DataBase.ref('Usuarios/' + user.toLowerCase() + '/opiniones').on('value',
+    function (opiniones: any) {
+      if (opiniones.exists()) {
+        let opinions = [];
+        for (const prop in opiniones.val()) {
+          if (opiniones.val().hasOwnProperty(prop)) {
+            const element = opiniones.val()[prop];
+            opinions.push(element);
+          }
+        }
+        store.setOpiniones(opinions);
+      } else {
+        store.setOpiniones([]);
+      }
+    });
 }
 
 function getExcuces(user: string) {
@@ -437,5 +465,5 @@ function getMyAditionals() {
 
 export default {
   addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional, setRegistroEsp,
-  getMyAditionals, setHorario, updateHorarioMonitor
+  getMyAditionals, setHorario, updateHorarioMonitor, getOpiniones, addNewOpinion
 };

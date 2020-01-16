@@ -8,6 +8,7 @@ import DataBaseFireBase from '../utils/DataBaseFireBase';
 import Horario from './monitor/Horario';
 import Excusas from './monitor/Excusas';
 import Historial from './monitor/Historial';
+import Opiniones from './monitor/Opiniones';
 
 const LAPSO = 7;
 
@@ -190,8 +191,10 @@ class Home extends  Component <any, any>{
             <Horario/>
           :store.navItemSelected === 'Excusas'?
             <Excusas/>
-          :store.navItemSelected === 'Historial'&&
+          :store.navItemSelected === 'Historial'?
             <Historial/>
+          :store.navItemSelected === 'Opiniones'&&
+            <Opiniones/>
         }
         </div>
       </section>

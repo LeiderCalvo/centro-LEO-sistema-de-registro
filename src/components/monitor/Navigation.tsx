@@ -10,7 +10,7 @@ class Navigation extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            navigationItems : ['Inicio', 'Horario', 'Excusas', 'Historial', 'Logout']
+            navigationItems : ['Inicio', 'Horario', 'Excusas', 'Historial', 'Opiniones','Logout']
         }
         this.handleClick = this.handleClick.bind(this);
     }

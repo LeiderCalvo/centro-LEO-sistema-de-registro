@@ -15,6 +15,7 @@ class Store {
     @observable isLoging : boolean = false;
     @observable callbackToast: any = null;
     @observable excusas : any[] = [];
+    @observable opiniones : any[] = [];
     @observable navItemSelected: string = 'Inicio';
     @observable horasLogradas: number = 0;
     @observable horasAdiconales: number = 0;
@@ -124,6 +125,14 @@ class Store {
         this.excusas = val;
     }
 
+    @action setOpiniones(val: any[]){
+        for (let i = 0; i < val.length; i++) {
+            const elem = val[i];
+            val[i].date = new Date(elem.date);
+        }
+        this.opiniones = val;
+    }
+
     @computed get currentMonitors(){
         let temp :any = this.currentUser.horario;
         let temp2 : any = [];
@@ -173,6 +182,9 @@ class Store {
 
             case 'Historial':
                 return `Hecha un vistazo a tu registro de trabajo en horas. El marcador gris en tu historial corresponde a los días que has faltado con excusa. #AprendoEnseñando`;
+
+            case 'Opiniones':
+                return `Guarda diariamente las experiencias adquiridas enseñando durante los turnos. #AprendoEnseñando`;
         
             default:
                 return 'Cargando ...';

@@ -147,7 +147,7 @@ class Excusas extends Component<any, any> {
                         <p className="fin tit">Fin</p>
                     </div>
 
-                    {store.excusas.map((elem, index)=>{
+                    {store.excusas.reverse().map((elem, index)=>{
                         return <div key={index+'excuces'} className="exc-row">
                             <p className="id item">{index}</p>
                             <p className="razon item">{elem.razon}</p>
