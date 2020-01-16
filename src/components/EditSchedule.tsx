@@ -104,7 +104,7 @@ class EditSchedule extends Component<any, any>{
                     })
                 }
 
-                <div className="label-cont">
+                <div className="label-cont horasTotales">
                     <h3 className='label'>Horas Totales</h3>
                     <input type='number' value={this.state.horasTotales} onChange={(e)=>{
                         this.setState({horasTotales: parseInt(e.target.value + '')})
