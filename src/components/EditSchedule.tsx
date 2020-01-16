@@ -12,6 +12,7 @@ class EditSchedule extends Component<any, any>{
         this.state = {
             horario: [[{inicio: '', fin: ''}],[{inicio: '', fin: ''}],[{inicio: '', fin: ''}],[{inicio: '', fin: ''}],[{inicio: '', fin: ''}],[{inicio: '', fin: ''}]],
             op: 1,
+            horasTotales: 0
         }
 
         this.wrapInformationToHorario = this.wrapInformationToHorario.bind(this);
@@ -37,6 +38,9 @@ class EditSchedule extends Component<any, any>{
                     temp[dia] = this.state.horario[i];
                 }
             }
+
+            store.setHorasTotales(this.state.horasTotales);
+            store.monitorSelected && DataBaseFireBase.setSetHorasTotales(this.state.horasTotales, store.monitorSelected);
 
             store.monitorSelected && DataBaseFireBase.setHorario(store.monitorSelected, temp);
             store.setMonitorSelected(null);
@@ -99,6 +103,13 @@ class EditSchedule extends Component<any, any>{
                         </div>
                     })
                 }
+
+                <div className="label-cont">
+                    <h3 className='label'>Horas Totales</h3>
+                    <input type='number' value={this.state.horasTotales} onChange={(e)=>{
+                        this.setState({horasTotales: parseInt(e.target.value + '')})
+                    }}/>
+                </div>
                 
                 <button className="btn" onClick={this.wrapInformationToHorario}>Guardar Cambios</button>
             </section>

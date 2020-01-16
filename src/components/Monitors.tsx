@@ -53,6 +53,7 @@ class Monitor extends React.Component<any, any>{
                         })
                     :
                         store.currentMonitors.map((elem: any, index : number)=>{
+                            if(elem===undefined)return;
                             return <div key={index+'monitor'}
                             onClick={()=>this.handleSelected(elem)}
                             style={store.monitoresActivos.includes(elem.toLocaleLowerCase())? {opacity: 1}:{opacity: .5}}

@@ -36,6 +36,10 @@ class HomeAdmin extends Component<any, any>{
         setTimeout(() => {
             this.setState({ op: 1 });
         }, 700);
+
+        if(store.currentUser.rol === 'admin'){
+            store.setMonitorSelected(null);
+        }
     }
 
     handleClick() {

@@ -298,6 +298,20 @@ function setHorasLogradas(cantidad: number) {
   });
 }
 
+function setHorasTotales(cantidad: number) {
+  DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/horasTotales').once('value').then(function (horasTotales: any) {
+    if (horasTotales.exists()) {
+      DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase()).update({ horasTotales: horasTotales.val() - cantidad });
+    } else {
+      DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase()).update({ horasTotales: cantidad });
+    }
+  });
+}
+
+function setSetHorasTotales(cantidad: number, user: string) {
+  DataBase.ref('Usuarios/' + user.toLowerCase()).update({ horasTotales: cantidad });
+}
+
 function addNewOpinion (object: {}) {
   DataBase.ref('Usuarios/' + store.currentUser.nombre.toLowerCase() + '/opiniones').push(object, function (error: any) {
     if (error) {
@@ -399,6 +413,10 @@ function updateHoras(user: string) {
   DataBase.ref('Usuarios/' + user.toLowerCase() + '/horasAdicionales').on('value', function (hora: any) {
     hora.exists() ? store.setHorasAdicionales(hora.val()) : store.setHorasAdicionales(0);
   });
+
+  DataBase.ref('Usuarios/' + user.toLowerCase() + '/horasTotales').on('value', function (hora: any) {
+    hora.exists() ? store.setHorasTotales(hora.val()) : store.setHorasTotales(0);
+  });
 }
 
 
@@ -465,5 +483,5 @@ function getMyAditionals() {
 
 export default {
   addNewUser, getRol, getHorario, transfomTimeToNumber, setHorasLogradas, transfomNumberToTime, setRegistro, setRef, setHorasPerdidas, addNewExcuse, getExcuces, updateHoras, updateRegistro, getHorarioGen, getMonitores, setActivo, removeActivo, getActivos, getInfoMonitor, getAllExcuces, setHoraAdicional, setRegistroEsp,
-  getMyAditionals, setHorario, updateHorarioMonitor, getOpiniones, addNewOpinion
+  getMyAditionals, setHorario, updateHorarioMonitor, getOpiniones, addNewOpinion, setHorasTotales, setSetHorasTotales
 };

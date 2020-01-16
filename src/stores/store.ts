@@ -20,6 +20,7 @@ class Store {
     @observable horasLogradas: number = 0;
     @observable horasAdiconales: number = 0;
     @observable horasPerdidas: number = 0;
+    @observable horasTotales: number = 0;
     @observable registros: any = {};
     @observable monitoresActivos : string[] = [];
     @observable monitores: {nombre: string, activo: boolean}[] = [];
@@ -107,6 +108,10 @@ class Store {
 
     @action setHorasPerdidas(val: number){
         this.horasPerdidas = val;
+    }
+
+    @action setHorasTotales(val: number){
+        this.horasTotales = val;
     }
 
     @action setAllCurrentUser(val: any){

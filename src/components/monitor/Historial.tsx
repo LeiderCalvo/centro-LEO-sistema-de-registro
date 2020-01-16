@@ -79,14 +79,23 @@ class Historial extends Component<any, any>{
 
     componentDidMount(){
         //console.log(store.currentUser);
-        DataBaseFireBase.updateHoras(store.currentUser.nombre);
-        DataBaseFireBase.updateRegistro(store.currentUser.nombre);
+        if(store.currentUser.rol === 'monitor'){
+            DataBaseFireBase.updateHoras(store.currentUser.nombre);
+            DataBaseFireBase.updateRegistro(store.currentUser.nombre);
+        }else if(store.currentUser.rol === 'monitor' && store.monitorSelected){
+            DataBaseFireBase.updateHoras(store.monitorSelected);
+            DataBaseFireBase.updateRegistro(store.monitorSelected);
+        }
     }
 
     render(){
         return(
             <div className="workArea Historial">
                 <div className="horas">
+                    <div className="hora-cont">
+                        <h2>{store.horasTotales === 0? '0' :store.horasTotales % Math.floor(store.horasTotales) === 0? store.horasTotales : store.horasTotales.toFixed(1)}</h2>
+                        <p>Horas<br/>Totales</p>
+                    </div>
                     <div className="hora-cont">
                         <h2>{store.horasLogradas === 0? '0' :store.horasLogradas % Math.floor(store.horasLogradas) === 0? store.horasLogradas : store.horasLogradas.toFixed(1)}</h2>
                         <p>Horas<br/>Logradas</p>
