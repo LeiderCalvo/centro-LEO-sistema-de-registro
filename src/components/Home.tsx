@@ -49,36 +49,50 @@ class Home extends  Component <any, any>{
     val2 !== null && store.setCurrentUser('termine',val2+'');
     this.setState({isDoneTermine: val2});
 
-    this.cerrarSesionAutomatico();
+    setTimeout(() => {
+      this.cerrarSesionAutomatico();
+    }, 1000);
 
   }
   
   componentWillUnmount(){
-    clearInterval(this.state.intervalId);
+    //console.log('cancelado');
+    clearTimeout(this.state.intervalId);
   }
 
   cerrarSesionAutomatico(){
-    let intervalId = setInterval(() => {
-      if(store.diferenceCurrentAndFinal<0 && store.currentUser.llegue === 'true'){
-        localStorage.setItem('isTerminado', 'false');
-        localStorage.setItem('isLlegado', 'false');
-        localStorage.setItem('isCurrentUser', 'false');
-        localStorage.removeItem('currentUser');
+    if(store.currentUser.inicio === 'null'){
+      
+    }else {
+      let intervalId = setTimeout(() => {
+        if(store.currentUser.llegue === 'true'){
+          store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
+  
+          DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
+          //DataBaseFireBase.setHorasTotales(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
+          store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
+  
+          DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
 
-        store.setCurrentUser('termine', 'true');
-        store.currentUser.rol === 'monitor'&&DataBaseFireBase.removeActivo(store.currentUser.nombre);
+          setTimeout(() => {
+            store.setAllCurrentUser({horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'false', termine:'false'});
+    
+            localStorage.setItem('isTerminado', 'false');
+            localStorage.setItem('isLlegado', 'false');
+            localStorage.setItem('isCurrentUser', 'false');
+            localStorage.removeItem('currentUser');
+    
+            store.setCurrentUser('termine', 'true');
+    
+            this.props.his.push('/');
+          }, 1000);
+  
+        }
+      }, store.diferenceCurrentAndFinal*60000);
+      console.log(store.diferenceCurrentAndFinal);
 
-        DataBaseFireBase.setHorasLogradas(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
-        //DataBaseFireBase.setHorasTotales(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes);
-        store.displayToast('Has completado'+(Math.abs(store.diferenceCurrentAndInitial/60)-this.state.horasPendientes)+' horas', 'info');
-
-        DataBaseFireBase.setRegistro(DataBaseFireBase.transfomTimeToNumber(store.fecha.hora+':'+store.fecha.minutos), Date.now(), 'salida');
-
-        store.setAllCurrentUser({horario: null, rol: '', nombre: '', dia: '', inicio: '', fin: '',  llegue:'false', termine:'false'});
-        this.props.his.push('/');
-      }
-    }, 60000*30);
-    this.setState({intervalId: intervalId});
+      this.setState({intervalId: intervalId});
+    }
   }
 
   handleClickLlegue(){
